@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 社区</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 社区页特定样式 */
+        .community-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-action {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        
+        .filter-tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-2);
+            padding: 0 15px;
+        }
+        
+        .filter-tab {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        .filter-tab.active {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .filter-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .post-list {
+            padding: 15px;
+        }
+        
+        .post-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        
+        .post-header {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+        }
+        
+        .post-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-user {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+        
+        .post-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .post-more {
+            color: var(--text-tertiary);
+            font-size: 18px;
+        }
+        
+        .post-content {
+            padding: 0 12px 12px;
+        }
+        
+        .post-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .post-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+        
+        .post-images {
+            display: grid;
+            gap: 5px;
+            margin-bottom: 12px;
+        }
+        
+        .post-images.count-1 {
+            grid-template-columns: 1fr;
+        }
+        
+        .post-images.count-2 {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .post-images.count-3, .post-images.count-4 {
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .post-images.count-5, .post-images.count-6, .post-images.count-7, .post-images.count-8, .post-images.count-9 {
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+        
+        .post-image {
+            width: 100%;
+            position: relative;
+            padding-bottom: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .post-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        
+        .post-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--gray-1);
+            border-radius: 100px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .post-tag i {
+            font-size: 10px;
+            margin-right: 4px;
+        }
+        
+        .post-activity {
+            background-color: var(--gray-1);
+            border-radius: 8px;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .activity-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 10px;
+        }
+        
+        .activity-info {
+            flex: 1;
+        }
+        
+        .activity-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .activity-meta {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .post-actions {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid var(--gray-2);
+        }
+        
+        .post-action {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            color: var(--text-tertiary);
+        }
+        
+        .post-action i {
+            margin-right: 5px;
+            font-size: 16px;
+        }
+        
+        .post-action.active {
+            color: var(--primary-color);
+        }
+        
+        .post-action.liked {
+            color: #E53935;
+        }
+        
+        .official-tag {
+            display: flex;
+            align-items: center;
+            background-color: #E3F2FD;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 10px;
+            color: var(--primary-color);
+            margin-left: 6px;
+        }
+        
+        .official-tag i {
+            margin-right: 3px;
+            font-size: 10px;
+        }
+        
+        .trending-topics {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 6px;
+            color: var(--primary-color);
+        }
+        
+        .section-more {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .topic-list {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 5px;
+        }
+        
+        .topic-item {
+            flex-shrink: 0;
+            margin-right: 10px;
+            width: 120px;
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .topic-item:last-child {
+            margin-right: 0;
+        }
+        
+        .topic-bg {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .topic-name {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px;
+            font-size: 12px;
+            font-weight: 500;
+            color: white;
+            background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
+        }
+        
+        .fab-button {
+            position: fixed;
+            bottom: 65px;
+            right: 15px;
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="community-header">
+                <div class="header-title">亲子社区</div>
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="far fa-bell"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 筛选标签页 -->
+            <div class="filter-tabs">
+                <div class="filter-tab active">热门</div>
+                <div class="filter-tab">关注</div>
+                <div class="filter-tab">附近</div>
+                <div class="filter-tab">官方</div>
+            </div>
+            
+            <!-- 热门话题 -->
+            <div class="trending-topics">
+                <div class="section-header">
+                    <div class="section-title">
+                        <i class="fas fa-fire"></i>
+                        <span>热门话题</span>
+                    </div>
+                    <div class="section-more">查看全部</div>
+                </div>
+                
+                <div class="topic-list">
+                    <div class="topic-item">
+                        <img src="https://images.unsplash.com/photo-1567310144666-187461da6a5b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="topic-bg" alt="下雨天亲子活动">
+                        <div class="topic-name">#下雨天亲子活动</div>
+                    </div>
+                    <div class="topic-item">
+                        <img src="https://images.unsplash.com/photo-1544017655-41fe3e410deb?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="topic-bg" alt="厨房小帮手">
+                        <div class="topic-name">#厨房小帮手</div>
+                    </div>
+                    <div class="topic-item">
+                        <img src="https://images.unsplash.com/photo-1471440671318-55bdbb772f93?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="topic-bg" alt="亲子阅读">
+                        <div class="topic-name">#亲子阅读</div>
+                    </div>
+                    <div class="topic-item">
+                        <img src="https://images.unsplash.com/photo-1584992236310-6edddc08acff?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="topic-bg" alt="居家科学实验">
+                        <div class="topic-name">#居家科学实验</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 帖子列表 -->
+            <div class="post-list">
+                <!-- 帖子1 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="https://images.unsplash.com/photo-1546961329-78bef0414d7c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="用户头像">
+                        </div>
+                        <div class="post-user">
+                            <div class="user-name">
+                                小花妈妈
+                                <span class="official-tag">
+                                    <i class="fas fa-check"></i>
+                                    <span>资深妈妈</span>
+                                </span>
+                            </div>
+                            <div class="post-time">今天 14:30</div>
+                        </div>
+                        <div class="post-more">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <div class="post-title">彩虹纸飞机大成功！</div>
+                        <div class="post-text">
+                            今天和小明一起做了创意彩虹纸飞机，他非常投入，坚持自己完成了全部步骤！最后的飞行测试中，他的飞机飞了超远，小家伙开心得不得了😄 强烈推荐这个活动，简单又有趣，孩子们很容易上手~
+                        </div>
+                        
+                        <div class="post-images count-3">
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="准备材料">
+                            </div>
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="对折">
+                            </div>
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="完成">
+                            </div>
+                        </div>
+                        
+                        <div class="post-tags">
+                            <div class="post-tag">
+                                <i class="fas fa-child"></i>
+                                <span>5岁+</span>
+                            </div>
+                            <div class="post-tag">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>创意手工</span>
+                            </div>
+                            <div class="post-tag">
+                                <i class="fas fa-clock"></i>
+                                <span>20分钟</span>
+                            </div>
+                        </div>
+                        
+                        <div class="post-activity">
+                            <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=60" class="activity-img" alt="创意彩虹纸飞机制作">
+                            <div class="activity-info">
+                                <div class="activity-name">创意彩虹纸飞机制作</div>
+                                <div class="activity-meta">
+                                    <span>3-5岁</span> · <span>创意</span> · <span>室内</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <div class="post-action liked">
+                            <i class="fas fa-heart"></i>
+                            <span>32</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-comment"></i>
+                            <span>12</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-bookmark"></i>
+                            <span>收藏</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share-alt"></i>
+                            <span>分享</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子2 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="用户头像">
+                        </div>
+                        <div class="post-user">
+                            <div class="user-name">
+                                创意育儿社
+                                <span class="official-tag" style="background-color: #E8F5E9; color: #4CAF50;">
+                                    <i class="fas fa-check"></i>
+                                    <span>官方</span>
+                                </span>
+                            </div>
+                            <div class="post-time">今天 09:15</div>
+                        </div>
+                        <div class="post-more">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <div class="post-title">【下雨天亲子活动合集】</div>
+                        <div class="post-text">
+                            连续下雨☔️孩子在家待不住？别担心！我们为大家准备了10个超好玩的室内亲子活动，让孩子在家也能玩得尽兴！这些活动注重培养孩子的创造力和动手能力，快来试试吧～ #下雨天亲子活动 #室内游戏
+                        </div>
+                        
+                        <div class="post-images count-1">
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1582779791160-5bd8fcc049db?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="下雨天活动">
+                            </div>
+                        </div>
+                        
+                        <div class="post-tags">
+                            <div class="post-tag">
+                                <i class="fas fa-child"></i>
+                                <span>全龄段</span>
+                            </div>
+                            <div class="post-tag">
+                                <i class="fas fa-home"></i>
+                                <span>室内活动</span>
+                            </div>
+                            <div class="post-tag">
+                                <i class="fas fa-users"></i>
+                                <span>亲子互动</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="far fa-heart"></i>
+                            <span>86</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-comment"></i>
+                            <span>24</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-bookmark"></i>
+                            <span>收藏</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share-alt"></i>
+                            <span>分享</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 帖子3 -->
+                <div class="post-card">
+                    <div class="post-header">
+                        <div class="post-avatar">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="用户头像">
+                        </div>
+                        <div class="post-user">
+                            <div class="user-name">王爸爸</div>
+                            <div class="post-time">昨天 18:45</div>
+                        </div>
+                        <div class="post-more">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="post-content">
+                        <div class="post-title">周末趣味恐龙化石挖掘</div>
+                        <div class="post-text">
+                            周末带小朋友体验了恐龙化石挖掘活动，没想到孩子这么有耐心，认真挖了一个多小时！不仅锻炼了专注力，还学到了很多恐龙知识。大家有没有类似的科学探索活动推荐？
+                        </div>
+                        
+                        <div class="post-images count-2">
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1549920867-1629df28cdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="恐龙化石">
+                            </div>
+                            <div class="post-image">
+                                <img src="https://images.unsplash.com/photo-1564325724739-bae0bd08762c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="挖掘过程">
+                            </div>
+                        </div>
+                        
+                        <div class="post-tags">
+                            <div class="post-tag">
+                                <i class="fas fa-child"></i>
+                                <span>6-8岁</span>
+                            </div>
+                            <div class="post-tag">
+                                <i class="fas fa-flask"></i>
+                                <span>科学探索</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="post-actions">
+                        <div class="post-action">
+                            <i class="far fa-heart"></i>
+                            <span>45</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-comment"></i>
+                            <span>18</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="far fa-bookmark"></i>
+                            <span>收藏</span>
+                        </div>
+                        <div class="post-action">
+                            <i class="fas fa-share-alt"></i>
+                            <span>分享</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 浮动按钮 -->
+            <div class="fab-button">
+                <i class="fas fa-plus"></i>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="tabbar">
+            <div class="tab-item">
+                <i class="fas fa-compass tab-icon"></i>
+                <span>发现</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-layer-group tab-icon"></i>
+                <span>合集</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-calendar-check tab-icon"></i>
+                <span>打卡</span>
+            </div>
+            <div class="tab-item active">
+                <i class="fas fa-users tab-icon"></i>
+                <span>社区</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user tab-icon"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

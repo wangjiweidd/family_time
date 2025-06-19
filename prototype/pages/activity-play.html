@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 活动执行</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 活动执行页特定样式 */
+        .play-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-back {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-right: 8px;
+        }
+        
+        .header-activity {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-action {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-left: 10px;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: var(--gray-2);
+            border-radius: 2px;
+            overflow: hidden;
+            margin: 0 15px;
+        }
+        
+        .progress-value {
+            height: 100%;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+            width: 50%; /* 当前进度为50% */
+        }
+        
+        .step-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .step-indicator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .step-current {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .step-total {
+            font-size: 18px;
+            color: var(--text-tertiary);
+            margin-left: 5px;
+        }
+        
+        .step-time {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+        
+        .step-time i {
+            margin-right: 5px;
+        }
+        
+        .play-content {
+            padding: 0 15px 100px;
+        }
+        
+        .play-img {
+            width: 100%;
+            height: 200px;
+            border-radius: 12px;
+            object-fit: cover;
+            margin-bottom: 20px;
+        }
+        
+        .play-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .play-desc {
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+        
+        .tips-box {
+            background-color: #FFF8E1;
+            border-left: 4px solid #FFC107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .tips-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #F57C00;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tips-title i {
+            margin-right: 8px;
+        }
+        
+        .tips-content {
+            font-size: 14px;
+            color: #795548;
+            line-height: 1.5;
+        }
+        
+        .record-box {
+            margin-top: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .record-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .record-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .record-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .record-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px 10px;
+            background-color: var(--gray-1);
+            border-radius: 8px;
+            margin-right: 10px;
+        }
+        
+        .record-btn:last-child {
+            margin-right: 0;
+        }
+        
+        .record-btn-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 18px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .record-btn-text {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .play-note {
+            margin-top: 20px;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            min-height: 80px;
+            border: 1px solid var(--gray-3);
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 14px;
+            margin-bottom: 15px;
+            resize: none;
+        }
+        
+        .nav-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .btn-prev, .btn-next {
+            flex: 1;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .btn-prev {
+            background-color: white;
+            color: var(--text-secondary);
+            border: 1px solid var(--gray-3);
+            margin-right: 15px;
+        }
+        
+        .btn-next {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+        }
+        
+        .btn-prev i, .btn-next i {
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="play-header">
+                <div class="header-left">
+                    <div class="header-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-activity">创意彩虹纸飞机制作</div>
+                </div>
+                <div class="header-right">
+                    <div class="header-action">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-ellipsis-h"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 进度条 -->
+            <div class="progress-bar">
+                <div class="progress-value"></div>
+            </div>
+            
+            <!-- 步骤指示器 -->
+            <div class="step-header">
+                <div class="step-indicator">
+                    <div class="step-current">2</div>
+                    <div class="step-total">/4</div>
+                </div>
+                <div class="step-time">
+                    <i class="far fa-clock"></i>
+                    <span>预计5分钟</span>
+                </div>
+            </div>
+            
+            <!-- 执行内容 -->
+            <div class="play-content">
+                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" class="play-img" alt="对折纸张">
+                
+                <h3 class="play-title">对折纸张，形成中轴线</h3>
+                
+                <p class="play-desc">
+                    将纸张沿中线对折，然后展开，在纸上留下折痕。这条折痕将成为飞机的中轴线。确保折痕清晰可见，这会让后续步骤更容易进行。
+                </p>
+                
+                <!-- 提示框 -->
+                <div class="tips-box">
+                    <div class="tips-title">
+                        <i class="fas fa-lightbulb"></i>
+                        <span>亲子互动提示</span>
+                    </div>
+                    <div class="tips-content">
+                        引导孩子自己尝试对折，不必太过精确。对于3-4岁的孩子，家长可以帮助指引，5岁以上可以尝试独立完成。这个过程培养孩子的手眼协调能力。
+                    </div>
+                </div>
+                
+                <!-- 记录区 -->
+                <div class="record-box">
+                    <div class="record-title">
+                        <i class="fas fa-camera"></i>
+                        <span>记录精彩瞬间</span>
+                    </div>
+                    
+                    <div class="record-actions">
+                        <div class="record-btn">
+                            <div class="record-btn-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="record-btn-text">拍照</div>
+                        </div>
+                        <div class="record-btn">
+                            <div class="record-btn-icon">
+                                <i class="fas fa-video"></i>
+                            </div>
+                            <div class="record-btn-text">录像</div>
+                        </div>
+                        <div class="record-btn">
+                            <div class="record-btn-icon">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            <div class="record-btn-text">录音</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 笔记区 -->
+                <div class="play-note">
+                    <div class="record-title">
+                        <i class="fas fa-pencil-alt"></i>
+                        <span>记录感想与发现</span>
+                    </div>
+                    <textarea class="note-textarea" placeholder="记录下孩子的表现、感受或有趣发现..."></textarea>
+                </div>
+            </div>
+            
+            <!-- 底部导航按钮 -->
+            <div class="nav-buttons">
+                <button class="btn-prev">
+                    <i class="fas fa-arrow-left"></i>上一步
+                </button>
+                <button class="btn-next">
+                    下一步<i class="fas fa-arrow-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

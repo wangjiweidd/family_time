@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 创建合集</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 创建合集页特定样式 */
+        .create-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-back {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-right: 8px;
+        }
+        
+        .header-title {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .header-action {
+            color: var(--primary-color);
+            font-size: 16px;
+        }
+        
+        .header-action.disabled {
+            color: var(--gray-4);
+        }
+        
+        .create-content {
+            padding: 20px 15px 100px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .form-input {
+            width: 100%;
+            height: 44px;
+            border: 1px solid var(--gray-3);
+            border-radius: 8px;
+            padding: 0 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+            background-color: white;
+        }
+        
+        .form-input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .form-textarea {
+            width: 100%;
+            min-height: 100px;
+            border: 1px solid var(--gray-3);
+            border-radius: 8px;
+            padding: 12px;
+            font-size: 15px;
+            color: var(--text-primary);
+            resize: none;
+        }
+        
+        .form-textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+        
+        .upload-cover {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 180px;
+            border: 2px dashed var(--gray-3);
+            border-radius: 12px;
+            background-color: var(--gray-1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 20px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+        
+        .uploaded-cover {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        .uploaded-actions {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            display: flex;
+        }
+        
+        .uploaded-action {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-left: 6px;
+        }
+        
+        .tag-selector {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--gray-1);
+            border-radius: 100px;
+            padding: 6px 12px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        
+        .tag-item.selected {
+            background-color: var(--primary-light);
+            color: white;
+        }
+        
+        .tag-item i {
+            margin-right: 5px;
+        }
+        
+        .activity-selection {
+            margin-top: 20px;
+        }
+        
+        .activity-search {
+            display: flex;
+            align-items: center;
+            background-color: var(--gray-1);
+            border-radius: 8px;
+            padding: 0 12px;
+            margin-bottom: 15px;
+        }
+        
+        .search-icon {
+            color: var(--gray-5);
+            margin-right: 8px;
+        }
+        
+        .search-input {
+            flex: 1;
+            height: 40px;
+            border: none;
+            background: transparent;
+            font-size: 14px;
+        }
+        
+        .activity-list {
+            margin-bottom: 20px;
+        }
+        
+        .activity-item {
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            border: 1px solid var(--gray-2);
+            overflow: hidden;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        
+        .activity-checkbox {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 2px solid var(--gray-3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            z-index: 1;
+        }
+        
+        .activity-checkbox.checked {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .activity-img {
+            width: 80px;
+            height: 80px;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+        
+        .activity-content {
+            flex: 1;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            padding-right: 30px;
+        }
+        
+        .activity-title {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        
+        .activity-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex: 1;
+        }
+        
+        .activity-tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .activity-tag {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            background-color: var(--gray-1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+        }
+        
+        .selected-count {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            font-size: 14px;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 10;
+        }
+        
+        .count-text {
+            font-weight: 500;
+        }
+        
+        .count-action {
+            display: flex;
+            align-items: center;
+        }
+        
+        .count-btn {
+            margin-left: 15px;
+            font-weight: 500;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .privacy-options {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .privacy-option {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            border: 1px solid var(--gray-3);
+            border-radius: 8px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        
+        .privacy-option:last-child {
+            margin-right: 0;
+        }
+        
+        .privacy-option.selected {
+            border-color: var(--primary-color);
+            background-color: #E3F2FD;
+        }
+        
+        .privacy-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            font-size: 18px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .privacy-option.selected .privacy-icon {
+            color: var(--primary-color);
+        }
+        
+        .privacy-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .privacy-desc {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="create-header">
+                <div class="header-left">
+                    <div class="header-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-title">创建合集</div>
+                </div>
+                <div class="header-action">发布</div>
+            </div>
+            
+            <!-- 创建表单内容 -->
+            <div class="create-content">
+                <!-- 上传封面 -->
+                <div class="form-group">
+                    <label class="form-label">合集封面</label>
+                    <div class="upload-cover">
+                        <!-- 初始状态 -->
+                        <div class="upload-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="upload-text">点击上传封面图片</div>
+                        
+                        <!-- 上传后状态（示例） -->
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="uploaded-cover" alt="封面预览">
+                        <div class="uploaded-actions">
+                            <div class="uploaded-action">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="uploaded-action">
+                                <i class="fas fa-trash-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 合集名称 -->
+                <div class="form-group">
+                    <label class="form-label">合集名称</label>
+                    <input type="text" class="form-input" placeholder="给合集起个吸引人的名字（最多20字）" value="父子亲密度提升游戏合集">
+                </div>
+                
+                <!-- 合集描述 -->
+                <div class="form-group">
+                    <label class="form-label">合集描述</label>
+                    <textarea class="form-textarea" placeholder="介绍一下这个合集的内容和特点（最多200字）">这个合集包含了6个专为爸爸和孩子设计的亲子游戏，通过简单有趣的互动活动，帮助父子增进感情，建立信任和亲密关系。适合3-8岁的孩子，活动时长15-30分钟不等，在家就能轻松开展。</textarea>
+                </div>
+                
+                <!-- 标签选择 -->
+                <div class="form-group">
+                    <label class="form-label">选择标签（最多5个）</label>
+                    <div class="tag-selector">
+                        <div class="tag-item selected">
+                            <i class="fas fa-child"></i>
+                            <span>3-8岁</span>
+                        </div>
+                        <div class="tag-item selected">
+                            <i class="fas fa-male"></i>
+                            <span>父子互动</span>
+                        </div>
+                        <div class="tag-item">
+                            <i class="fas fa-home"></i>
+                            <span>室内活动</span>
+                        </div>
+                        <div class="tag-item selected">
+                            <i class="fas fa-heart"></i>
+                            <span>情感培养</span>
+                        </div>
+                        <div class="tag-item">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>创意手工</span>
+                        </div>
+                        <div class="tag-item">
+                            <i class="fas fa-running"></i>
+                            <span>运动</span>
+                        </div>
+                        <div class="tag-item selected">
+                            <i class="fas fa-gamepad"></i>
+                            <span>游戏</span>
+                        </div>
+                        <div class="tag-item">
+                            <i class="fas fa-book"></i>
+                            <span>阅读</span>
+                        </div>
+                        <div class="tag-item selected">
+                            <i class="fas fa-clock"></i>
+                            <span>15-30分钟</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动选择 -->
+                <div class="section-title">
+                    <i class="fas fa-list"></i>
+                    <span>选择活动</span>
+                </div>
+                
+                <div class="activity-selection">
+                    <div class="activity-search">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-input" placeholder="搜索活动">
+                    </div>
+                    
+                    <div class="activity-list">
+                        <!-- 活动1 -->
+                        <div class="activity-item">
+                            <div class="activity-checkbox checked">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1472457897821-70d3819a0e24?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="父子背背赛">
+                            <div class="activity-content">
+                                <div class="activity-title">父子背背赛</div>
+                                <div class="activity-desc">
+                                    爸爸背着孩子完成简单的障碍赛，培养信任感和默契。
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">4-8岁</span>
+                                    <span class="activity-tag">运动</span>
+                                    <span class="activity-tag">20分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 活动2 -->
+                        <div class="activity-item">
+                            <div class="activity-checkbox checked">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1489710437720-ebb67ec84dd2?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="共绘家庭画">
+                            <div class="activity-content">
+                                <div class="activity-title">共绘家庭画</div>
+                                <div class="activity-desc">
+                                    父子共同在一张纸上作画，创作属于自己的家庭回忆。
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">全龄段</span>
+                                    <span class="activity-tag">创意</span>
+                                    <span class="activity-tag">30分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 活动3 -->
+                        <div class="activity-item">
+                            <div class="activity-checkbox checked">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="爸爸厨房">
+                            <div class="activity-content">
+                                <div class="activity-title">爸爸厨房小帮手</div>
+                                <div class="activity-desc">
+                                    和爸爸一起制作简单的美食，分享烹饪的乐趣。
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">5-8岁</span>
+                                    <span class="activity-tag">厨艺</span>
+                                    <span class="activity-tag">45分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 活动4 -->
+                        <div class="activity-item">
+                            <div class="activity-checkbox">
+                                <!-- 未选中状态 -->
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="创意彩虹纸飞机制作">
+                            <div class="activity-content">
+                                <div class="activity-title">创意彩虹纸飞机制作</div>
+                                <div class="activity-desc">
+                                    通过折纸和绘画，制作色彩缤纷的纸飞机，培养孩子的动手能力和创造力。
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">3-5岁</span>
+                                    <span class="activity-tag">创意</span>
+                                    <span class="activity-tag">20分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 活动5 -->
+                        <div class="activity-item">
+                            <div class="activity-checkbox">
+                                <!-- 未选中状态 -->
+                            </div>
+                            <img src="https://images.unsplash.com/photo-1510017803434-a899398421b3?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="读书时间">
+                            <div class="activity-content">
+                                <div class="activity-title">爸爸讲故事时间</div>
+                                <div class="activity-desc">
+                                    由爸爸来读故事书，让孩子在熟悉的声音中感受阅读的乐趣。
+                                </div>
+                                <div class="activity-tags">
+                                    <span class="activity-tag">3-6岁</span>
+                                    <span class="activity-tag">阅读</span>
+                                    <span class="activity-tag">15分钟</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 隐私设置 -->
+                <div class="section-title">
+                    <i class="fas fa-lock"></i>
+                    <span>隐私设置</span>
+                </div>
+                
+                <div class="privacy-options">
+                    <div class="privacy-option selected">
+                        <div class="privacy-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="privacy-name">公开</div>
+                        <div class="privacy-desc">所有人可见</div>
+                    </div>
+                    <div class="privacy-option">
+                        <div class="privacy-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div class="privacy-name">亲友可见</div>
+                        <div class="privacy-desc">仅亲友可见</div>
+                    </div>
+                    <div class="privacy-option">
+                        <div class="privacy-icon">
+                            <i class="fas fa-lock"></i>
+                        </div>
+                        <div class="privacy-name">私密</div>
+                        <div class="privacy-desc">仅自己可见</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部已选计数条 -->
+            <div class="selected-count">
+                <div class="count-text">已选择3个活动</div>
+                <div class="count-action">
+                    <span>至少选择3个活动</span>
+                    <span class="count-btn">确定</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

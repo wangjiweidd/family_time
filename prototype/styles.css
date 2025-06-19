@@ -1,0 +1,184 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+body {
+    background-color: #f6f6f6;
+}
+
+/* 原型容器 */
+.prototype-container {
+    display: flex;
+    height: 100vh;
+}
+
+/* 侧边导航 */
+.sidebar {
+    width: 250px;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px;
+    overflow-y: auto;
+    height: 100vh;
+}
+
+.sidebar h2 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #3a506b;
+}
+
+.pages-nav h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #ecf0f1;
+}
+
+.pages-nav ul {
+    list-style: none;
+}
+
+.pages-nav li {
+    margin-bottom: 5px;
+}
+
+.pages-nav a {
+    display: block;
+    padding: 8px 10px;
+    color: #bdc3c7;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.pages-nav a:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.pages-nav a.active {
+    background-color: #3498db;
+    color: #fff;
+}
+
+/* 原型信息区域 */
+.prototype-info {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #3a506b;
+}
+
+.prototype-info h3 {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #ecf0f1;
+}
+
+.prototype-info p {
+    font-size: 12px;
+    margin-bottom: 8px;
+    line-height: 1.5;
+    color: #bdc3c7;
+}
+
+.prototype-info a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+.prototype-info a:hover {
+    text-decoration: underline;
+}
+
+/* 内容区域 */
+.content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background-color: #ecf0f1;
+}
+
+/* 手机框架 */
+.phone-frame {
+    width: 375px;
+    height: 812px;
+    background-color: #fff;
+    border-radius: 40px;
+    overflow: hidden;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2), 0 0 0 6px #e0e0e0;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.phone-header {
+    height: 40px;
+    background-color: #000;
+    position: relative;
+}
+
+.phone-notch {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 24px;
+    background-color: #000;
+    border-bottom-left-radius: 18px;
+    border-bottom-right-radius: 18px;
+}
+
+.phone-footer {
+    height: 30px;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.home-indicator {
+    width: 134px;
+    height: 5px;
+    background-color: #000;
+    border-radius: 3px;
+}
+
+#prototype-frame {
+    flex: 1;
+    width: 100%;
+    border: none;
+    background-color: #fff;
+}
+
+/* 响应式设计 */
+@media (max-width: 1024px) {
+    .prototype-container {
+        flex-direction: column;
+        height: auto;
+    }
+    
+    .sidebar {
+        width: 100%;
+        height: auto;
+        max-height: 300px;
+    }
+    
+    .content {
+        padding: 20px;
+        height: calc(100vh - 300px);
+    }
+    
+    .phone-frame {
+        max-height: 100%;
+        width: auto;
+        height: 100%;
+    }
+} 

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 打卡</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 打卡页特定样式 */
+        .checkin-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: white;
+        }
+        
+        .header-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .header-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-action {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-left: 10px;
+            font-size: 18px;
+        }
+        
+        .calendar-wrapper {
+            background-color: white;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .month-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .month-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .month-arrows {
+            display: flex;
+            align-items: center;
+        }
+        
+        .month-arrow {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            margin-left: 5px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+        
+        .calendar-weekday {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 30px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+        }
+        
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 14px;
+            color: var(--text-primary);
+            position: relative;
+        }
+        
+        .calendar-day.inactive {
+            color: var(--text-tertiary);
+        }
+        
+        .calendar-day.today {
+            background-color: #E3F2FD;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .calendar-day.checked {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .calendar-day.checked:after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: white;
+        }
+        
+        .streak-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px;
+            background-color: white;
+            margin-bottom: 15px;
+            border-radius: 0 0 12px 12px;
+        }
+        
+        .streak-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .streak-value {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .streak-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .daily-challenge {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 0 15px 15px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .challenge-header {
+            background: linear-gradient(135deg, #FF9500, #FF5722);
+            padding: 15px;
+            color: white;
+        }
+        
+        .challenge-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .challenge-title i {
+            margin-right: 6px;
+        }
+        
+        .challenge-desc {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+        
+        .challenge-content {
+            padding: 15px;
+        }
+        
+        .challenge-activity {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .activity-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            object-fit: cover;
+            margin-right: 12px;
+            flex-shrink: 0;
+        }
+        
+        .activity-info {
+            flex: 1;
+        }
+        
+        .activity-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .activity-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .activity-meta {
+            display: flex;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .activity-meta-item {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+        
+        .activity-meta-item i {
+            margin-right: 3px;
+            font-size: 12px;
+        }
+        
+        .challenge-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 0;
+            font-size: 15px;
+            font-weight: 500;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .challenge-button i {
+            margin-right: 6px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 25px 15px 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .checkin-history {
+            margin: 0 15px 20px;
+        }
+        
+        .history-item {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .history-header {
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--gray-2);
+        }
+        
+        .history-date {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-date i {
+            margin-right: 6px;
+            color: var(--primary-color);
+        }
+        
+        .history-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-action {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-left: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-action i {
+            margin-right: 3px;
+        }
+        
+        .history-content {
+            padding: 15px;
+            display: flex;
+        }
+        
+        .history-images {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .history-image {
+            width: calc(33.333% - 5px);
+            aspect-ratio: 1;
+            border-radius: 6px;
+            object-fit: cover;
+            margin-right: 7.5px;
+            margin-bottom: 7.5px;
+        }
+        
+        .history-image:nth-child(3n) {
+            margin-right: 0;
+        }
+        
+        .history-note {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+        
+        .badges-section {
+            margin: 0 15px 30px;
+        }
+        
+        .badges-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .badge-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .badge-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+            position: relative;
+        }
+        
+        .badge-icon img {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .badge-name {
+            font-size: 12px;
+            color: var(--text-primary);
+            text-align: center;
+        }
+        
+        .badge-icon.locked:after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-icon.locked:before {
+            content: '\f023';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            color: white;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="checkin-header">
+                <div class="header-title">打卡日历</div>
+                <div class="header-actions">
+                    <div class="header-action">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 日历区域 -->
+            <div class="calendar-wrapper">
+                <div class="month-nav">
+                    <div class="month-name">2023年6月</div>
+                    <div class="month-arrows">
+                        <div class="month-arrow">
+                            <i class="fas fa-chevron-left"></i>
+                        </div>
+                        <div class="month-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="calendar-grid">
+                    <!-- 星期标题 -->
+                    <div class="calendar-weekday">日</div>
+                    <div class="calendar-weekday">一</div>
+                    <div class="calendar-weekday">二</div>
+                    <div class="calendar-weekday">三</div>
+                    <div class="calendar-weekday">四</div>
+                    <div class="calendar-weekday">五</div>
+                    <div class="calendar-weekday">六</div>
+                    
+                    <!-- 日期 -->
+                    <div class="calendar-day inactive">28</div>
+                    <div class="calendar-day inactive">29</div>
+                    <div class="calendar-day inactive">30</div>
+                    <div class="calendar-day inactive">31</div>
+                    <div class="calendar-day">1</div>
+                    <div class="calendar-day">2</div>
+                    <div class="calendar-day">3</div>
+                    
+                    <div class="calendar-day">4</div>
+                    <div class="calendar-day">5</div>
+                    <div class="calendar-day">6</div>
+                    <div class="calendar-day">7</div>
+                    <div class="calendar-day">8</div>
+                    <div class="calendar-day checked">9</div>
+                    <div class="calendar-day checked">10</div>
+                    
+                    <div class="calendar-day checked">11</div>
+                    <div class="calendar-day">12</div>
+                    <div class="calendar-day checked">13</div>
+                    <div class="calendar-day checked">14</div>
+                    <div class="calendar-day checked">15</div>
+                    <div class="calendar-day checked">16</div>
+                    <div class="calendar-day checked">17</div>
+                    
+                    <div class="calendar-day checked">18</div>
+                    <div class="calendar-day today">19</div>
+                    <div class="calendar-day">20</div>
+                    <div class="calendar-day">21</div>
+                    <div class="calendar-day">22</div>
+                    <div class="calendar-day">23</div>
+                    <div class="calendar-day">24</div>
+                    
+                    <div class="calendar-day">25</div>
+                    <div class="calendar-day">26</div>
+                    <div class="calendar-day">27</div>
+                    <div class="calendar-day">28</div>
+                    <div class="calendar-day">29</div>
+                    <div class="calendar-day">30</div>
+                    <div class="calendar-day inactive">1</div>
+                </div>
+            </div>
+            
+            <!-- 连续打卡统计 -->
+            <div class="streak-stats">
+                <div class="streak-item">
+                    <div class="streak-value">9</div>
+                    <div class="streak-label">连续打卡</div>
+                </div>
+                <div class="streak-item">
+                    <div class="streak-value">12</div>
+                    <div class="streak-label">本月打卡</div>
+                </div>
+                <div class="streak-item">
+                    <div class="streak-value">28</div>
+                    <div class="streak-label">总打卡天数</div>
+                </div>
+            </div>
+            
+            <!-- 每日挑战 -->
+            <div class="daily-challenge">
+                <div class="challenge-header">
+                    <div class="challenge-title">
+                        <i class="fas fa-bolt"></i>
+                        <span>今日挑战</span>
+                    </div>
+                    <div class="challenge-desc">完成挑战，获得双倍成长点数！</div>
+                </div>
+                <div class="challenge-content">
+                    <div class="challenge-activity">
+                        <img src="https://images.unsplash.com/photo-1533222481269-af9d3a19be15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="提升自律性">
+                        <div class="activity-info">
+                            <div class="activity-name">时间管理小游戏</div>
+                            <div class="activity-desc">
+                                通过趣味时间管理游戏，培养孩子的自律性和时间观念，让学习和玩耍都有规划。
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-meta-item">
+                                    <i class="fas fa-child"></i>
+                                    <span>5-8岁</span>
+                                </div>
+                                <div class="activity-meta-item">
+                                    <i class="far fa-clock"></i>
+                                    <span>15分钟</span>
+                                </div>
+                                <div class="activity-meta-item">
+                                    <i class="fas fa-star"></i>
+                                    <span>难度: 2/5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="challenge-button">
+                        <i class="fas fa-play"></i>
+                        <span>开始挑战</span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- 打卡记录 -->
+            <div class="section-title">
+                <i class="fas fa-history"></i>
+                <span>打卡记录</span>
+            </div>
+            
+            <div class="checkin-history">
+                <!-- 记录1 -->
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-date">
+                            <i class="far fa-calendar-check"></i>
+                            <span>2023年6月18日</span>
+                        </div>
+                        <div class="history-actions">
+                            <div class="history-action">
+                                <i class="far fa-heart"></i>
+                                <span>12</span>
+                            </div>
+                            <div class="history-action">
+                                <i class="far fa-comment"></i>
+                                <span>3</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <div style="flex: 1;">
+                            <div class="activity-name">创意彩虹纸飞机制作</div>
+                            <div class="history-note">
+                                今天和小明一起做了创意彩虹纸飞机，他非常投入，坚持自己完成了全部步骤！最后的飞行测试中，他的飞机飞了超远，小家伙开心得不得了。
+                            </div>
+                            <div class="history-images">
+                                <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="准备材料">
+                                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="对折">
+                                <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="完成">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 记录2 -->
+                <div class="history-item">
+                    <div class="history-header">
+                        <div class="history-date">
+                            <i class="far fa-calendar-check"></i>
+                            <span>2023年6月17日</span>
+                        </div>
+                        <div class="history-actions">
+                            <div class="history-action">
+                                <i class="far fa-heart"></i>
+                                <span>8</span>
+                            </div>
+                            <div class="history-action">
+                                <i class="far fa-comment"></i>
+                                <span>1</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <div style="flex: 1;">
+                            <div class="activity-name">趣味恐龙化石挖掘</div>
+                            <div class="history-note">
+                                小明对恐龙知识非常感兴趣，在挖掘过程中展现出了极大的耐心和专注力。他能够准确识别出不同种类的恐龙，并主动提出了许多问题。
+                            </div>
+                            <div class="history-images">
+                                <img src="https://images.unsplash.com/photo-1549920867-1629df28cdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="恐龙化石">
+                                <img src="https://images.unsplash.com/photo-1564325724739-bae0bd08762c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="挖掘过程">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 徽章收集 -->
+            <div class="section-title">
+                <i class="fas fa-medal"></i>
+                <span>徽章收集</span>
+            </div>
+            
+            <div class="badges-section">
+                <div class="badges-grid">
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <img src="https://img.icons8.com/color/96/000000/prize.png" alt="连续打卡7天">
+                        </div>
+                        <div class="badge-name">连续7天</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <img src="https://img.icons8.com/color/96/000000/medal2.png" alt="连续打卡14天">
+                        </div>
+                        <div class="badge-name">连续14天</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon locked">
+                            <img src="https://img.icons8.com/color/96/000000/medal-first-place.png" alt="连续打卡30天">
+                        </div>
+                        <div class="badge-name">连续30天</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon">
+                            <img src="https://img.icons8.com/color/96/000000/paint-palette.png" alt="创意小能手">
+                        </div>
+                        <div class="badge-name">创意小能手</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon locked">
+                            <img src="https://img.icons8.com/color/96/000000/microscope.png" alt="科学探索家">
+                        </div>
+                        <div class="badge-name">科学探索家</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon locked">
+                            <img src="https://img.icons8.com/color/96/000000/reading.png" alt="阅读爱好者">
+                        </div>
+                        <div class="badge-name">阅读爱好者</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon locked">
+                            <img src="https://img.icons8.com/color/96/000000/property-time.png" alt="时间管理">
+                        </div>
+                        <div class="badge-name">时间管理</div>
+                    </div>
+                    <div class="badge-item">
+                        <div class="badge-icon locked">
+                            <img src="https://img.icons8.com/color/96/000000/basketball-player.png" alt="运动健将">
+                        </div>
+                        <div class="badge-name">运动健将</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 底部导航 -->
+        <div class="tabbar">
+            <div class="tab-item">
+                <i class="fas fa-compass tab-icon"></i>
+                <span>发现</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-layer-group tab-icon"></i>
+                <span>合集</span>
+            </div>
+            <div class="tab-item active">
+                <i class="fas fa-calendar-check tab-icon"></i>
+                <span>打卡</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-users tab-icon"></i>
+                <span>社区</span>
+            </div>
+            <div class="tab-item">
+                <i class="fas fa-user tab-icon"></i>
+                <span>我的</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 成长记录</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 成长记录页特定样式 */
+        .growth-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-back {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-right: 8px;
+        }
+        
+        .header-title {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-action {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-left: 10px;
+        }
+        
+        .child-selector {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            background-color: white;
+        }
+        
+        .child-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 12px;
+        }
+        
+        .child-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .child-info {
+            flex: 1;
+        }
+        
+        .child-name {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        
+        .child-age {
+            font-size: 13px;
+            color: var(--text-tertiary);
+        }
+        
+        .child-switcher {
+            display: flex;
+            align-items: center;
+            color: var(--primary-color);
+            font-size: 14px;
+        }
+        
+        .child-switcher i {
+            margin-left: 5px;
+        }
+        
+        .growth-stats {
+            display: flex;
+            padding: 15px;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-2);
+        }
+        
+        .growth-stat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px 0;
+            position: relative;
+        }
+        
+        .growth-stat:not(:last-child):after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25%;
+            bottom: 25%;
+            width: 1px;
+            background-color: var(--gray-3);
+        }
+        
+        .stat-value {
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .filter-tabs {
+            display: flex;
+            background-color: white;
+            border-bottom: 1px solid var(--gray-2);
+            padding: 0 15px;
+        }
+        
+        .filter-tab {
+            padding: 12px 15px;
+            font-size: 14px;
+            color: var(--text-secondary);
+            position: relative;
+        }
+        
+        .filter-tab.active {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .filter-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 15px;
+            right: 15px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+        }
+        
+        .timeline {
+            padding: 20px 15px;
+        }
+        
+        .timeline-date {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .date-line {
+            flex: 1;
+            height: 1px;
+            background-color: var(--gray-3);
+        }
+        
+        .date-text {
+            padding: 0 15px;
+            font-size: 14px;
+            color: var(--text-tertiary);
+            background-color: var(--bg-gray);
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 25px;
+        }
+        
+        .timeline-line {
+            width: 2px;
+            background-color: var(--gray-3);
+            position: relative;
+            margin-right: 15px;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+        }
+        
+        .timeline-content {
+            flex: 1;
+        }
+        
+        .activity-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 15px;
+        }
+        
+        .activity-header {
+            padding: 12px;
+        }
+        
+        .activity-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .activity-time {
+            display: flex;
+            align-items: center;
+        }
+        
+        .activity-time i {
+            margin-right: 4px;
+            font-size: 12px;
+        }
+        
+        .activity-media {
+            width: 100%;
+            white-space: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0 12px 12px;
+        }
+        
+        .media-item {
+            display: inline-block;
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-right: 8px;
+            position: relative;
+        }
+        
+        .media-item:last-child {
+            margin-right: 0;
+        }
+        
+        .media-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .media-type {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .activity-note {
+            padding: 12px;
+            border-top: 1px solid var(--gray-2);
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .milestone-card {
+            background-color: #E8F5E9;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .milestone-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #81C784;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 10px;
+        }
+        
+        .milestone-title {
+            flex: 1;
+            font-size: 15px;
+            font-weight: 500;
+            color: #2E7D32;
+        }
+        
+        .milestone-date {
+            font-size: 12px;
+            color: #689F38;
+        }
+        
+        .milestone-desc {
+            font-size: 14px;
+            color: #33691E;
+            line-height: 1.5;
+        }
+        
+        .growth-abilities {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+        
+        .ability-tag {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            border-radius: 100px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: #43A047;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .ability-tag i {
+            margin-right: 4px;
+            font-size: 10px;
+        }
+        
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 15px;
+            text-align: center;
+            display: none; /* 默认隐藏 */
+        }
+        
+        .empty-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: var(--gray-1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--gray-5);
+            font-size: 32px;
+            margin-bottom: 15px;
+        }
+        
+        .empty-text {
+            font-size: 15px;
+            color: var(--text-tertiary);
+            margin-bottom: 20px;
+        }
+        
+        .btn-add-record {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn-add-record i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="growth-header">
+                <div class="header-left">
+                    <div class="header-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-title">成长记录</div>
+                </div>
+                <div class="header-right">
+                    <div class="header-action">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <div class="header-action">
+                        <i class="fas fa-ellipsis-v"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 孩子选择器 -->
+            <div class="child-selector">
+                <div class="child-avatar">
+                    <img src="https://images.unsplash.com/photo-1545489074-c51f9bd2c00e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="小明">
+                </div>
+                <div class="child-info">
+                    <div class="child-name">小明</div>
+                    <div class="child-age">5岁3个月</div>
+                </div>
+                <div class="child-switcher">
+                    <span>切换</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+            
+            <!-- 统计数字 -->
+            <div class="growth-stats">
+                <div class="growth-stat">
+                    <div class="stat-value">18</div>
+                    <div class="stat-label">活动完成</div>
+                </div>
+                <div class="growth-stat">
+                    <div class="stat-value">36</div>
+                    <div class="stat-label">成长点</div>
+                </div>
+                <div class="growth-stat">
+                    <div class="stat-value">5</div>
+                    <div class="stat-label">成长徽章</div>
+                </div>
+            </div>
+            
+            <!-- 筛选标签页 -->
+            <div class="filter-tabs">
+                <div class="filter-tab active">全部记录</div>
+                <div class="filter-tab">活动记录</div>
+                <div class="filter-tab">成长里程碑</div>
+                <div class="filter-tab">徽章收集</div>
+            </div>
+            
+            <!-- 时间线内容 -->
+            <div class="timeline">
+                <!-- 日期分隔 -->
+                <div class="timeline-date">
+                    <div class="date-line"></div>
+                    <div class="date-text">2023年6月19日</div>
+                    <div class="date-line"></div>
+                </div>
+                
+                <!-- 活动记录 -->
+                <div class="timeline-item">
+                    <div class="timeline-line">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-title">创意彩虹纸飞机制作</div>
+                                <div class="activity-meta">
+                                    <div class="activity-tags">
+                                        <span>3-5岁</span> · <span>创意</span>
+                                    </div>
+                                    <div class="activity-time">
+                                        <i class="far fa-clock"></i>
+                                        <span>14:30</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-media">
+                                <div class="media-item">
+                                    <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="media-img" alt="准备材料">
+                                </div>
+                                <div class="media-item">
+                                    <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="media-img" alt="对折">
+                                    <div class="media-type">
+                                        <i class="fas fa-video"></i>
+                                    </div>
+                                </div>
+                                <div class="media-item">
+                                    <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="media-img" alt="完成">
+                                </div>
+                            </div>
+                            
+                            <div class="activity-note">
+                                小明今天对折纸飞机很感兴趣，特别是在飞机翅膀的折叠过程中表现出很高的专注度。他坚持自己完成，最喜欢的环节是在飞机上画彩虹图案。
+                            </div>
+                        </div>
+                        
+                        <!-- 成长能力标签 -->
+                        <div class="growth-abilities">
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>精细动作能力</span>
+                            </div>
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>空间感知</span>
+                            </div>
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>创造力</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 日期分隔 -->
+                <div class="timeline-date">
+                    <div class="date-line"></div>
+                    <div class="date-text">2023年6月18日</div>
+                    <div class="date-line"></div>
+                </div>
+                
+                <!-- 里程碑记录 -->
+                <div class="timeline-item">
+                    <div class="timeline-line">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="milestone-card">
+                            <div class="milestone-header">
+                                <div class="milestone-icon">
+                                    <i class="fas fa-award"></i>
+                                </div>
+                                <div class="milestone-title">获得"创意小能手"徽章</div>
+                                <div class="milestone-date">10:15</div>
+                            </div>
+                            <div class="milestone-desc">
+                                小明在连续完成5个创意类活动后，获得了"创意小能手"徽章！这表明他在创意思维和表达方面有了显著进步。
+                            </div>
+                            <div class="growth-abilities">
+                                <div class="ability-tag">
+                                    <i class="fas fa-star"></i>
+                                    <span>创造力</span>
+                                </div>
+                                <div class="ability-tag">
+                                    <i class="fas fa-star"></i>
+                                    <span>表达能力</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动记录2 -->
+                <div class="timeline-item">
+                    <div class="timeline-line">
+                        <div class="timeline-dot"></div>
+                    </div>
+                    <div class="timeline-content">
+                        <div class="activity-card">
+                            <div class="activity-header">
+                                <div class="activity-title">趣味恐龙化石挖掘</div>
+                                <div class="activity-meta">
+                                    <div class="activity-tags">
+                                        <span>5-8岁</span> · <span>科学</span>
+                                    </div>
+                                    <div class="activity-time">
+                                        <i class="far fa-clock"></i>
+                                        <span>09:45</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="activity-media">
+                                <div class="media-item">
+                                    <img src="https://images.unsplash.com/photo-1549920867-1629df28cdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="media-img" alt="恐龙化石">
+                                </div>
+                                <div class="media-item">
+                                    <img src="https://images.unsplash.com/photo-1564325724739-bae0bd08762c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="media-img" alt="挖掘过程">
+                                </div>
+                            </div>
+                            
+                            <div class="activity-note">
+                                小明对恐龙知识非常感兴趣，在挖掘过程中展现出了极大的耐心和专注力。他能够准确识别出不同种类的恐龙，并主动提出了许多关于恐龙生活习性的问题。
+                            </div>
+                        </div>
+                        
+                        <!-- 成长能力标签 -->
+                        <div class="growth-abilities">
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>专注力</span>
+                            </div>
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>探索精神</span>
+                            </div>
+                            <div class="ability-tag">
+                                <i class="fas fa-plus"></i>
+                                <span>科学认知</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 空状态 -->
+            <div class="empty-state">
+                <div class="empty-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="empty-text">暂无成长记录，开始记录精彩瞬间吧！</div>
+                <button class="btn-add-record">
+                    <i class="fas fa-plus"></i>
+                    <span>添加记录</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

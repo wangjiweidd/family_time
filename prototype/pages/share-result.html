@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 成果分享</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 成果分享页特定样式 */
+        .share-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+        }
+        
+        .header-back {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            margin-right: 8px;
+        }
+        
+        .header-title {
+            font-size: 17px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .share-content {
+            padding: 20px 15px 100px;
+        }
+        
+        .completion-card {
+            background-color: #E1F5FE;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 25px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .completion-bg {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            opacity: 0.1;
+            transform: translate(20px, -20px);
+        }
+        
+        .completion-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .completion-activity {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+        }
+        
+        .completion-details {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .completion-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background-color: #BBDEFB;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            overflow: hidden;
+        }
+        
+        .completion-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .completion-info {
+            flex: 1;
+        }
+        
+        .completion-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        
+        .completion-date {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            display: flex;
+            align-items: center;
+        }
+        
+        .completion-date i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .completion-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+            background-color: white;
+            border-radius: 12px;
+            flex: 1;
+            margin-right: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .stat-item:last-child {
+            margin-right: 0;
+        }
+        
+        .stat-value {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .photo-item {
+            position: relative;
+            width: 100%;
+            padding-bottom: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .photo-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .photo-type {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        .audio-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--gray-1);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .audio-play {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 12px;
+        }
+        
+        .audio-info {
+            flex: 1;
+        }
+        
+        .audio-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+        }
+        
+        .audio-duration {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        .audio-waveform {
+            width: 120px;
+            height: 30px;
+            margin-left: 10px;
+            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjMwIiB2aWV3Qm94PSIwIDAgMTIwIDMwIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xIDIyaDJWMTRoMnYxNGgyVjhoMnYyMGgyVjEyaDJ2MTJoMlYxNmgydjZoMnYtM2gydjVoMnYtN2gydjRoMnYtMmgydjRoMnYtNmgydjEwaDF2LTVoMnYyaDJ2LTRoMnY3aDJ2LTlsMi0xdjVoMlYxN2gydjVoMnYtN2gydjRoMnYtMmgydjdoMnYtNWgydjNoMnYtNWgydjdoMnYtNGgydjJoMnYtNGgydjdoMnYtNGgydj0xaDF2LTVoMnYyaDJ2LTZoMnY5aDJ2LTExaDJ2N2gydi01aDJ2M2gydi01aDJ2MTBoMnYtNWgydjJoMnYtNGgydjEwaDJ2LTdoMnY0aDJ2LTJoMnY0aDJ2LThoMnYxMWgydi01IiBzdHJva2U9IiMzNDk4ZGIiLz48L3N2Zz4=');
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+        
+        .notes-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid var(--gray-3);
+        }
+        
+        .notes-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .notes-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #E8F5E9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4CAF50;
+            margin-right: 10px;
+        }
+        
+        .notes-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .notes-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .summary-card {
+            background-color: #FFF8E1;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .summary-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .summary-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #FFECB3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFC107;
+            margin-right: 10px;
+        }
+        
+        .summary-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .growth-tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .growth-tag {
+            background-color: white;
+            border-radius: 100px;
+            padding: 5px 12px;
+            font-size: 12px;
+            color: #FF9800;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .growth-tag i {
+            font-size: 10px;
+            margin-right: 4px;
+        }
+        
+        .share-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .btn-share {
+            flex: 2;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .btn-share i {
+            margin-right: 6px;
+        }
+        
+        .btn-save {
+            flex: 1;
+            background-color: white;
+            color: var(--text-secondary);
+            border: 1px solid var(--gray-3);
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部 -->
+            <div class="share-header">
+                <div class="header-left">
+                    <div class="header-back">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-title">活动成果</div>
+                </div>
+            </div>
+            
+            <!-- 分享内容 -->
+            <div class="share-content">
+                <!-- 完成卡片 -->
+                <div class="completion-card">
+                    <i class="fas fa-paper-plane completion-bg"></i>
+                    <div class="completion-title">恭喜完成活动！</div>
+                    <div class="completion-activity">创意彩虹纸飞机制作</div>
+                    
+                    <div class="completion-details">
+                        <div class="completion-avatar">
+                            <img src="https://images.unsplash.com/photo-1545489074-c51f9bd2c00e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80" alt="小明">
+                        </div>
+                        <div class="completion-info">
+                            <div class="completion-name">小明</div>
+                            <div class="completion-date">
+                                <i class="far fa-calendar-alt"></i>
+                                <span>2023年6月19日 14:30</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="completion-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">4</div>
+                            <div class="stat-label">步骤完成</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">20</div>
+                            <div class="stat-label">分钟用时</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">5</div>
+                            <div class="stat-label">记录数量</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 照片区域 -->
+                <div class="section-title">
+                    <i class="fas fa-camera"></i>
+                    <span>活动照片</span>
+                </div>
+                
+                <div class="photo-grid">
+                    <div class="photo-item">
+                        <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="photo-img" alt="准备材料">
+                    </div>
+                    <div class="photo-item">
+                        <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="photo-img" alt="对折">
+                        <div class="photo-type">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                    <div class="photo-item">
+                        <img src="https://images.unsplash.com/photo-1544247341-3b3f10716a4b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="photo-img" alt="折角">
+                    </div>
+                    <div class="photo-item">
+                        <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="photo-img" alt="完成">
+                    </div>
+                </div>
+                
+                <!-- 录音记录 -->
+                <div class="section-title">
+                    <i class="fas fa-microphone"></i>
+                    <span>语音记录</span>
+                </div>
+                
+                <div class="audio-item">
+                    <div class="audio-play">
+                        <i class="fas fa-play"></i>
+                    </div>
+                    <div class="audio-info">
+                        <div class="audio-name">小明的感想</div>
+                        <div class="audio-duration">00:35</div>
+                    </div>
+                    <div class="audio-waveform"></div>
+                </div>
+                
+                <!-- 笔记记录 -->
+                <div class="section-title">
+                    <i class="fas fa-pencil-alt"></i>
+                    <span>感想笔记</span>
+                </div>
+                
+                <div class="notes-card">
+                    <div class="notes-header">
+                        <div class="notes-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="notes-title">活动记录</div>
+                    </div>
+                    <div class="notes-content">
+                        小明今天对折纸飞机很感兴趣，特别是在飞机翅膀的折叠过程中表现出很高的专注度。他坚持自己完成，遇到困难时会主动寻求帮助。最喜欢的环节是在飞机上画彩虹图案，展现了不错的创造力。最后的飞行测试中，他非常开心，迫不及待地想要制作更多款式。
+                    </div>
+                </div>
+                
+                <!-- 成长总结 -->
+                <div class="section-title">
+                    <i class="fas fa-chart-line"></i>
+                    <span>成长点</span>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-header">
+                        <div class="summary-icon">
+                            <i class="fas fa-lightbulb"></i>
+                        </div>
+                        <div class="summary-title">本次活动培养了这些能力</div>
+                    </div>
+                    <div class="growth-tags">
+                        <div class="growth-tag">
+                            <i class="fas fa-check"></i>
+                            <span>精细动作能力</span>
+                        </div>
+                        <div class="growth-tag">
+                            <i class="fas fa-check"></i>
+                            <span>空间感知</span>
+                        </div>
+                        <div class="growth-tag">
+                            <i class="fas fa-check"></i>
+                            <span>创造力</span>
+                        </div>
+                        <div class="growth-tag">
+                            <i class="fas fa-check"></i>
+                            <span>专注力</span>
+                        </div>
+                        <div class="growth-tag">
+                            <i class="fas fa-check"></i>
+                            <span>解决问题能力</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部按钮 -->
+            <div class="share-buttons">
+                <button class="btn-save">存至记录</button>
+                <button class="btn-share">
+                    <i class="fas fa-share-alt"></i>分享至社区
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

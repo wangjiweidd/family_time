@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 活动详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        :root {
+            --primary-color: #4ECDC4; /* 更改为清新绿色 */
+            --secondary-color: #FF9F1C; /* 辅助色：温暖橙色 */
+            --accent-color: #FFE66D; /* 强调色：温暖黄色 */
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --gray-1: #f8f9fa;
+            --gray-2: #e9ecef;
+            --gray-3: #dee2e6;
+            --white: #ffffff;
+            --success: #6BCB77;
+            --warning: #FFB039;
+            --mild-primary: #E7F5F4; /* 主色调的浅色版本 */
+            --module-spacing: 16px;      /* 修改：模块之间的间距从20px减少到16px */
+            --item-spacing: 15px;        /* 模块内项目间距 */
+            --inner-spacing: 10px;       /* 内部元素间距 */
+            --border-radius-lg: 12px;    /* 大圆角 */
+            --border-radius-md: 8px;     /* 中圆角 */
+            --border-radius-sm: 6px;     /* 小圆角 */
+            --section-padding: 15px;     /* 区块内边距 */
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f5f7fa;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        
+        /* 活动详情页特定样式 */
+        .detail-header {
+            position: relative;
+            margin-bottom: calc(var(--module-spacing) / 2);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        
+        .detail-img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .header-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4), rgba(0,0,0,0));
+            height: 70%;
+            pointer-events: none;
+        }
+        
+        .header-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 10;
+        }
+        
+        .header-actions-right {
+            display: flex;
+        }
+        
+        .action-btn {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 10px;
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .back-btn {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(255,255,255,0.8);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-title {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            color: white;
+            z-index: 10;
+            text-align: center;
+            transform: none;
+        }
+        
+        .header-title h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0 0 15px;
+            text-shadow: 0 2px 5px rgba(0,0,0,0.5);
+            line-height: 1.2;
+        }
+        
+        /* 标签样式 */
+        .detail-tags {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            gap: 6px;
+            margin-bottom: 5px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            padding-bottom: 5px;
+            max-width: 100%;
+        }
+        
+        .detail-tags::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .detail-tag {
+            display: inline-flex;
+            align-items: center;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 20px;
+            padding: 3px 8px;
+            font-size: 11px;
+            color: white;
+            backdrop-filter: blur(5px);
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        
+        .detail-tag:nth-child(1) {
+            background-color: rgba(255, 193, 7, 0.3);
+        }
+        
+        .detail-tag:nth-child(2) {
+            background-color: rgba(78, 205, 196, 0.3);
+        }
+        
+        .detail-tag:nth-child(3) {
+            background-color: rgba(255, 107, 107, 0.3);
+        }
+        
+        .detail-tag:nth-child(4) {
+            background-color: rgba(130, 88, 159, 0.3);
+        }
+        
+        .detail-tag:nth-child(5) {
+            background-color: rgba(106, 176, 76, 0.3);
+        }
+        
+        .detail-tag i {
+            margin-right: 5px;
+            font-size: 12px;
+        }
+        
+        .container {
+            background: var(--white);
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .page {
+            position: relative;
+        }
+        
+        .detail-content {
+            padding: 20px 15px;
+            background-color: white;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .activity-name {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+        }
+        
+        .intro {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--module-spacing);
+            padding: 15px;
+            background-color: var(--gray-1);
+            border-radius: 12px;
+            border-left: 3px solid var(--primary-color);
+        }
+        
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: var(--inner-spacing);
+            display: flex;
+            align-items: center;
+            position: relative;
+            margin-top: var(--inner-spacing); /* 添加：为了更均匀的间距 */
+        }
+        
+        .section-title:after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: var(--gray-3);
+            margin-left: 10px;
+            display: none;
+        }
+        
+        .time-estimate {
+            display: flex;
+            align-items: center;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 12px;
+            margin-bottom: var(--module-spacing);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .time-total {
+            padding: 0 15px;
+            border-right: 1px solid var(--gray-2);
+            text-align: center;
+        }
+        
+        .time-number {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            line-height: 1;
+        }
+        
+        .time-unit {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .time-bars {
+            flex: 1;
+            height: 6px;
+            background: var(--gray-2);
+            border-radius: 3px;
+            display: flex;
+            margin: 0 15px;
+            overflow: hidden;
+        }
+        
+        .time-bar {
+            height: 100%;
+        }
+        
+        .time-labels {
+            flex: 1;
+            display: flex;
+            justify-content: space-between;
+            margin-left: 15px;
+        }
+        
+        .time-label {
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .time-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .time-prep {
+            background-color: var(--warning);
+            width: 20%;
+        }
+        
+        .time-activity {
+            background-color: var(--primary-color);
+            width: 60%;
+        }
+        
+        .time-cleanup {
+            background-color: var(--secondary-color);
+            width: 20%;
+        }
+        
+        /* 材料列表 */
+        .materials-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: var(--item-spacing); /* 修改：从module-spacing(20px)改为item-spacing(15px) */
+        }
+        
+        /* 材料项 */
+        .material-item {
+            width: calc(33.33% - 7px);
+            background-color: white;
+            border-radius: 10px;
+            padding: 10px 8px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+            position: relative;
+        }
+        
+        .material-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: #FFC107;
+            color: white;
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .material-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--mild-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            flex-shrink: 0;
+        }
+        
+        .material-icon i {
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+        
+        .material-name {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.3;
+        }
+        
+        /* 活动辅助信息 */
+        .activity-support-info {
+            margin-bottom: var(--module-spacing);
+        }
+        
+        /* 家长指南 */
+        .parent-guide-section {
+            margin-bottom: var(--module-spacing);
+        }
+        
+        .parent-guide-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .parent-guide-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        /* 家长提醒 */
+        .parent-tips {
+            margin-bottom: var(--module-spacing);
+        }
+        
+        /* 安全提示 */
+        .safety-tips {
+            background-color: #FFF9E6;
+            border-radius: var(--border-radius-lg);
+            padding: var(--section-padding);
+            margin-bottom: var(--module-spacing);
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .safety-tips-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #FF9800;
+            margin-bottom: 10px;
+            padding-left: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .safety-tips-content {
+            display: flex;
+            flex-direction: column;
+            gap: var(--inner-spacing);
+        }
+        
+        .safety-item {
+            font-size: 13px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .safety-item i {
+            color: #FF9800;
+            margin-right: var(--inner-spacing);
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        /* 活动介绍区域 */
+        .activity-intro {
+            margin-bottom: calc(var(--module-spacing) / 2);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .intro-benefits {
+            overflow-x: auto;
+            white-space: nowrap;
+            margin: 0 -15px;
+            padding: 0 15px 15px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .intro-benefits::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .intro-card {
+            display: inline-block;
+            width: 65%;
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-right: 12px;
+            vertical-align: top;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .intro-card:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-color), #66DAD2);
+        }
+        
+        .intro-card:nth-child(2):before {
+            background: linear-gradient(90deg, #FFC107, #FFE082);
+        }
+        
+        .intro-card:nth-child(3):before {
+            background: linear-gradient(90deg, #FF9800, #FFCC80);
+        }
+        
+        .intro-card-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .intro-card-title i {
+            color: var(--primary-color);
+            margin-right: 10px;
+            font-size: 16px;
+            width: 32px;
+            height: 32px;
+            background: var(--mild-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 5px rgba(78,205,196,0.2);
+        }
+        
+        .intro-card:nth-child(2) .intro-card-title i {
+            color: #FFC107;
+            background: rgba(255, 193, 7, 0.1);
+            box-shadow: 0 2px 5px rgba(255, 193, 7, 0.2);
+        }
+        
+        .intro-card:nth-child(3) .intro-card-title i {
+            color: #FF9800;
+            background: rgba(255, 152, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(255, 152, 0, 0.2);
+        }
+        
+        .intro-card-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            white-space: normal;
+        }
+        
+        .intro-card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+            gap: 6px;
+        }
+        
+        .intro-tag {
+            background-color: var(--mild-primary);
+            color: var(--primary-color);
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+        
+        .intro-card:nth-child(2) .intro-tag {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: #FFC107;
+        }
+        
+        .intro-card:nth-child(3) .intro-tag {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+        }
+        
+        /* 用户评价 */
+        .review-section {
+            margin-bottom: var(--module-spacing);
+        }
+        
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .review-stats {
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-score {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-right: 10px;
+        }
+        
+        .review-button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-button i {
+            margin-right: 5px;
+        }
+        
+        .review-list {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .review-item {
+            padding: 15px;
+            border-bottom: none;
+            position: relative;
+        }
+        
+        .review-item:after {
+            content: "";
+            position: absolute;
+            left: 40px;
+            right: 0;
+            bottom: 0;
+            height: 1px;
+            background-color: var(--gray-3);
+        }
+        
+        .review-item:last-child:after {
+            display: none;
+        }
+        
+        .reviewer-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+        
+        .reviewer-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: var(--gray-3);
+            margin-right: 10px;
+            overflow: hidden;
+        }
+        
+        .reviewer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .reviewer-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+        
+        .review-rating {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        .review-rating .star {
+            color: #FFC107;
+            font-size: 12px;
+            margin-left: 2px;
+        }
+        
+        .review-content {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        .review-time {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .bottom-btns {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 12px 15px;
+            background-color: white;
+            box-shadow: 0 -3px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .btn-start {
+            flex: 3;
+            background: linear-gradient(135deg, var(--primary-color) 0%, #64D8D0 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(78,205,196,0.3);
+            transition: all 0.2s;
+        }
+        
+        .btn-start:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 5px rgba(78,205,196,0.3);
+        }
+        
+        .btn-random {
+            flex: 1;
+            background-color: white;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 14px 0;
+            font-size: 16px;
+            font-weight: 600;
+            margin-right: 10px;
+            transition: all 0.2s;
+        }
+        
+        .btn-random:active {
+            background-color: var(--mild-primary);
+            transform: translateY(1px);
+        }
+        
+        .bottom-space {
+            height: 30px;
+        }
+        
+        /* 动画效果 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .float-animation {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        /* 步骤列表 */
+        .steps-list {
+            margin-bottom: var(--module-spacing);
+            position: relative;
+            background: var(--white);
+            padding: var(--section-padding);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .steps-decoration {
+            position: absolute;
+            right: -5px;
+            top: -15px;
+            width: 80px;
+            height: 80px;
+            opacity: 0.08;
+            pointer-events: none;
+            z-index: 0;
+        }
+        
+        .step-item {
+            display: flex;
+            margin-bottom: var(--item-spacing);
+            position: relative;
+            z-index: 1;
+            align-items: flex-start;
+        }
+        
+        .step-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .step-number-container {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .step-number {
+            width: 28px;
+            height: 28px;
+            background-color: #FFC107;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(255, 193, 7, 0.3);
+            margin-top: 10px;
+        }
+        
+        .step-content {
+            flex: 1;
+            background: var(--mild-primary);
+            padding: 12px 15px;
+            border-radius: 10px;
+        }
+        
+        .step-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        
+        .step-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        
+        .step-connection {
+            position: absolute;
+            top: 28px;
+            height: calc(100% + var(--item-spacing) - 28px);
+            left: 14px;
+            width: 1px;
+            background-color: var(--gray-3);
+            z-index: 1;
+        }
+        
+        .step-item:last-child .step-connection {
+            display: none;
+        }
+        
+        /* 父母提示卡片 */
+        .parent-tips-cards {
+            display: flex;
+            overflow-x: auto;
+            margin: 0 -5px;
+            padding-bottom: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .parent-tips-cards::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .parent-tip-card {
+            flex: 0 0 70%;
+            background: linear-gradient(135deg, var(--mild-primary) 0%, #FFF 100%);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 0 5px;
+            border-left: 3px solid var(--primary-color);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .parent-tip-pattern {
+            position: absolute;
+            right: -15px;
+            bottom: -15px;
+            width: 70px;
+            height: 70px;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+        
+        .parent-tip-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .parent-tip-title i {
+            width: 28px;
+            height: 28px;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 8px;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(78,205,196,0.3);
+        }
+        
+        .parent-tip-content {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        
+        /* 相关活动 */
+        .related-activities {
+            margin-bottom: var(--module-spacing);
+            position: relative;
+        }
+        
+        .related-title-with-more {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .related-list {
+            overflow-x: auto;
+            white-space: nowrap;
+            padding: 5px 0;
+            margin: 0 -15px;
+            padding: 0 15px 5px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+        }
+        
+        .related-list::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .related-item {
+            display: inline-block;
+            width: 160px;
+            margin-right: 12px;
+            vertical-align: top;
+            position: relative;
+            transition: transform 0.2s;
+        }
+        
+        .related-item:active {
+            transform: scale(0.98);
+        }
+        
+        .related-img {
+            width: 160px;
+            height: 110px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+        }
+        
+        .related-difficulty {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0,0,0,0.5);
+            color: white;
+            font-size: 10px;
+            padding: 3px 6px;
+            border-radius: 10px;
+        }
+        
+        .related-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            line-height: 1.4;
+        }
+        
+        .related-tags {
+            display: flex;
+            margin-top: 5px;
+        }
+        
+        .related-tag {
+            font-size: 10px;
+            color: var(--text-secondary);
+            background: var(--gray-1);
+            padding: 2px 6px;
+            border-radius: 10px;
+            margin-right: 5px;
+            white-space: nowrap;
+        }
+        
+        /* 查看更多 */
+        .see-more {
+            display: flex;
+            align-items: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        /* 重置页面间距 */
+        .page-content {
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部图片区域 -->
+            <div class="detail-header">
+                <div class="header-overlay"></div>
+                <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="detail-img" alt="创意彩虹纸飞机制作">
+                <div class="header-actions">
+                    <div class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-actions-right">
+                        <div class="action-btn favorite">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="action-btn">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-title">
+                    <h1>创意彩虹纸飞机制作</h1>
+                    <div class="detail-tags">
+                        <div class="detail-tag">
+                            <i class="fas fa-child"></i>
+                            <span>3-5岁</span>
+                        </div>
+                        <div class="detail-tag">
+                            <i class="far fa-clock"></i>
+                            <span>20分钟</span>
+                        </div>
+                        <div class="detail-tag">
+                            <i class="fas fa-star"></i>
+                            <span>难度: 2/5</span>
+                        </div>
+                        <div class="detail-tag">
+                            <i class="fas fa-paint-brush"></i>
+                            <span>创意</span>
+                        </div>
+                        <div class="detail-tag">
+                            <i class="fas fa-home"></i>
+                            <span>室内</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 活动内容区域 -->
+            <div class="detail-content">
+                <!-- 活动标签 -->
+                
+                <!-- 活动简介 -->
+                <div class="activity-intro">
+                    <div class="intro-benefits">
+                        <div class="intro-card">
+                            <div class="intro-card-title">
+                                <i class="fas fa-brain"></i>
+                                <span>启发思考</span>
+                            </div>
+                            <div class="intro-card-content">
+                                通过纸飞机制作过程，向孩子解释空气动力学原理，培养科学思维与探索精神
+                            </div>
+                            <div class="intro-card-tags">
+                                <div class="intro-tag">科学启蒙</div>
+                                <div class="intro-tag">物理原理</div>
+                                <div class="intro-tag">3-6岁</div>
+                            </div>
+                        </div>
+                        <div class="intro-card">
+                            <div class="intro-card-title">
+                                <i class="fas fa-hand-paper"></i>
+                                <span>培养能力</span>
+                            </div>
+                            <div class="intro-card-content">
+                                锻炼精细动作控制能力，培养空间想象力和创造力，增强手眼协调和专注力
+                            </div>
+                            <div class="intro-card-tags">
+                                <div class="intro-tag">动手能力</div>
+                                <div class="intro-tag">空间感知</div>
+                                <div class="intro-tag">专注力</div>
+                            </div>
+                        </div>
+                        <div class="intro-card">
+                            <div class="intro-card-title">
+                                <i class="fas fa-paint-brush"></i>
+                                <span>延伸活动</span>
+                            </div>
+                            <div class="intro-card-content">
+                                组织纸飞机竞赛，记录飞行距离，探讨改进设计方法，培养孩子的观察力和分析能力
+                            </div>
+                            <div class="intro-card-tags">
+                                <div class="intro-tag">亲子互动</div>
+                                <div class="intro-tag">团队合作</div>
+                                <div class="intro-tag">逻辑思维</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 准备材料 -->
+                <div class="section-title">
+                    <span>准备材料</span>
+                </div>
+                
+                <div class="materials-list">
+                    <div class="material-item">
+                        <div class="material-badge">3张</div>
+                        <div class="material-icon">
+                            <i class="fas fa-file"></i>
+                        </div>
+                        <div class="material-name">彩色A4纸</div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-badge">1盒</div>
+                        <div class="material-icon">
+                            <i class="fas fa-pencil-alt"></i>
+                        </div>
+                        <div class="material-name">彩色笔</div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-badge">1把</div>
+                        <div class="material-icon">
+                            <i class="fas fa-cut"></i>
+                        </div>
+                        <div class="material-name">安全剪刀</div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-badge">1卷</div>
+                        <div class="material-icon">
+                            <i class="fas fa-tape"></i>
+                        </div>
+                        <div class="material-name">透明胶带</div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-badge">1把</div>
+                        <div class="material-icon">
+                            <i class="fas fa-ruler"></i>
+                        </div>
+                        <div class="material-name">直尺</div>
+                    </div>
+                    <div class="material-item">
+                        <div class="material-badge">1个</div>
+                        <div class="material-icon">
+                            <i class="fas fa-eraser"></i>
+                        </div>
+                        <div class="material-name">橡皮擦</div>
+                    </div>
+                </div>
+                
+                <!-- 活动步骤 -->
+                <div class="section-title">
+                    <span>活动步骤</span>
+                </div>
+                
+                <div class="steps-list">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cGF0aCBkPSJNNDAsNDBjMCwwLDMwLDEwLDMwLDMwYzAsMjAtMzAsMzAtMzAsMzAiIGZpbGw9Im5vbmUiIHN0cm9rZT0iI0ZGNkI2QiIgc3Ryb2tlLXdpZHRoPSIzIi8+PHBhdGggZD0iTTYwLDQwYzAsMC0zMCwxMC0zMCwzMGMwLDIwLDMwLDMwLDMwLDMwIiBmaWxsPSJub25lIiBzdHJva2U9IiNGRjZCNkIiIHN0cm9rZS13aWR0aD0iMyIvPjwvc3ZnPg==" class="steps-decoration" alt="装饰">
+                    
+                    <!-- 步骤1 -->
+                    <div class="step-item">
+                        <div class="step-number-container">
+                            <div class="step-number">1</div>
+                            <div class="step-connection"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">准备彩纸</h3>
+                            <div class="step-desc">
+                                准备一张彩色A4纸，将纸横向放置在桌面上。如果是白纸，可以先让孩子在纸上画上喜欢的图案。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 步骤2 -->
+                    <div class="step-item">
+                        <div class="step-number-container">
+                            <div class="step-number">2</div>
+                            <div class="step-connection"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">中轴线折叠</h3>
+                            <div class="step-desc">
+                                将纸张沿中线对折，然后展开，在纸上留下折痕。这条折痕将成为飞机的中轴线。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 步骤3 -->
+                    <div class="step-item">
+                        <div class="step-number-container">
+                            <div class="step-number">3</div>
+                            <div class="step-connection"></div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">折叠飞机头部</h3>
+                            <div class="step-desc">
+                                将纸张的两个上角向中间折叠，使它们的边缘与中轴线对齐，形成一个尖角。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 步骤4 -->
+                    <div class="step-item">
+                        <div class="step-number-container">
+                            <div class="step-number">4</div>
+                        </div>
+                        <div class="step-content">
+                            <h3 class="step-title">完成翅膀制作</h3>
+                            <div class="step-desc">
+                                继续折叠飞机的翅膀和机身，完成彩虹纸飞机的制作！现在可以和孩子一起试飞，看谁的飞机飞得更远。
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 注意事项 -->
+                <div class="section-title">
+                    <span>注意事项</span>
+                </div>
+                
+                <div class="safety-tips">
+                    <div class="safety-tips-content">
+                        <div class="safety-item">
+                            <i class="fas fa-cut"></i>
+                            <div>剪刀使用时要小心，3岁以下儿童需要在家长帮助下使用</div>
+                        </div>
+                        <div class="safety-item">
+                            <i class="fas fa-hand-paper"></i>
+                            <div>飞机试飞时选择宽敞且没有易碎物品的区域</div>
+                        </div>
+                        <div class="safety-item">
+                            <i class="fas fa-fingerprint"></i>
+                            <div>纸张边缘可能较锐利，小心划伤手指</div>
+                        </div>
+                        <div class="safety-item">
+                            <i class="fas fa-broom"></i>
+                            <div>活动完成后及时清理桌面和地面的纸屑</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 用户评价 -->
+                <div class="section-title">
+                    <span>用户评价</span>
+                </div>
+                
+                <div class="review-section">
+                    <div class="review-header">
+                        <div class="review-stats">
+                            <div class="review-score">4.8</div>
+                            <div class="stars">
+                                <i class="fas fa-star star active"></i>
+                                <i class="fas fa-star star active"></i>
+                                <i class="fas fa-star star active"></i>
+                                <i class="fas fa-star star active"></i>
+                                <i class="fas fa-star-half-alt star active"></i>
+                            </div>
+                        </div>
+                        <button class="review-button">
+                            <i class="fas fa-pencil-alt"></i>
+                            写评价
+                        </button>
+                    </div>
+                    
+                    <div class="review-list">
+                        <!-- 评价1 -->
+                        <div class="review-item">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MCA1MCI+PGNpcmNsZSBjeD0iMjUiIGN5PSIyMCIgcj0iMTAiIGZpbGw9IiM0RUNEQzQiLz48cGF0aCBkPSJNMTAsNDVjMC0xNSwzMC0xNSwzMCwwIiBmaWxsPSIjNEVDREM0Ii8+PC9zdmc+" alt="用户头像">
+                                </div>
+                                <div class="reviewer-name">小明妈妈</div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                </div>
+                            </div>
+                            <div class="review-content">
+                                活动非常简单易操作，5岁的孩子在我稍微指导下就能完成。他非常喜欢自己做的飞机，我们还按照提示讲解了简单的空气动力学知识，孩子听得很认真！
+                            </div>
+                            <div class="review-time">2023-05-15</div>
+                        </div>
+                        
+                        <!-- 评价2 -->
+                        <div class="review-item">
+                            <div class="reviewer-info">
+                                <div class="reviewer-avatar">
+                                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MCA1MCI+PGNpcmNsZSBjeD0iMjUiIGN5PSIyMCIgcj0iMTAiIGZpbGw9IiNGRkM3MDAiLz48cGF0aCBkPSJNMTAsNDVjMC0xNSwzMC0xNSwzMCwwIiBmaWxsPSIjRkZDNzAwIi8+PC9zdmc+" alt="用户头像">
+                                </div>
+                                <div class="reviewer-name">张爸爸</div>
+                                <div class="review-rating">
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="fas fa-star star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                            <div class="review-content">
+                                步骤清晰，我和儿子一起完成了这个纸飞机。唯一的建议是可以加一些更详细的图片说明，对于初次折纸的孩子会更有帮助。
+                            </div>
+                            <div class="review-time">2023-05-10</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 相关活动推荐 -->
+                <div class="related-title-with-more">
+                    <div class="section-title" style="margin-bottom: 0; width: 100%; text-align: center;">
+                        <span>相关活动</span>
+                    </div>
+                    <a href="#" class="see-more">查看更多 <i class="fas fa-chevron-right"></i></a>
+                </div>
+                
+                <div class="related-activities">
+                    <div class="related-list">
+                        <div class="related-item float-animation">
+                            <div class="related-difficulty">难度: 简单</div>
+                            <img src="https://images.unsplash.com/photo-1513682121497-80211f36a7d3?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="related-img" alt="彩虹瓶实验">
+                            <div class="related-name">彩虹瓶实验</div>
+                            <div class="related-tags">
+                                <div class="related-tag">科学</div>
+                                <div class="related-tag">3-6岁</div>
+                            </div>
+                        </div>
+                        <div class="related-item float-animation" style="animation-delay: 0.5s;">
+                            <div class="related-difficulty">难度: 中等</div>
+                            <img src="https://images.unsplash.com/photo-1603354350317-6f7aaa5911c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="related-img" alt="纸杯小风铃">
+                            <div class="related-name">纸杯小风铃</div>
+                            <div class="related-tags">
+                                <div class="related-tag">手工</div>
+                                <div class="related-tag">4-7岁</div>
+                            </div>
+                        </div>
+                        <div class="related-item float-animation" style="animation-delay: 1s;">
+                            <div class="related-difficulty">难度: 简单</div>
+                            <img src="https://images.unsplash.com/photo-1603665569384-95dcc3c0a039?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" class="related-img" alt="叶子拓印画">
+                            <div class="related-name">叶子拓印画</div>
+                            <div class="related-tags">
+                                <div class="related-tag">艺术</div>
+                                <div class="related-tag">2-5岁</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 底部留白，避免被底部按钮遮挡 -->
+                <div class="bottom-space"></div>
+            </div>
+            
+            <!-- 底部按钮 -->
+            <div class="bottom-btns">
+                <button class="btn-random">换一个</button>
+                <button class="btn-start">就玩这个</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

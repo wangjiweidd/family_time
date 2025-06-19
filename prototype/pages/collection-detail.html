@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 合集详情</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* 合集详情页特定样式 */
+        .collection-header {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .collection-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        
+        .header-actions {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            right: 15px;
+            display: flex;
+            justify-content: space-between;
+            z-index: 2;
+        }
+        
+        .back-btn, .action-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-primary);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-actions-right {
+            display: flex;
+        }
+        
+        .action-btn {
+            margin-left: 10px;
+        }
+        
+        .collection-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.7), transparent);
+            color: white;
+        }
+        
+        .collection-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .collection-meta {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .collection-count {
+            margin-right: 15px;
+        }
+        
+        .collection-creator {
+            display: flex;
+            align-items: center;
+        }
+        
+        .creator-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 5px;
+        }
+        
+        .creator-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .creator-name {
+            font-size: 12px;
+        }
+        
+        .collection-content {
+            padding: 20px 15px;
+        }
+        
+        .collection-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 8px;
+            color: var(--primary-color);
+        }
+        
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .tag-item {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--gray-1);
+            border-radius: 100px;
+            padding: 6px 12px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .tag-item i {
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        
+        .play-all {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+        
+        .play-all i {
+            margin-right: 8px;
+        }
+        
+        .activity-list {
+            margin-bottom: 20px;
+        }
+        
+        .activity-item {
+            display: flex;
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+        }
+        
+        .activity-img {
+            width: 100px;
+            height: 100px;
+            flex-shrink: 0;
+            object-fit: cover;
+        }
+        
+        .activity-content {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activity-title {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 5px;
+        }
+        
+        .activity-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            flex: 1;
+        }
+        
+        .activity-tags {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .activity-tag {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            background-color: var(--gray-1);
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .activity-status {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background-color: rgba(0, 0, 0, 0.6);
+            color: white;
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 10px;
+        }
+        
+        .similar-collections {
+            margin-bottom: 30px;
+        }
+        
+        .similar-list {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 10px;
+        }
+        
+        .similar-item {
+            flex-shrink: 0;
+            width: 140px;
+            margin-right: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .similar-img {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+        }
+        
+        .similar-info {
+            padding: 8px;
+            background-color: white;
+        }
+        
+        .similar-name {
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 3px;
+            white-space: normal;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 32px;
+        }
+        
+        .similar-count {
+            font-size: 10px;
+            color: var(--text-tertiary);
+        }
+        
+        .bottom-actions {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            z-index: 10;
+        }
+        
+        .action-save {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        
+        .action-share {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 0;
+            font-size: 16px;
+        }
+        
+        .action-save i, .action-share i {
+            margin-right: 6px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 头部图片区域 -->
+            <div class="collection-header">
+                <img src="https://images.unsplash.com/photo-1582779791160-5bd8fcc049db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="collection-img" alt="下雨天宅家必玩10种游戏">
+                <div class="header-actions">
+                    <div class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </div>
+                    <div class="header-actions-right">
+                        <div class="action-btn">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="action-btn">
+                            <i class="fas fa-ellipsis-h"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="collection-info">
+                    <h1 class="collection-name">下雨天宅家必玩10种游戏</h1>
+                    <div class="collection-meta">
+                        <div class="collection-count">10个活动</div>
+                        <div class="collection-creator">
+                            <div class="creator-avatar">
+                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="创意育儿社">
+                            </div>
+                            <div class="creator-name">创意育儿社</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 合集内容区域 -->
+            <div class="collection-content">
+                <!-- 合集简介 -->
+                <div class="collection-description">
+                    雨天宅在家也不无聊！这个合集精选了10个适合雨天在家玩的亲子活动，既能锻炼孩子各方面能力，又能增进亲子关系。活动难度适中，材料简单易得，快来和孩子一起度过一个愉快的雨天吧！
+                </div>
+                
+                <!-- 标签 -->
+                <div class="section-title">
+                    <i class="fas fa-tags"></i>
+                    <span>活动标签</span>
+                </div>
+                <div class="tag-list">
+                    <div class="tag-item">
+                        <i class="fas fa-child"></i>
+                        <span>3-8岁</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-home"></i>
+                        <span>室内活动</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-paint-brush"></i>
+                        <span>创意手工</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-flask"></i>
+                        <span>科学探索</span>
+                    </div>
+                    <div class="tag-item">
+                        <i class="fas fa-brain"></i>
+                        <span>思维训练</span>
+                    </div>
+                </div>
+                
+                <!-- 一键开始按钮 -->
+                <button class="play-all">
+                    <i class="fas fa-play"></i>
+                    <span>一键开始全部活动</span>
+                </button>
+                
+                <!-- 活动列表 -->
+                <div class="section-title">
+                    <i class="fas fa-list"></i>
+                    <span>活动列表</span>
+                </div>
+                <div class="activity-list">
+                    <!-- 活动1 -->
+                    <div class="activity-item">
+                        <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="创意彩虹纸飞机制作">
+                        <div class="activity-content">
+                            <div class="activity-title">创意彩虹纸飞机制作</div>
+                            <div class="activity-desc">
+                                通过折纸和绘画，制作色彩缤纷的纸飞机，培养孩子的动手能力和创造力。
+                            </div>
+                            <div class="activity-tags">
+                                <span class="activity-tag">3-5岁</span>
+                                <span class="activity-tag">创意</span>
+                                <span class="activity-tag">20分钟</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动2 -->
+                    <div class="activity-item">
+                        <img src="https://images.unsplash.com/photo-1537455385523-85116bb4a9ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="室内寻宝游戏">
+                        <div class="activity-content">
+                            <div class="activity-title">室内寻宝游戏</div>
+                            <div class="activity-desc">
+                                在家中设置各种线索和谜题，引导孩子寻找隐藏的宝藏，锻炼观察力和解决问题的能力。
+                            </div>
+                            <div class="activity-tags">
+                                <span class="activity-tag">4-8岁</span>
+                                <span class="activity-tag">探索</span>
+                                <span class="activity-tag">30分钟</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动3 -->
+                    <div class="activity-item">
+                        <img src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="厨房小实验">
+                        <div class="activity-content">
+                            <div class="activity-title">厨房小实验：彩虹杯</div>
+                            <div class="activity-desc">
+                                利用厨房中常见的材料，进行简单有趣的科学实验，探索色彩变化的奥秘。
+                            </div>
+                            <div class="activity-tags">
+                                <span class="activity-tag">5-8岁</span>
+                                <span class="activity-tag">科学</span>
+                                <span class="activity-tag">15分钟</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动4 -->
+                    <div class="activity-item">
+                        <img src="https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="故事创作">
+                        <div class="activity-content">
+                            <div class="activity-title">雨天故事创作</div>
+                            <div class="activity-desc">
+                                以下雨天为主题，和孩子一起创作有趣的故事，通过绘画或口述方式表达出来。
+                            </div>
+                            <div class="activity-tags">
+                                <span class="activity-tag">全龄段</span>
+                                <span class="activity-tag">语言</span>
+                                <span class="activity-tag">25分钟</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 查看更多 -->
+                    <div style="text-align: center; margin-top: 10px;">
+                        <a href="#" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
+                            查看全部10个活动 <i class="fas fa-angle-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- 相似合集 -->
+                <div class="section-title">
+                    <i class="fas fa-magic"></i>
+                    <span>猜你喜欢</span>
+                </div>
+                <div class="similar-collections">
+                    <div class="similar-list">
+                        <div class="similar-item">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="父子亲密度">
+                            <div class="similar-info">
+                                <div class="similar-name">父子亲密度提升6种游戏</div>
+                                <div class="similar-count">6个活动</div>
+                            </div>
+                        </div>
+                        <div class="similar-item">
+                            <img src="https://images.unsplash.com/photo-1533222481269-af9d3a19be15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="自律性">
+                            <div class="similar-info">
+                                <div class="similar-name">提升孩子自律性的5种游戏</div>
+                                <div class="similar-count">5个活动</div>
+                            </div>
+                        </div>
+                        <div class="similar-item">
+                            <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="户外探索">
+                            <div class="similar-info">
+                                <div class="similar-name">周末户外探索合集</div>
+                                <div class="similar-count">8个活动</div>
+                            </div>
+                        </div>
+                        <div class="similar-item">
+                            <img src="https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="家庭厨房">
+                            <div class="similar-info">
+                                <div class="similar-name">厨房小帮手成长计划</div>
+                                <div class="similar-count">7个活动</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 底部按钮 -->
+            <div class="bottom-actions">
+                <button class="action-save">
+                    <i class="far fa-bookmark"></i>
+                    <span>收藏</span>
+                </button>
+                <button class="action-share">
+                    <i class="fas fa-share-alt"></i>
+                    <span>分享</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

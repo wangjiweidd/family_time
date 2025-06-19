@@ -1,0 +1,401 @@
+/* 微信小程序通用样式 */
+
+/* 颜色变量 */
+:root {
+    /* 主色调 */
+    --primary-color: #07C160; /* 微信小程序标准绿色 */
+    --primary-light: #39CD80;
+    --primary-dark: #06AD56;
+    
+    /* 辅助色 */
+    --secondary-color: #ff9500; /* 温暖的橙色 */
+    --secondary-light: #ffb74d;
+    --secondary-dark: #f57c00;
+    
+    /* 中性色 */
+    --gray-1: #F7F7F7;
+    --gray-2: #EEEEEE;
+    --gray-3: #DDDDDD;
+    --gray-4: #CCCCCC;
+    --gray-5: #999999;
+    --gray-6: #666666;
+    --gray-7: #333333;
+    
+    /* 功能色 */
+    --success: #4cd964;
+    --warning: #ffcc00;
+    --error: #ff3b30;
+    
+    /* 文字颜色 */
+    --text-primary: #000000;
+    --text-secondary: #353535;
+    --text-tertiary: #888888;
+    --text-white: #ffffff;
+    
+    /* 背景色 */
+    --bg-white: #ffffff;
+    --bg-gray: #f6f6f6;
+    
+    /* 边框颜色 */
+    --border-color: #EEEEEE;
+    
+    /* 间距 */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 12px;
+    --space-lg: 16px;
+    --space-xl: 20px;
+    
+    /* 圆角 */
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+}
+
+/* 基础样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", "PingFang SC", "Microsoft YaHei", "Source Han Sans SC", "Noto Sans CJK SC", "WenQuanYi Micro Hei", sans-serif;
+    font-size: 14px;
+    color: var(--text-primary);
+    background-color: var(--gray-1);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 布局类 */
+.container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: auto;
+    background-color: var(--bg-white);
+}
+
+.page {
+    min-height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 100px; /* 为底部导航留出空间 */
+}
+
+.page-with-padding {
+    padding: 15px;
+}
+
+/* 导航栏 */
+.navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 44px;
+    background-color: var(--bg-white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 0 15px;
+}
+
+.navbar-title {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.navbar-back {
+    font-size: 18px;
+    color: var(--primary-color);
+}
+
+.navbar-action {
+    position: absolute;
+    right: 15px;
+    font-size: 16px;
+    color: var(--primary-color);
+}
+
+/* 底部标签栏 */
+.tabbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    background-color: var(--bg-white);
+    border-top: 1px solid var(--border-color);
+}
+
+.tab-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-tertiary);
+    font-size: 10px;
+}
+
+.tab-item.active {
+    color: var(--primary-color);
+}
+
+.tab-icon {
+    font-size: 22px;
+    margin-bottom: 2px;
+}
+
+/* 按钮样式 */
+.btn {
+    display: inline-block;
+    border: 1px solid transparent;
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 16px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: white;
+}
+
+.btn-outline {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+.btn-lg {
+    width: 100%;
+    padding: 12px 0;
+    font-size: 18px;
+}
+
+.btn-sm {
+    padding: 4px 12px;
+    font-size: 14px;
+}
+
+/* 卡片样式 */
+.card {
+    background-color: var(--bg-white);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.card-img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.card-content {
+    padding: 12px;
+}
+
+.card-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+}
+
+.card-desc {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 8px;
+}
+
+/* 标签样式 */
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+}
+
+.tag {
+    font-size: 12px;
+    color: var(--text-tertiary);
+    background-color: var(--gray-2);
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-right: 6px;
+    margin-bottom: 6px;
+}
+
+/* 图标样式 */
+.icon {
+    font-size: 16px;
+}
+
+.icon-sm {
+    font-size: 14px;
+}
+
+.icon-lg {
+    font-size: 20px;
+}
+
+/* 输入框 */
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-label {
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
+}
+
+.input {
+    width: 100%;
+    height: 44px;
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    padding: 0 12px;
+    font-size: 16px;
+    background-color: var(--bg-white);
+}
+
+.textarea {
+    width: 100%;
+    min-height: 100px;
+    border: 1px solid var(--gray-3);
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 16px;
+    resize: none;
+}
+
+/* 横向滚动 */
+.scroll-x {
+    display: flex;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding: 15px 0;
+}
+
+.scroll-item {
+    flex-shrink: 0;
+    margin-right: 15px;
+}
+
+.scroll-item:last-child {
+    margin-right: 0;
+}
+
+/* 辅助类 */
+.text-center {
+    text-align: center;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-column {
+    flex-direction: column;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mt-5 {
+    margin-top: 5px;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-15 {
+    margin-top: 15px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.mb-5 {
+    margin-bottom: 5px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mb-15 {
+    margin-bottom: 15px;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+/* 微信小程序规范导航栏 */
+.wxapp-navbar {
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-color: white;
+}
+
+.navbar-title {
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+.navbar-back {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-action {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    color: var(--primary-color);
+} 
