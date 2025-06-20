@@ -1,0 +1,1089 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>亲子活动实验室 - 首页</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        :root {
+            --primary-color: #4ECDC4; /* 统一主色调：清新绿色 */
+            --secondary-color: #FF9F1C; /* 辅助色：温暖橙色 */
+            --accent-color: #FFE66D; /* 强调色：温暖黄色 */
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --gray-1: #f8f9fa;
+            --gray-2: #e9ecef;
+            --gray-3: #dee2e6;
+            --white: #ffffff;
+            --success: #6BCB77;
+            --warning: #FFB039;
+            --mild-primary: #E7F5F4;
+            --module-spacing: 16px;
+            --item-spacing: 15px;
+            --inner-spacing: 10px;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+            --border-radius-sm: 6px;
+            --section-padding: 15px;
+        }
+        body {
+            background-color: var(--gray-1);
+            color: var(--text-primary);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+        }
+        .container {
+            background: var(--white);
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* 增加一些活泼的动画效果 */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        /* 重新设计合集卡片 - 网格布局 */
+        .collection-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+            padding: 0 2px;
+        }
+        
+        .collection-card {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            height: 150px;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .collection-card:nth-child(odd) {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .collection-card:nth-child(even) {
+            animation: float 6s ease-in-out infinite 1.5s;
+        }
+        
+        .collection-card:active {
+            transform: scale(0.95) translateY(5px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .collection-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.85);
+            transition: transform 0.5s, filter 0.3s;
+        }
+        
+        .collection-card:hover .collection-img {
+            transform: scale(1.08);
+            filter: brightness(1);
+        }
+        
+        .collection-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.2) 60%, rgba(0,0,0,0));
+            z-index: 2;
+            color: white;
+            transform: translateZ(20px);
+        }
+        
+        .collection-name {
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .featured-collection .collection-name {
+            font-size: 18px;
+        }
+        
+        .collection-tags {
+            display: flex;
+            overflow-x: auto;
+            white-space: nowrap;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .collection-tags::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .collection-tag {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-right: 8px;
+            font-size: 13px;
+            white-space: nowrap;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        /* 精选推荐合集样式 */
+        .collection-card {
+            height: 160px;
+        }
+        
+        .featured-collection {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-collection:before {
+            content: '精选';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .featured-collection .collection-name {
+            font-size: 18px;
+        }
+        
+        /* 活动项目改进 - 更活泼的卡片设计 */
+        .activity-item {
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            margin-bottom: 15px;
+            background: var(--white);
+            transition: all 0.3s;
+            overflow: hidden;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+        }
+        
+        .activity-item:nth-child(2n) {
+            border-left-color: var(--secondary-color);
+        }
+        
+        .activity-item:nth-child(3n) {
+            border-left-color: var(--accent-color);
+        }
+        
+        .activity-item:active {
+            transform: scale(0.98) translateX(3px);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .activity-left {
+            border-radius: var(--border-radius-md);
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: rotate(-2deg);
+            transition: transform 0.3s;
+        }
+        
+        .activity-item:hover .activity-left {
+            transform: rotate(0deg);
+        }
+        
+        .activity-img {
+            transition: transform 0.5s;
+        }
+        
+        .activity-item:hover .activity-img {
+            transform: scale(1.08);
+        }
+        
+        .activity-right {
+            padding-left: 5px;
+        }
+        
+        /* 随机活动按钮动效 */
+        .random-activity {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-color), #35b4ac);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 5px 15px rgba(78,205,196,0.3);
+            animation: pulse 2s infinite;
+            z-index: 100;
+            font-size: 22px;
+            transition: all 0.3s ease;
+        }
+        
+        .random-activity:active {
+            transform: scale(0.9) rotate(15deg);
+            box-shadow: 0 3px 10px rgba(78,205,196,0.2);
+        }
+        
+        .random-activity::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-color), #35b4ac);
+            opacity: 0.6;
+            z-index: -1;
+            animation: pulse-shadow 2s infinite;
+        }
+        
+        @keyframes pulse-shadow {
+            0% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 0; }
+            100% { transform: scale(1); opacity: 0.6; }
+        }
+        
+        .tab-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 0;
+            transition: all 0.3s;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .filter-tab.active {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .filter-tab.active:after {
+            background-color: var(--primary-color);
+            height: 4px;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-title i {
+            margin-right: 6px;
+        }
+        
+        .section-more {
+            color: var(--secondary-color);
+        }
+        
+        .wx-nav-title {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        /* 微信小程序标准导航栏 */
+        .wx-status-bar {
+            height: 20px; /* 状态栏高度 */
+            background: linear-gradient(135deg, var(--primary-color), #35b4ac);
+        }
+        
+        .wx-nav {
+            height: 44px; /* 微信小程序标准导航栏高度 */
+            width: 100%;
+            position: relative;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-color), #35b4ac);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(78,205,196,0.2);
+            z-index: 10;
+        }
+        
+        .wx-nav-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: white;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            letter-spacing: 0.5px;
+        }
+
+        /* 搜索区域 */
+        .search-area {
+            padding: 10px 16px 12px;
+            background: linear-gradient(to bottom, var(--primary-color), rgba(78,205,196,0.9));
+            display: flex;
+            align-items: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 5;
+        }
+        
+        .search-bar {
+            flex: 1;
+            height: 38px;
+            background-color: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .search-bar:focus-within {
+            box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            background-color: white;
+        }
+        
+        .search-icon {
+            color: var(--primary-color);
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .search-input {
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            color: var(--text-primary);
+            height: 38px;
+            flex: 1;
+            outline: none;
+        }
+        
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+        
+        .notification-icon {
+            width: 48px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+        
+        .notification-icon i {
+            font-size: 22px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .notification-icon::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 230, 109, 0.5);
+        }
+
+        /* 内容区域 */
+        .content-area {
+            background-color: #F7F7F7; /* 微信小程序标准背景色 */
+        }
+        
+        .collection-section {
+            padding: 16px 16px 8px; /* 微信小程序标准内边距 */
+            background-color: #fff;
+            margin-bottom: 8px; /* 微信小程序标准分区间距 */
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .section-title {
+            font-size: 16px; /* 微信小程序标准标题大小 */
+            font-weight: 500;
+            color: #000;
+        }
+        
+        .section-more {
+            font-size: 14px; /* 微信小程序标准次要文字大小 */
+            color: #576B95; /* 微信小程序标准链接颜色 */
+            display: flex;
+            align-items: center;
+        }
+        
+        .section-more i {
+            margin-left: 4px;
+            font-size: 12px;
+        }
+        
+        .collection-scroll {
+            display: flex;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 8px;
+            margin: 0 -2px;
+        }
+        
+        .collection-card {
+            flex: 0 0 auto;
+            width: 200px;
+            margin-right: 8px; /* 微信小程序标准卡片间距 */
+            border-radius: 8px; /* 微信小程序标准卡片圆角 */
+            overflow: hidden;
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 微信小程序标准阴影 */
+            position: relative;
+        }
+        
+        .collection-img {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .collection-info {
+            padding: 8px 12px; /* 微信小程序标准内边距 */
+        }
+        
+        .collection-name {
+            font-size: 14px; /* 微信小程序标准文字大小 */
+            font-weight: 500;
+            color: #000;
+            margin-bottom: 4px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        
+        .collection-tags {
+            display: flex;
+            font-size: 12px; /* 微信小程序标准辅助文字大小 */
+            color: #888;
+            flex-wrap: wrap;
+        }
+        
+        .collection-tag {
+            background-color: #F6F6F6; /* 微信小程序标准背景色 */
+            padding: 2px 6px;
+            border-radius: 2px; /* 微信小程序标准小圆角 */
+            margin-right: 6px;
+            margin-bottom: 4px;
+            white-space: nowrap;
+        }
+        
+        /* 分类导航 */
+        .category-section {
+            background-color: #fff;
+            margin-bottom: 8px;
+        }
+        
+        .filter-scroll {
+            display: flex;
+            overflow-x: auto;
+            padding: 0;
+            -webkit-overflow-scrolling: touch;
+            background-color: white;
+            border-bottom: 1px solid #F0F0F0;
+        }
+        
+        .filter-tab {
+            padding: 0 16px;
+            height: 44px;
+            font-size: 15px;
+            color: var(--text-secondary);
+            position: relative;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .filter-tab.active {
+            color: var(--primary-color);
+            font-weight: 600;
+            transform: scale(1.05);
+        }
+        
+        .filter-tab.active:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 16px;
+            right: 16px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 1.5px 1.5px 0 0;
+            animation: slide-in 0.3s ease-out;
+        }
+        
+        @keyframes slide-in {
+            0% { transform: scaleX(0); opacity: 0; }
+            100% { transform: scaleX(1); opacity: 1; }
+        }
+        
+        /* 筛选区域 - 单行下拉形式 */
+        .filter-options {
+            padding: 0 16px;
+            display: flex;
+            align-items: center;
+            background-color: white;
+            height: 48px;
+            border-bottom: 1px solid #F0F0F0;
+            overflow-x: auto;
+        }
+        
+        .filter-option {
+            height: 32px;
+            min-width: 70px;
+            margin-right: 16px;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
+            font-size: 14px;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            padding: 0 10px;
+            border-radius: 16px;
+        }
+        
+        .filter-option i {
+            margin-left: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        
+        .filter-option:hover i {
+            transform: translateY(2px);
+        }
+        
+        .filter-option.active {
+            color: var(--primary-color);
+            background-color: var(--mild-primary);
+            font-weight: 500;
+        }
+        
+        .filter-option.active i {
+            color: var(--primary-color);
+        }
+        
+        /* 活动列表 - 左图右文列表形式 */
+        .activity-list {
+            background-color: #F7F7F7;
+            padding: 8px 16px;
+        }
+        
+        .activity-item {
+            display: flex;
+            background-color: white;
+            margin-bottom: 8px;
+            padding: 12px 16px;
+        }
+        
+        .activity-left {
+            width: 100px;
+            height: 100px;
+            border-radius: 8px;
+            overflow: hidden;
+            flex-shrink: 0;
+            margin-right: 12px;
+        }
+        
+        .activity-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            background-color: #f0f0f0;
+        }
+        
+        .activity-right {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-width: 0;
+        }
+        
+        .activity-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        
+        .activity-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+        }
+        
+        .activity-tags {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 8px;
+        }
+        
+        .activity-tag {
+            font-size: 12px;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .activity-tag:nth-child(3n+1) {
+            background-color: var(--primary-color);
+        }
+        
+        .activity-tag:nth-child(3n+2) {
+            background-color: var(--secondary-color);
+        }
+        
+        .activity-tag:nth-child(3n) {
+            background-color: var(--accent-color);
+            color: var(--text-primary);
+        }
+        
+        .activity-item:hover .activity-tag {
+            transform: translateY(-2px);
+        }
+        
+        .activity-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .activity-time {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .activity-rating {
+            display: flex;
+            color: #FFC300;
+        }
+        
+        .activity-rating i {
+            font-size: 12px;
+            margin-left: 1px;
+        }
+        
+        /* 底部导航栏 */
+        .tabbar {
+            height: 55px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            background-color: white;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 50;
+            padding-bottom: env(safe-area-inset-bottom);
+        }
+        
+        .tab-item {
+            color: var(--text-secondary);
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tab-item.active {
+            color: var(--primary-color);
+        }
+        
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .tab-icon {
+            font-size: 20px;
+            margin-bottom: 3px;
+            transition: transform 0.3s;
+        }
+        
+        .tab-item.active .tab-icon {
+            transform: translateY(-2px);
+        }
+        
+        .tab-item span {
+            font-size: 12px;
+            transition: transform 0.3s;
+        }
+        
+        .tab-item.active span {
+            transform: translateY(-2px);
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="page">
+            <!-- 微信小程序状态栏 -->
+            <div class="wx-status-bar"></div>
+            
+            <!-- 微信小程序标准导航栏 -->
+            <div class="wx-nav">
+                <div class="wx-nav-title">亲子活动实验室</div>
+            </div>
+            
+            <!-- 搜索区域 -->
+            <div class="search-area">
+                <div class="search-bar">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="搜索活动...">
+                </div>
+                <div class="notification-icon">
+                    <i class="fas fa-bell"></i>
+                </div>
+            </div>
+            
+            <!-- 内容区域 -->
+            <div class="content-area">
+                <!-- 推荐合集 -->
+                <div class="collection-section">
+                    <div class="section-header">
+                        <div class="section-title"><i class="fas fa-crown"></i>推荐合集</div>
+                        <div class="section-more">
+                            <span>查看全部</span>
+                            <i class="fas fa-angle-right"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="collection-grid">
+                        <div class="collection-card featured-collection">
+                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" class="collection-img" alt="下雨天活动">
+                            <div class="collection-info">
+                                <div class="collection-name">下雨天宅家必玩游戏</div>
+                                <div class="collection-tags">
+                                    <div class="collection-tag">10个活动</div>
+                                    <div class="collection-tag">全龄段</div>
+                                    <div class="collection-tag">室内</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="collection-card">
+                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" class="collection-img" alt="父子亲密度">
+                            <div class="collection-info">
+                                <div class="collection-name">父子亲密度提升游戏</div>
+                                <div class="collection-tags">
+                                    <div class="collection-tag">6个活动</div>
+                                    <div class="collection-tag">互动</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="collection-card">
+                            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="collection-img" alt="培养自律">
+                            <div class="collection-info">
+                                <div class="collection-name">培养孩子自律性游戏</div>
+                                <div class="collection-tags">
+                                    <div class="collection-tag">5个活动</div>
+                                    <div class="collection-tag">行为养成</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动分类导航 -->
+                <div class="category-section">
+                    <div class="filter-scroll">
+                        <div class="filter-tab active">全部</div>
+                        <div class="filter-tab">STEAM实验</div>
+                        <div class="filter-tab">快闪挑战</div>
+                        <div class="filter-tab">故事创作</div>
+                        <div class="filter-tab">手工合作</div>
+                        <div class="filter-tab">户外探索</div>
+                        <div class="filter-tab">亲子厨房</div>
+                    </div>
+                    
+                    <!-- 筛选选项 -->
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <span>全部年龄</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-option">
+                            <span>全部时长</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-option">
+                            <span>全部场景</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-option">
+                            <span>全部难度</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="filter-option active">
+                            <span>筛选</span>
+                            <i class="fas fa-sliders-h"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动列表 -->
+                <div class="activity-list">
+                    <!-- 活动1 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="创意彩虹纸飞机制作">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">创意彩虹纸飞机制作</div>
+                            <div class="activity-desc">打造一款色彩缤纷的纸飞机，在飞行中展现绚烂的彩虹效果</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">3-5岁</div>
+                                <div class="activity-tag">创意</div>
+                                <div class="activity-tag">手工合作</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">20分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动2 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="趣味恐龙化石挖掘">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">趣味恐龙化石挖掘</div>
+                            <div class="activity-desc">让孩子变身小考古学家，发掘神秘的恐龙化石，了解史前生物知识</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">6-8岁</div>
+                                <div class="activity-tag">科学</div>
+                                <div class="activity-tag">STEAM</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">30分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动3 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3fd9?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="彩色气泡爆炸实验">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">彩色气泡爆炸实验</div>
+                            <div class="activity-desc">使用简单材料制作七彩缤纷的泡泡，探索气体和液体的奇妙反应</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">3-5岁</div>
+                                <div class="activity-tag">科学</div>
+                                <div class="activity-tag">STEAM</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">15分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动4 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="雨天故事创作">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">雨天故事创作与绘本制作</div>
+                            <div class="activity-desc">在雨天创作属于自己的故事，发挥想象力制作精美的手工绘本</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">3-5岁</div>
+                                <div class="activity-tag">创意</div>
+                                <div class="activity-tag">故事创作</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">25分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动5 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="厨房小实验">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">厨房小实验：彩虹杯</div>
+                            <div class="activity-desc">利用简单的厨房材料，制作出美丽的彩虹分层效果，学习液体密度知识</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">3-5岁</div>
+                                <div class="activity-tag">科学</div>
+                                <div class="activity-tag">亲子厨房</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">15分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 活动6 -->
+                    <div class="activity-item">
+                        <div class="activity-left">
+                            <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=400&q=80" class="activity-img" alt="大自然寻宝记">
+                        </div>
+                        <div class="activity-right">
+                            <div class="activity-name">大自然寻宝记</div>
+                            <div class="activity-desc">探索户外世界，寻找大自然的宝藏，培养孩子的观察力和探索精神</div>
+                            <div class="activity-tags">
+                                <div class="activity-tag">3-5岁</div>
+                                <div class="activity-tag">户外</div>
+                                <div class="activity-tag">探索</div>
+                            </div>
+                            <div class="activity-meta">
+                                <div class="activity-time">30分钟</div>
+                                <div class="activity-rating">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 随机活动按钮 - 右下角悬浮 -->
+            <div class="random-activity">
+                <i class="fas fa-random"></i>
+            </div>
+            
+            <!-- 底部导航 -->
+            <div class="tabbar">
+                <div class="tab-item active">
+                    <i class="fas fa-compass tab-icon"></i>
+                    <span>发现</span>
+                </div>
+                <div class="tab-item">
+                    <i class="fas fa-layer-group tab-icon"></i>
+                    <span>合集</span>
+                </div>
+                <div class="tab-item">
+                    <i class="fas fa-calendar-check tab-icon"></i>
+                    <span>打卡</span>
+                </div>
+                <div class="tab-item">
+                    <i class="fas fa-users tab-icon"></i>
+                    <span>社区</span>
+                </div>
+                <div class="tab-item">
+                    <i class="fas fa-user tab-icon"></i>
+                    <span>我的</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

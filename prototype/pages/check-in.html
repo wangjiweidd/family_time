@@ -7,6 +7,44 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/common.css">
     <style>
+        :root {
+            --primary-color: #4ECDC4; /* 统一主色调：清新绿色 */
+            --secondary-color: #FF9F1C; /* 辅助色：温暖橙色 */
+            --accent-color: #FFE66D; /* 强调色：温暖黄色 */
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --text-tertiary: #b2bec3;
+            --gray-1: #f8f9fa;
+            --gray-2: #e9ecef;
+            --gray-3: #dee2e6;
+            --white: #ffffff;
+            --success: #6BCB77;
+            --warning: #FFB039;
+            --mild-primary: #E7F5F4;
+            --border-color: rgba(0,0,0,0.05);
+            --module-spacing: 12px;
+            --item-spacing: 10px;
+            --inner-spacing: 8px;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+            --border-radius-sm: 4px;
+        }
+        
+        body {
+            background-color: var(--gray-1);
+            color: var(--text-primary);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            background: var(--gray-1);
+            max-width: 600px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
         /* 打卡页特定样式 */
         .checkin-header {
             padding: 15px;
@@ -14,10 +52,11 @@
             align-items: center;
             justify-content: space-between;
             background-color: white;
+            border-bottom: 1px solid var(--border-color);
         }
         
         .header-title {
-            font-size: 18px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
         }
@@ -28,31 +67,32 @@
         }
         
         .header-action {
-            width: 36px;
-            height: 36px;
+            width: 32px;
+            height: 32px;
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--text-primary);
             margin-left: 10px;
-            font-size: 18px;
         }
         
         .calendar-wrapper {
             background-color: white;
-            padding: 15px;
-            margin-bottom: 15px;
+            padding: 12px 15px;
+            margin-bottom: var(--module-spacing);
+            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .month-nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
         }
         
         .month-name {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 500;
             color: var(--text-primary);
         }
@@ -63,8 +103,8 @@
         }
         
         .month-arrow {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -75,14 +115,14 @@
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 5px;
+            gap: 4px;
         }
         
         .calendar-weekday {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 30px;
+            height: 24px;
             font-size: 12px;
             color: var(--text-tertiary);
             font-weight: 500;
@@ -95,7 +135,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 50%;
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-primary);
             position: relative;
         }
@@ -105,7 +145,7 @@
         }
         
         .calendar-day.today {
-            background-color: #E3F2FD;
+            background-color: var(--mild-primary);
             color: var(--primary-color);
             font-weight: 500;
         }
@@ -119,9 +159,9 @@
         .calendar-day.checked:after {
             content: '';
             position: absolute;
-            bottom: 5px;
-            width: 4px;
-            height: 4px;
+            bottom: 4px;
+            width: 3px;
+            height: 3px;
             border-radius: 50%;
             background-color: white;
         }
@@ -129,10 +169,11 @@
         .streak-stats {
             display: flex;
             justify-content: space-around;
-            padding: 15px;
+            padding: 12px 15px;
             background-color: white;
-            margin-bottom: 15px;
-            border-radius: 0 0 12px 12px;
+            margin-bottom: var(--module-spacing);
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .streak-item {
@@ -142,10 +183,10 @@
         }
         
         .streak-value {
-            font-size: 24px;
+            font-size: 20px;
             font-weight: 600;
             color: var(--primary-color);
-            margin-bottom: 5px;
+            margin-bottom: 3px;
         }
         
         .streak-label {
@@ -155,22 +196,22 @@
         
         .daily-challenge {
             background-color: white;
-            border-radius: 12px;
+            border-radius: var(--border-radius-lg);
             overflow: hidden;
-            margin: 0 15px 15px;
+            margin: 0 15px var(--module-spacing);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
         
         .challenge-header {
-            background: linear-gradient(135deg, #FF9500, #FF5722);
-            padding: 15px;
+            background: linear-gradient(135deg, var(--secondary-color), #FF5722);
+            padding: 12px 15px;
             color: white;
         }
         
         .challenge-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 500;
-            margin-bottom: 5px;
+            margin-bottom: 4px;
             display: flex;
             align-items: center;
         }
@@ -185,18 +226,18 @@
         }
         
         .challenge-content {
-            padding: 15px;
+            padding: 12px 15px;
         }
         
         .challenge-activity {
             display: flex;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .activity-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 8px;
+            width: 70px;
+            height: 70px;
+            border-radius: var(--border-radius-md);
             object-fit: cover;
             margin-right: 12px;
             flex-shrink: 0;
@@ -210,22 +251,23 @@
             font-size: 15px;
             font-weight: 500;
             color: var(--text-primary);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
         }
         
         .activity-desc {
             font-size: 12px;
             color: var(--text-secondary);
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            line-height: 1.4;
         }
         
         .activity-meta {
             display: flex;
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-tertiary);
         }
         
@@ -237,21 +279,29 @@
         
         .activity-meta-item i {
             margin-right: 3px;
-            font-size: 12px;
+            font-size: 11px;
         }
         
         .challenge-button {
             background-color: var(--primary-color);
             color: white;
             border: none;
-            border-radius: 8px;
-            padding: 10px 0;
+            border-radius: var(--border-radius-md);
+            padding: 12px 0;
             font-size: 15px;
             font-weight: 500;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        
+        .challenge-button:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(78, 205, 196, 0.2);
         }
         
         .challenge-button i {
@@ -259,10 +309,10 @@
         }
         
         .section-title {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 15px;
+            font-weight: 600;
             color: var(--text-primary);
-            margin: 25px 15px 15px;
+            margin: 20px 15px 12px;
             display: flex;
             align-items: center;
         }
@@ -278,22 +328,22 @@
         
         .history-item {
             background-color: white;
-            border-radius: 12px;
+            border-radius: var(--border-radius-lg);
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
         }
         
         .history-header {
-            padding: 12px 15px;
+            padding: 10px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--gray-2);
+            border-bottom: 1px solid var(--border-color);
         }
         
         .history-date {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 500;
             color: var(--text-primary);
             display: flex;
@@ -323,34 +373,29 @@
         }
         
         .history-content {
-            padding: 15px;
+            padding: 12px 15px;
             display: flex;
         }
         
         .history-images {
             display: flex;
             flex-wrap: wrap;
-            margin-top: 10px;
+            margin-top: 8px;
+            gap: 6px;
         }
         
         .history-image {
-            width: calc(33.333% - 5px);
+            width: calc(33.333% - 4px);
             aspect-ratio: 1;
-            border-radius: 6px;
+            border-radius: var(--border-radius-sm);
             object-fit: cover;
-            margin-right: 7.5px;
-            margin-bottom: 7.5px;
-        }
-        
-        .history-image:nth-child(3n) {
-            margin-right: 0;
         }
         
         .history-note {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-secondary);
             line-height: 1.5;
-            margin-top: 10px;
+            margin-top: 8px;
         }
         
         .badges-section {
@@ -370,13 +415,13 @@
         }
         
         .badge-icon {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 6px;
+            margin-bottom: 4px;
             position: relative;
         }
         
@@ -386,7 +431,7 @@
         }
         
         .badge-name {
-            font-size: 12px;
+            font-size: 11px;
             color: var(--text-primary);
             text-align: center;
         }
@@ -426,12 +471,12 @@
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <div class="header-action">
-                        <i class="fas fa-ellipsis-v"></i>
+                        <i class="fas fa-ellipsis-h"></i>
                     </div>
                 </div>
             </div>
             
-            <!-- 日历区域 -->
+            <!-- 日历区域（高度优化） -->
             <div class="calendar-wrapper">
                 <div class="month-nav">
                     <div class="month-name">2023年6月</div>
@@ -514,7 +559,7 @@
                 </div>
             </div>
             
-            <!-- 每日挑战 -->
+            <!-- 每日挑战（确保CTA在首屏） -->
             <div class="daily-challenge">
                 <div class="challenge-header">
                     <div class="challenge-title">

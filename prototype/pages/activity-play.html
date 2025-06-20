@@ -7,6 +7,45 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/common.css">
     <style>
+        :root {
+            --primary-color: #4ECDC4; /* 统一主色调：清新绿色 */
+            --secondary-color: #FF9F1C; /* 辅助色：温暖橙色 */
+            --accent-color: #FFE66D; /* 强调色：温暖黄色 */
+            --text-primary: #2d3436;
+            --text-secondary: #636e72;
+            --text-tertiary: #b2bec3;
+            --gray-1: #f8f9fa;
+            --gray-2: #e9ecef;
+            --gray-3: #dee2e6;
+            --white: #ffffff;
+            --success: #6BCB77;
+            --warning: #FFB039;
+            --mild-primary: #E7F5F4;
+            --border-color: rgba(0,0,0,0.05);
+            --module-spacing: 16px;
+            --item-spacing: 15px;
+            --inner-spacing: 10px;
+            --border-radius-lg: 12px;
+            --border-radius-md: 8px;
+            --border-radius-sm: 6px;
+        }
+        
+        body {
+            background-color: var(--gray-1);
+            color: var(--text-primary);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container {
+            background: var(--white);
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            min-height: 100vh;
+        }
+        
         /* 活动执行页特定样式 */
         .play-header {
             padding: 15px;
@@ -14,6 +53,7 @@
             align-items: center;
             justify-content: space-between;
             border-bottom: 1px solid var(--border-color);
+            background-color: var(--white);
         }
         
         .header-left {
@@ -33,7 +73,7 @@
         
         .header-activity {
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-primary);
         }
         
@@ -50,6 +90,7 @@
             justify-content: center;
             color: var(--text-primary);
             margin-left: 10px;
+            position: relative;
         }
         
         .progress-bar {
@@ -65,6 +106,7 @@
             background-color: var(--primary-color);
             border-radius: 2px;
             width: 50%; /* 当前进度为50% */
+            transition: width 0.3s ease-out;
         }
         
         .step-header {
@@ -72,17 +114,19 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-color: var(--white);
         }
         
         .step-indicator {
             display: flex;
-            align-items: center;
+            align-items: baseline;
         }
         
         .step-current {
             font-size: 32px;
             font-weight: 700;
             color: var(--primary-color);
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
         
         .step-total {
@@ -96,14 +140,19 @@
             align-items: center;
             color: var(--text-secondary);
             font-size: 14px;
+            background-color: var(--gray-1);
+            padding: 6px 10px;
+            border-radius: 16px;
         }
         
         .step-time i {
             margin-right: 5px;
+            color: var(--secondary-color);
         }
         
         .play-content {
             padding: 0 15px 100px;
+            background-color: var(--white);
         }
         
         .play-img {
@@ -112,13 +161,28 @@
             border-radius: 12px;
             object-fit: cover;
             margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
         
         .play-title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 15px;
+            position: relative;
+            padding-left: 12px;
+            line-height: 1.4;
+        }
+        
+        .play-title:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 4px;
+            bottom: 4px;
+            width: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
         
         .play-desc {
@@ -126,20 +190,22 @@
             line-height: 1.6;
             color: var(--text-secondary);
             margin-bottom: 20px;
+            padding: 0 2px;
         }
         
         .tips-box {
-            background-color: #FFF8E1;
-            border-left: 4px solid #FFC107;
+            background-color: rgba(255, 159, 28, 0.1); /* 使用辅助色的淡化版本 */
+            border-left: 4px solid var(--secondary-color);
             padding: 15px;
-            border-radius: 8px;
+            border-radius: 12px;
             margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
         }
         
         .tips-title {
             font-size: 16px;
             font-weight: 500;
-            color: #F57C00;
+            color: var(--secondary-color);
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -151,18 +217,21 @@
         
         .tips-content {
             font-size: 14px;
-            color: #795548;
-            line-height: 1.5;
+            color: var(--text-secondary);
+            line-height: 1.6;
         }
         
         .record-box {
             margin-top: 30px;
             margin-bottom: 20px;
+            background-color: var(--gray-1);
+            padding: 15px;
+            border-radius: 12px;
         }
         
         .record-title {
             font-size: 16px;
-            font-weight: 500;
+            font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 15px;
             display: flex;
@@ -186,9 +255,16 @@
             flex-direction: column;
             align-items: center;
             padding: 15px 10px;
-            background-color: var(--gray-1);
-            border-radius: 8px;
+            background-color: var(--white);
+            border-radius: 12px;
             margin-right: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .record-btn:active {
+            transform: scale(0.97);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
         }
         
         .record-btn:last-child {
@@ -196,37 +272,59 @@
         }
         
         .record-btn-icon {
-            width: 40px;
-            height: 40px;
+            width: 44px;
+            height: 44px;
             border-radius: 50%;
-            background-color: white;
+            background-color: var(--mild-primary);
             display: flex;
             align-items: center;
             justify-content: center;
             color: var(--primary-color);
             font-size: 18px;
             margin-bottom: 8px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s;
+        }
+        
+        .record-btn:nth-child(2) .record-btn-icon {
+            background-color: rgba(255, 159, 28, 0.2);
+            color: var(--secondary-color);
+        }
+        
+        .record-btn:nth-child(3) .record-btn-icon {
+            background-color: rgba(255, 230, 109, 0.3);
+            color: #F57C00;
         }
         
         .record-btn-text {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
+            font-weight: 500;
         }
         
         .play-note {
-            margin-top: 20px;
+            margin-top: 25px;
+            background-color: var(--gray-1);
+            padding: 15px;
+            border-radius: 12px;
         }
         
         .note-textarea {
             width: 100%;
-            min-height: 80px;
+            min-height: 100px;
             border: 1px solid var(--gray-3);
             border-radius: 8px;
-            padding: 10px;
+            padding: 12px;
             font-size: 14px;
-            margin-bottom: 15px;
+            margin-bottom: 5px;
             resize: none;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+            font-family: inherit;
+        }
+        
+        .note-textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(78, 205, 196, 0.2);
         }
         
         .nav-buttons {
@@ -236,20 +334,24 @@
             right: 0;
             padding: 15px;
             background-color: white;
-            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.08);
             display: flex;
             z-index: 10;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
         .btn-prev, .btn-next {
             flex: 1;
-            height: 44px;
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 8px;
             font-size: 16px;
             font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
         }
         
         .btn-prev {
@@ -259,14 +361,29 @@
             margin-right: 15px;
         }
         
+        .btn-prev:active {
+            transform: scale(0.98);
+            background-color: var(--gray-1);
+        }
+        
         .btn-next {
             background-color: var(--primary-color);
             color: white;
             border: none;
+            box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
         }
         
-        .btn-prev i, .btn-next i {
-            margin-right: 5px;
+        .btn-next:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 4px rgba(78, 205, 196, 0.2);
+        }
+        
+        .btn-prev i {
+            margin-right: 6px;
+        }
+        
+        .btn-next i {
+            margin-left: 6px;
         }
     </style>
 </head>

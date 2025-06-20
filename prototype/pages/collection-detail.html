@@ -329,6 +329,27 @@
         .action-save i, .action-share i {
             margin-right: 6px;
         }
+        
+        .highlight-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .highlight-card {
+            background: var(--mild-primary);
+            color: var(--primary-color);
+            border-radius: 10px;
+            padding: 10px 16px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 2px 6px rgba(78,205,196,0.08);
+        }
+        .highlight-card i {
+            margin-right: 8px;
+            font-size: 15px;
+        }
     </style>
 </head>
 <body>
@@ -371,39 +392,16 @@
                     雨天宅在家也不无聊！这个合集精选了10个适合雨天在家玩的亲子活动，既能锻炼孩子各方面能力，又能增进亲子关系。活动难度适中，材料简单易得，快来和孩子一起度过一个愉快的雨天吧！
                 </div>
                 
-                <!-- 标签 -->
+                <!-- 合集亮点 -->
                 <div class="section-title">
-                    <i class="fas fa-tags"></i>
-                    <span>活动标签</span>
+                    <i class="fas fa-lightbulb"></i>
+                    <span>合集亮点</span>
                 </div>
-                <div class="tag-list">
-                    <div class="tag-item">
-                        <i class="fas fa-child"></i>
-                        <span>3-8岁</span>
-                    </div>
-                    <div class="tag-item">
-                        <i class="fas fa-home"></i>
-                        <span>室内活动</span>
-                    </div>
-                    <div class="tag-item">
-                        <i class="fas fa-paint-brush"></i>
-                        <span>创意手工</span>
-                    </div>
-                    <div class="tag-item">
-                        <i class="fas fa-flask"></i>
-                        <span>科学探索</span>
-                    </div>
-                    <div class="tag-item">
-                        <i class="fas fa-brain"></i>
-                        <span>思维训练</span>
-                    </div>
+                <div class="highlight-list">
+                    <div class="highlight-card"><i class="fas fa-users"></i> 适合3-8岁亲子家庭</div>
+                    <div class="highlight-card"><i class="fas fa-home"></i> 雨天宅家、周末亲子时光</div>
+                    <div class="highlight-card"><i class="fas fa-brain"></i> 提升动手能力、亲子互动</div>
                 </div>
-                
-                <!-- 一键开始按钮 -->
-                <button class="play-all">
-                    <i class="fas fa-play"></i>
-                    <span>一键开始全部活动</span>
-                </button>
                 
                 <!-- 活动列表 -->
                 <div class="section-title">

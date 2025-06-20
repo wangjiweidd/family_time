@@ -31,6 +31,7 @@
         body {
             background-color: var(--gray-1);
             color: var(--text-primary);
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         .container {
             background: var(--white);
@@ -38,167 +39,191 @@
             margin: 0 auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
         }
-        .collection-card {
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-            transition: transform 0.2s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .collection-card:hover {
-            transform: translateY(-3px);
-        }
-        .collection-tag {
-            background-color: var(--mild-primary);
-            color: var(--primary-color);
-            border-radius: 10px;
-            padding: 2px 8px;
-            margin-right: 6px;
-            margin-bottom: 4px;
-            font-size: 12px;
-        }
-        .activity-tag {
-            background-color: var(--mild-primary);
-            color: var(--primary-color);
-            border-radius: 10px;
-            padding: 2px 8px;
-            margin-right: 6px;
-            margin-bottom: 5px;
-            font-size: 12px;
-        }
-        .activity-item {
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-            margin-bottom: 12px;
-            background: var(--white);
-        }
-        .activity-left {
-            border-radius: var(--border-radius-md);
-        }
-        .random-activity {
-            background-color: var(--primary-color);
-            color: white;
-            box-shadow: 0 2px 8px rgba(78,205,196,0.15);
-        }
-        .tab-item.active {
-            color: var(--primary-color);
-        }
-        .filter-tab.active {
-            color: var(--primary-color);
-        }
-        .filter-tab.active:after {
-            background-color: var(--primary-color);
-        }
-        .section-title {
-            color: var(--primary-color);
-            font-weight: 600;
-        }
-        .section-more {
-            color: var(--secondary-color);
-        }
-        .wx-nav-title {
-            color: var(--primary-color);
-            font-weight: 700;
-        }
-        /* 微信小程序标准导航栏 */
-        .wx-status-bar {
-            height: 20px; /* 状态栏高度 */
-            background-color: #fff;
+        
+        /* 增加一些活泼的动画效果 */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
         
-        .wx-nav {
-            height: 44px; /* 微信小程序标准导航栏高度 */
-            width: 100%;
-            position: relative;
-            text-align: center;
-            background-color: #fff;
+        /* 重新设计合集卡片 - 网格布局 */
+        .collection-grid {
             display: flex;
-            align-items: center;
-            justify-content: center;
+            flex-direction: row;
+            gap: 8px; /* 减少卡片间距 */
+            margin-top: 8px; /* 进一步减少顶部间距 */
+            padding: 0 16px 0; /* 完全移除底部padding */
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE 和 Edge */
+            margin-left: 0;
+            margin-right: 0;
+            margin-bottom: 0; /* 确保无底部边距 */
         }
         
-        .wx-nav-title {
-            font-size: 17px; /* 微信小程序标准标题大小 */
-            font-weight: 500;
-            color: #000;
-            max-width: 220px; /* 微信小程序规范中心标题最大宽度 */
+        .collection-grid::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .collection-card {
+            position: relative;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+        
+        .collection-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .collection-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 1;
+            filter: brightness(0.9);
+            transition: transform 0.5s, filter 0.3s;
+        }
+        
+        .collection-card:hover .collection-img {
+            transform: scale(1.08);
+            filter: brightness(1);
+        }
+        
+        .collection-info {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.7) 50%, rgba(0,0,0,0.3) 85%, rgba(0,0,0,0));
+            z-index: 2;
+            color: white;
+        }
+        
+        .collection-name {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+            text-shadow: 0px 2px 4px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+            line-height: 1.3;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2; /* 允许标题最多显示2行 */
+            -webkit-box-orient: vertical;
+        }
+        
+        .collection-tags {
+            display: flex;
+            overflow-x: auto;
             white-space: nowrap;
-        }
-
-        /* 搜索区域 */
-        .search-area {
-            padding: 8px 16px; /* 微信小程序标准水平内边距为16px */
-            background-color: #fff;
-            display: flex;
-            align-items: center;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
         }
         
-        .search-bar {
-            flex: 1;
-            height: 36px; /* 微信小程序标准搜索框高度 */
-            background-color: #F6F6F6; /* 微信小程序标准搜索框背景色 */
-            border-radius: 4px; /* 微信小程序标准圆角 */
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
+        .collection-tags::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
         }
         
-        .search-icon {
-            color: #9E9E9E; /* 微信小程序标准图标颜色 */
+        .collection-tag {
+            display: inline-block;
+            background-color: rgba(0,0,0,0.85); /* 增加标签底色的不透明度 */
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
             margin-right: 8px;
-            font-size: 16px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            border-left: 3px solid var(--primary-color);
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3); /* 添加阴影效果 */
+            border: 0.5px solid rgba(255,255,255,0.2); /* 添加微弱边框 */
         }
         
-        .search-input {
-            border: none;
-            background: transparent;
-            font-size: 15px; /* 微信小程序标准输入文字大小 */
-            color: #353535; /* 微信小程序标准文字颜色 */
-            height: 36px;
-            flex: 1;
+        .collection-tag:nth-child(2) {
+            border-left-color: var(--secondary-color);
+            background-color: rgba(0,0,0,0.85); /* 统一所有标签的底色不透明度 */
         }
         
-        .search-input::placeholder {
-            color: #9E9E9E; /* 微信小程序标准占位符颜色 */
+        .collection-tag:nth-child(3) {
+            border-left-color: var(--accent-color);
+            background-color: rgba(0,0,0,0.85); /* 统一所有标签的底色不透明度 */
         }
         
-        .notification-icon {
-            width: 48px; /* 微信小程序标准图标按钮触控区域 */
-            height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #353535; /* 微信小程序标准图标颜色 */
+        /* 精选推荐合集样式 */
+        .collection-card {
+            flex: 0 0 auto;
+            width: 320px; /* 增加卡片宽度 */
+            height: 150px; /* 略微调整高度 */
+            border-radius: var(--border-radius-lg);
+            margin-right: 8px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s;
         }
         
-        .notification-icon i {
-            font-size: 22px; /* 微信小程序标准图标大小 */
+        /* 确保collection-card最后一个元素右侧有足够的内边距，便于滚动 */
+        .collection-grid .collection-card:last-child {
+            margin-right: 16px;
         }
-
+        
+        .featured-collection:first-child:before {
+            content: '精选';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: rgba(255, 230, 109, 0.95);
+            color: var(--text-primary);
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 13px;
+            font-weight: 600;
+            z-index: 10;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+        
         /* 内容区域 */
         .content-area {
             background-color: #F7F7F7; /* 微信小程序标准背景色 */
+            padding-bottom: 60px; /* 为底部标签栏留出空间 */
         }
         
         .collection-section {
-            padding: 16px 16px 8px; /* 微信小程序标准内边距 */
+            padding: 12px 0 0; /* 减少顶部padding */
             background-color: #fff;
-            margin-bottom: 8px; /* 微信小程序标准分区间距 */
+            margin-bottom: 0; /* 移除底部边距 */
+            border-bottom: none; /* 确保没有底部边框 */
         }
         
         .section-header {
+            padding: 0 16px; /* 为标题添加左右内边距 */
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 8px; /* 减少底部间距 */
         }
         
         .section-title {
-            font-size: 16px; /* 微信小程序标准标题大小 */
-            font-weight: 500;
+            font-size: 18px;
+            font-weight: 600;
             color: #000;
+            letter-spacing: 0.5px;
+            font-family: 'STHeiti', 'Microsoft YaHei', sans-serif; /* 更换字体 */
         }
         
         .section-more {
@@ -216,78 +241,42 @@
         .collection-scroll {
             display: flex;
             overflow-x: auto;
+            padding: 0;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 8px;
-            margin: 0 -2px;
+            background-color: white;
+            border-top: 1px solid rgba(0,0,0,0.03); /* 添加极淡的分隔线 */
+            border-bottom: 1px solid rgba(0,0,0,0.03); /* 淡化底部边框 */
         }
         
-        .collection-card {
-            flex: 0 0 auto;
-            width: 200px;
-            margin-right: 8px; /* 微信小程序标准卡片间距 */
-            border-radius: 8px; /* 微信小程序标准卡片圆角 */
-            overflow: hidden;
-            background-color: white;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); /* 微信小程序标准阴影 */
-            position: relative;
-        }
+        /* 这部分样式已被上方的collection-card定义覆盖 */
         
         .collection-img {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
-            height: 100px;
+            height: 100%;
             object-fit: cover;
-            background-color: #f0f0f0;
-            transition: transform 0.3s ease;
+            z-index: 1;
+            filter: brightness(0.9);
+            transition: transform 0.5s, filter 0.3s;
         }
         
         .collection-card:hover .collection-img {
-            transform: scale(1.05);
+            transform: scale(1.08);
+            filter: brightness(1);
         }
         
-        .collection-info {
-            padding: 8px 12px; /* 微信小程序标准内边距 */
-            position: relative;
-        }
+        /* 这部分样式已被上方定义覆盖 */
         
-        .collection-name {
-            font-size: 14px; /* 微信小程序标准文字大小 */
-            font-weight: 500;
-            color: #000;
-            margin-bottom: 4px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
-        }
-        
-        .collection-tags {
-            display: flex;
-            font-size: 12px; /* 微信小程序标准辅助文字大小 */
-            color: #888;
-            overflow-x: auto;
-            white-space: nowrap;
-            scrollbar-width: none; /* Firefox */
-            -ms-overflow-style: none; /* IE and Edge */
-        }
-        
-        .collection-tags::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, Opera */
-        }
-        
-        .collection-tag {
-            background-color: #F6F6F6; /* 微信小程序标准背景色 */
-            padding: 2px 6px;
-            border-radius: 2px; /* 微信小程序标准小圆角 */
-            margin-right: 6px;
-            white-space: nowrap;
-            display: inline-block;
-        }
+        /* 这部分样式已被上方定义覆盖 */
         
         /* 分类导航 */
         .category-section {
             background-color: #fff;
-            margin-bottom: 8px;
+            margin-top: 0; /* 确保与上方无间距 */
+            margin-bottom: 0; /* 减少底部间距 */
+            border-top: none; /* 移除顶部边框 */
         }
         
         .filter-scroll {
@@ -296,23 +285,39 @@
             padding: 0;
             -webkit-overflow-scrolling: touch;
             background-color: white;
-            border-bottom: 1px solid #F0F0F0;
+            border-top: 1px solid rgba(0,0,0,0.03); /* 添加极淡的分隔线 */
+            border-bottom: 1px solid rgba(0,0,0,0.03); /* 淡化底部边框 */
+            margin-top: 0; /* 确保没有上边距 */
         }
         
         .filter-tab {
             padding: 0 16px;
             height: 44px;
             font-size: 15px;
-            color: #353535;
+            color: var(--text-secondary);
             position: relative;
             white-space: nowrap;
             display: flex;
             align-items: center;
+            transition: all 0.3s;
         }
         
         .filter-tab.active {
-            color: #07C160;
-            font-weight: 500;
+            color: var(--primary-color);
+            font-weight: 600;
+            transform: scale(1.05);
+        }
+
+        /* 修复底部标签 */
+        a.tab-item {
+            text-decoration: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            padding: 6px 0;
+            transition: all 0.3s;
         }
         
         .filter-tab.active:after {
@@ -322,19 +327,35 @@
             left: 16px;
             right: 16px;
             height: 3px;
-            background-color: #07C160;
+            background-color: var(--primary-color);
             border-radius: 1.5px 1.5px 0 0;
+            animation: slide-in 0.3s ease-out;
+        }
+        
+        @keyframes slide-in {
+            0% { transform: scaleX(0); opacity: 0; }
+            100% { transform: scaleX(1); opacity: 1; }
         }
         
         /* 筛选区域 - 单行下拉形式 */
         .filter-options {
-            padding: 0 16px;
+            padding: 0;
             display: flex;
             align-items: center;
             background-color: white;
             height: 48px;
             border-bottom: 1px solid #F0F0F0;
             overflow-x: auto;
+        }
+        
+        /* 第一个选项（年龄）左边距与最后一个选项（筛选）右边距一致 */
+        .filter-option:first-child {
+            margin-left: 16px;
+        }
+        
+        /* 最后一个选项（筛选）右边距 */
+        .filter-option:last-child {
+            margin-right: 16px;
         }
         
         .filter-option {
@@ -345,46 +366,111 @@
             align-items: center;
             white-space: nowrap;
             font-size: 14px;
-            color: #353535;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            padding: 0 10px;
+            border-radius: 16px;
         }
         
         .filter-option i {
-            margin-left: 4px;
+            margin-left: 6px;
             font-size: 12px;
-            color: #9E9E9E;
+            color: var(--text-muted);
+            transition: transform 0.3s;
+        }
+        
+        .filter-option:hover i {
+            transform: translateY(2px);
         }
         
         .filter-option.active {
-            color: #07C160;
+            color: var(--primary-color);
+            background-color: var(--mild-primary);
+            font-weight: 500;
         }
         
-        /* 活动列表 - 左图右文列表形式 */
+        .filter-option.active i {
+            color: var(--primary-color);
+        }
+        
+        /* 活动列表 - 更生动的设计 */
         .activity-list {
             background-color: #F7F7F7;
-            padding: 8px 0;
+            padding: 12px 16px;
+            margin-top: 0;
+            display: block; /* 改回块级布局 */
+            gap: 0;
         }
         
+        /* 活动标题 */
+        .activity-header {
+            padding: 16px;
+            background-color: #fff;
+            margin: 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        /* 活动列表项样式改进 */
         .activity-item {
             display: flex;
-            background-color: white;
-            margin-bottom: 8px;
-            padding: 12px 16px;
+            flex-direction: row; /* 横向排列 */
+            border-radius: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+            margin-bottom: 16px;
+            background: var(--white);
+            transition: all 0.3s;
+            overflow: hidden;
+            position: relative;
+            padding: 0;
+            border-left: 4px solid var(--primary-color); /* 将彩色边框移到左侧 */
+            border-top: none; /* 移除顶部边框 */
+            height: auto;
+            min-height: 120px; /* 确保卡片最小高度 */
         }
         
+        /* 根据不同类型的活动设置不同的左侧边框颜色 */
+        .activity-item:nth-child(3n+1) {
+            border-left: 4px solid var(--primary-color);
+            border-top: none;
+        }
+        
+        .activity-item:nth-child(3n+2) {
+            border-left: 4px solid var(--secondary-color);
+            border-top: none;
+        }
+        
+        .activity-item:nth-child(3n) {
+            border-left: 4px solid var(--accent-color);
+            border-top: none;
+        }
+        
+        .activity-item:active {
+            transform: scale(0.98) translateY(1px);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.06);
+        }
+        
+        /* 优化活动卡片左侧图片 */
         .activity-left {
-            width: 100px;
-            height: 100px;
-            border-radius: 8px;
-            overflow: hidden;
-            flex-shrink: 0;
-            margin-right: 12px;
+            flex: 0 0 110px; /* 固定宽度110px，不拉伸不压缩 */
+            min-width: 110px; /* 最小宽度也是110px */
+            position: relative;
+            background-color: #f0f0f0;
         }
         
         .activity-img {
-            width: 100%;
+            width: 110px;
             height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
             object-fit: cover;
-            background-color: #f0f0f0;
+            transition: transform 0.5s; /* 恢复过渡效果 */
+        }
+        
+        /* 恢复悬停缩放效果 */
+        .activity-item:hover .activity-img {
+            transform: scale(1.08);
         }
         
         .activity-right {
@@ -393,22 +479,25 @@
             flex-direction: column;
             justify-content: space-between;
             min-width: 0;
+            padding: 12px 16px 12px 12px;
+            position: relative;
         }
         
         .activity-name {
-            font-size: 16px;
-            font-weight: 500;
+            font-size: 17px;
+            font-weight: 600;
             color: #000;
-            margin-bottom: 4px;
+            margin-bottom: 5px;
             overflow: hidden;
             text-overflow: ellipsis;
             display: -webkit-box;
             -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
+            line-height: 1.3;
         }
         
         .activity-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: #666;
             margin-bottom: 8px;
             overflow: hidden;
@@ -416,33 +505,67 @@
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
+            line-height: 1.4;
         }
         
         .activity-tags {
             display: flex;
             flex-wrap: wrap;
             margin-bottom: 8px;
+            gap: 6px;
         }
         
         .activity-tag {
             font-size: 12px;
-            color: #888;
-            background-color: #F6F6F6;
-            padding: 2px 6px;
-            border-radius: 2px;
-            margin-right: 6px;
-            margin-bottom: 5px;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.3px;
         }
         
+        /* 根据不同类型的活动设置不同的标签颜色 */
+        .activity-tag:nth-child(3n+1) {
+            background-color: #4ECDC4; /* 清新绿色系标签 */
+        }
+        
+        .activity-tag:nth-child(3n+2) {
+            background-color: #FF9F1C; /* 温暖橙色标签 */
+        }
+        
+        .activity-tag:nth-child(3n) {
+            background-color: #FFE66D; /* 亮黄色标签 */
+            color: rgba(0, 0, 0, 0.7);
+        }
+        
+        /* 调整元信息为单行显示 */
         .activity-meta {
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            margin-top: auto; /* 将元信息推到底部 */
+            flex-wrap: nowrap; /* 确保不会换行 */
+            overflow: hidden; /* 超出部分隐藏 */
+            white-space: nowrap; /* 禁止换行 */
         }
         
         .activity-time {
-            font-size: 13px;
+            font-size: 12px;
             color: #888;
+            display: flex;
+            align-items: center;
+            margin-right: 10px; /* 添加右侧间距 */
+            flex-shrink: 0; /* 防止压缩 */
+        }
+        
+        .activity-time:before {
+            content: "\f017"; /* 时钟图标 */
+            font-family: "Font Awesome 5 Free";
+            margin-right: 4px;
+            color: #aaa;
+            font-size: 11px;
         }
         
         .activity-rating {
@@ -452,50 +575,497 @@
         
         .activity-rating i {
             font-size: 12px;
-            margin-left: 1px;
+            margin-left: 2px;
+        }
+        
+        /* 热门标签样式修改 */
+        .activity-item:first-child:after {
+            content: '热门';
+            position: absolute;
+            top: 10px;
+            left: 10px; /* 移到左上角 */
+            background-color: rgba(255, 107, 107, 0.9);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
+        }
+        
+        /* 新鲜标签样式修改 */
+        .activity-item:nth-child(2):after {
+            content: '新鲜';
+            position: absolute;
+            top: 10px;
+            left: 10px; /* 移到左上角 */
+            background-color: rgba(80, 200, 120, 0.9);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            z-index: 2;
         }
         
         /* 底部导航栏 */
         .tabbar {
-            height: 50px; /* 微信小程序标准底部导航高度 */
-            border-top: 1px solid #F0F0F0; /* 微信小程序标准分隔线 */
-            box-shadow: none; /* 微信小程序标准没有阴影 */
-            background-color: #ffffff; /* 确保背景是白色 */
+            height: 55px;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.05);
+            background-color: white;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            max-width: 600px;
+            margin: 0 auto;
+            z-index: 50;
+            padding-bottom: env(safe-area-inset-bottom);
         }
         
         .tab-item {
-            color: #9E9E9E; /* 微信小程序标准未选中颜色 */
+            color: var(--text-secondary);
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
         }
         
         .tab-item.active {
-            color: #07C160; /* 微信小程序标准绿色 */
+            color: var(--primary-color);
+        }
+        
+        .tab-item.active::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 3px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
         }
         
         .tab-icon {
-            font-size: 22px; /* 微信小程序标准图标大小 */
+            font-size: 20px;
             margin-bottom: 3px;
         }
-
-        /* 随机活动按钮 */
+        
+        .tab-item span {
+            font-size: 12px;
+        }
+        
+        .tab-item.active span {
+            font-weight: 500;
+        }
+        
+        /* 随机活动按钮动效 */
         .random-activity {
             position: fixed;
-            bottom: 70px;
+            bottom: 80px;
             right: 20px;
-            width: 50px;
-            height: 50px;
-            border-radius: 25px;
-            background-color: var(--primary-color);
+            width: 60px;
+            height: 60px;
+            border-radius: 30px;
+            background: linear-gradient(135deg, var(--primary-color), #35b4ac);
             color: white;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(78,205,196,0.3);
+            box-shadow: 0 5px 15px rgba(78,205,196,0.3);
             z-index: 100;
-            transition: transform 0.2s ease;
+            font-size: 22px;
+            transition: all 0.3s ease;
         }
-
+        
         .random-activity:active {
             transform: scale(0.95);
+            box-shadow: 0 3px 10px rgba(78,205,196,0.2);
+        }
+        
+        /* 微信小程序标准导航栏 */
+        .wx-status-bar {
+            height: 20px; /* 状态栏高度 */
+            background-color: #ffffff;
+        }
+        
+        .wx-nav {
+            height: 44px; /* 微信小程序标准导航栏高度 */
+            width: 100%;
+            position: relative;
+            text-align: center;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+        }
+        
+        .wx-nav-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #cc0000; /* 更深的红色标题 */
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+        
+        /* 搜索区域 */
+        .search-area {
+            padding: 10px 16px;
+            background-color: #ffffff;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 5;
+        }
+        
+        .search-bar {
+            flex: 1;
+            height: 36px;
+            background-color: #f5f5f5;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            transition: all 0.3s;
+        }
+        
+        .search-icon {
+            color: #999;
+            margin-right: 6px;
+            font-size: 14px;
+        }
+        
+        .search-input {
+            border: none;
+            background: transparent;
+            font-size: 14px;
+            color: var(--text-primary);
+            height: 36px;
+            flex: 1;
+            outline: none;
+        }
+        
+        .search-input::placeholder {
+            color: #999;
+        }
+        
+        .notification-icon {
+            width: 48px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            position: relative;
+        }
+        
+        .notification-icon i {
+            font-size: 22px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .notification-icon::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            border-radius: 50%;
+            box-shadow: 0 0 5px rgba(255, 230, 109, 0.5);
+        }
+        
+        /* 新样式的合集卡片 */
+        .featured-collection-container {
+            padding: 0;
+            margin-bottom: 16px;
+        }
+        
+        /* 整体横向滚动容器 */
+        .featured-collection-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            padding: 0;
+            margin-bottom: 16px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+            white-space: nowrap;
+            width: 100%;
+            background-color: transparent; /* 确保背景透明以显示大卡片背景 */
+        }
+        
+        .featured-collection-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        /* 合集项 - 大卡片容器 */
+        .featured-collection-item {
+            display: inline-block;
+            width: 80%; /* 使卡片占据80%的宽度，这样可以显示下一个卡片的一部分 */
+            margin-right: 12px;
+            vertical-align: top;
+        }
+        
+        .featured-collection-item:first-child {
+            margin-left: 16px;
+        }
+        
+        .featured-collection-item:last-child {
+            margin-right: 16px; /* 确保最后一个卡片右侧有足够边距 */
+        }
+        
+        /* 大卡片背景 */
+        .featured-collection-bg {
+            border-radius: 16px;
+            padding: 20px 0px 20px 16px; /* 只保留左侧和上下内边距，移除右侧内边距 */
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            margin: 0;
+            width: 100%;
+        }
+        
+        /* 卡片标题和图标 */
+        .featured-collection-icon {
+            position: absolute;
+            top: 20px;
+            left: 16px;
+            font-size: 28px; /* 增大图标 */
+            color: white;
+            opacity: 1;
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* 增强阴影 */
+            z-index: 3;
+            background-color: rgba(0,0,0,0.3); /* 添加半透明背景 */
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+        }
+        
+        .featured-collection-title {
+            color: white;
+            font-size: 24px; /* 将字号从22px增加到24px */
+            font-weight: 700; /* 加粗 */
+            margin-left: 0px; /* 与小卡片左对齐 */
+            margin-top: px; /* 减小顶部边距 */
+            margin-bottom: px; /* 减小底部边距 */
+            text-shadow: 0 2px 6px rgba(0,0,0,0.6); /* 增强阴影 */
+            z-index: 4;
+            position: relative;
+            background-color: transparent; /* 移除半透明背景 */
+            padding: 4px 0px 4px 0px; /* 减小上下内边距 */
+            border-radius: 8px;
+            display: inline-block;
+        }
+        
+        /* 内部小卡片的滚动容器 */
+        .featured-item-scroll {
+            display: flex;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 0;
+            margin-top: 10px;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            width: auto; /* 自动宽度 */
+            min-width: 100%; /* 至少100%宽度 */
+            padding-right: 16px; /* 添加右侧内边距以对齐大卡片 */
+            position: relative; /* 确保正确的层叠上下文 */
+            z-index: 5; /* 确保在背景上层显示 */
+        }
+        
+        .featured-item-scroll::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        /* 小卡片样式 */
+        .featured-item {
+            flex: 0 0 auto;
+            width: 110px;
+            min-width: 110px; /* 确保固定宽度 */
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15); /* 增强阴影效果 */
+            transition: transform 0.3s;
+            border: none; /* 移除边框 */
+        }
+        
+        .featured-item:active {
+            transform: scale(0.96);
+        }
+        
+        /* 小卡片内容样式 */
+        .featured-item-img {
+            width: 100%;
+            height: 110px;
+            overflow: hidden;
+            position: relative;
+            background-color: white; /* 确保背景为白色 */
+        }
+        
+        .featured-item-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+            opacity: 1; /* 确保图片完全不透明 */
+            filter: none; /* 移除任何可能的滤镜效果 */
+        }
+        
+        .featured-item:hover .featured-item-img img {
+            transform: scale(1.08);
+        }
+        
+        /* 添加小卡片标签样式，并移除半透明效果 */
+        .featured-item-tag {
+            position: absolute;
+            bottom: 0;
+            left: 0; /* 从右侧改为左侧 */
+            background-color: #FF9F1C; /* 橙色标签，不透明 */
+            color: white;
+            font-size: 11px;
+            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 0 8px 0 0; /* 调整为右上角圆角 */
+            z-index: 2;
+        }
+        
+        .featured-item-info {
+            padding: 8px 10px;
+        }
+        
+        .featured-item-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .featured-item-author {
+            font-size: 11px;
+            color: #888;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+        }
+        
+        .featured-item-author:before {
+            content: "\f017"; /* 时钟图标 */
+            font-family: "Font Awesome 5 Free";
+            margin-right: 3px;
+            font-size: 10px;
+            opacity: 0.7;
+        }
+        
+        /* 美化合集卡片设计 */
+        .featured-collection-bg.rainy-theme {
+            background-image: linear-gradient(135deg, #1A535C 0%, #4ECDC4 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+        
+        .featured-collection-bg.rainy-theme::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .featured-collection-bg.family-bond-theme {
+            background-image: linear-gradient(135deg, #FF9F1C 0%, #FFBF69 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-collection-bg.family-bond-theme::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1536640712-4d4c36ff0e4e?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        .featured-collection-bg.discipline-theme {
+            background-image: linear-gradient(135deg, #4B5F78 0%, #8DA9C4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-collection-bg.discipline-theme::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=800&q=80');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: 1;
+        }
+        
+        /* 确保图标和标题在背景图之上 */
+        .featured-collection-icon {
+            z-index: 4;
+        }
+        
+        .featured-collection-title {
+            z-index: 4;
+        }
+        
+        /* 确保第一个小卡片不需要额外左边距 */
+        .featured-item:first-child {
+            margin-left: 0;
+        }
+        
+        /* 确保最后一个小卡片右侧有足够空间 */
+        .featured-item:last-child {
+            margin-right: 0;
+            position: relative;
+        }
+        
+        /* 调整滚动容器可见性 */
+        .featured-collection-bg {
+            overflow-x: visible; /* 允许内容超出父容器 */
         }
     </style>
 </head>
@@ -516,9 +1086,6 @@
                     <i class="fas fa-search search-icon"></i>
                     <input type="text" class="search-input" placeholder="搜索活动...">
                 </div>
-                <div class="notification-icon">
-                    <i class="fas fa-bell"></i>
-                </div>
             </div>
             
             <!-- 内容区域 -->
@@ -526,53 +1093,186 @@
                 <!-- 推荐合集 -->
                 <div class="collection-section">
                     <div class="section-header">
-                        <div class="section-title">推荐合集</div>
+                        <div class="section-title">精选亲子合集</div>
                         <div class="section-more">
                             <span>查看全部</span>
                             <i class="fas fa-angle-right"></i>
                         </div>
                     </div>
                     
-                    <div class="collection-scroll">
-                        <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" class="collection-img" alt="下雨天活动">
-                            <div class="collection-info">
-                                <div class="collection-name">下雨天宅家必玩游戏</div>
-                                <div class="collection-tags">
-                                    <div class="collection-tag">10个活动</div>
-                                    <div class="collection-tag">全龄段</div>
-                                    <div class="collection-tag">室内</div>
+                    <!-- 横滑合集容器 -->
+                    <div class="featured-collection-scroll">
+                        <!-- 合集项1 -->
+                        <div class="featured-collection-item">
+                            <div class="featured-collection-bg rainy-theme">
+                                <div class="featured-collection-title">
+                                    下雨天宅家必玩游戏
+                                </div>
+                                
+                                <!-- 小卡片容器 -->
+                                <div class="featured-item-scroll">
+                                    <!-- 小卡片1 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1503676382389-4809596d5290?auto=format&fit=crop&w=400&q=80" alt="彩虹纸飞机">
+                                            <div class="featured-item-tag">3-5岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">彩虹纸飞机</div>
+                                            <div class="featured-item-author">20分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片2 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=400&q=80" alt="指印画创作">
+                                            <div class="featured-item-tag">全龄段</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">指印画创作</div>
+                                            <div class="featured-item-author">15分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片3 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1560421683-6856ea585c78?auto=format&fit=crop&w=400&q=80" alt="水彩星空画">
+                                            <div class="featured-item-tag">6-8岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">水彩星空画</div>
+                                            <div class="featured-item-author">30分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片4 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1499781350541-7783f6c6a0c8?auto=format&fit=crop&w=400&q=80" alt="树叶拓印">
+                                            <div class="featured-item-tag">3-5岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">树叶拓印</div>
+                                            <div class="featured-item-author">25分钟</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=400&q=80" class="collection-img" alt="父子亲密度">
-                            <div class="collection-info">
-                                <div class="collection-name">父子亲密度提升游戏</div>
-                                <div class="collection-tags">
-                                    <div class="collection-tag">6个活动</div>
-                                    <div class="collection-tag">互动</div>
-                                    <div class="collection-tag">高评分</div>
+                        <!-- 合集项2 -->
+                        <div class="featured-collection-item">
+                            <div class="featured-collection-bg family-bond-theme">
+                                <div class="featured-collection-title" style="color: white;">
+                                    增进亲子感情游戏
+                                </div>
+                                
+                                <!-- 小卡片容器 -->
+                                <div class="featured-item-scroll">
+                                    <!-- 小卡片1 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1465101178521-c1a9136a3fd9?auto=format&fit=crop&w=400&q=80" alt="彩色气泡爆炸">
+                                            <div class="featured-item-tag">3-5岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">彩色气泡爆炸</div>
+                                            <div class="featured-item-author">15分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片2 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1517816743773-6e0fd518b4a6?auto=format&fit=crop&w=400&q=80" alt="恐龙化石挖掘">
+                                            <div class="featured-item-tag">6-8岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">恐龙化石挖掘</div>
+                                            <div class="featured-item-author">30分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片3 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=400&q=80" alt="厨房彩虹杯">
+                                            <div class="featured-item-tag">3-5岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">厨房彩虹杯</div>
+                                            <div class="featured-item-author">15分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片4 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1602934445884-da0fa1c9d3b3?auto=format&fit=crop&w=400&q=80" alt="小小火山喷发">
+                                            <div class="featured-item-tag">4-8岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">小小火山喷发</div>
+                                            <div class="featured-item-author">20分钟</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         
-                        <div class="collection-card">
-                            <img src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=400&q=80" class="collection-img" alt="培养自律">
-                            <div class="collection-info">
-                                <div class="collection-name">培养孩子自律性游戏</div>
-                                <div class="collection-tags">
-                                    <div class="collection-tag">5个活动</div>
-                                    <div class="collection-tag">行为养成</div>
-                                    <div class="collection-tag">专注力</div>
+                        <!-- 合集项3 -->
+                        <div class="featured-collection-item">
+                            <div class="featured-collection-bg discipline-theme">
+                                <div class="featured-collection-title" style="color: white;">
+                                    培养孩子自律性游戏
+                                </div>
+                                
+                                <!-- 小卡片容器 -->
+                                <div class="featured-item-scroll">
+                                    <!-- 小卡片1 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1502082553048-f009c37129b9?auto=format&fit=crop&w=400&q=80" alt="雨天故事创作">
+                                            <div class="featured-item-tag">3-5岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">雨天故事创作</div>
+                                            <div class="featured-item-author">25分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片2 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=400&q=80" alt="亲子绘本阅读">
+                                            <div class="featured-item-tag">全龄段</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">亲子绘本阅读</div>
+                                            <div class="featured-item-author">15分钟</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 小卡片3 -->
+                                    <div class="featured-item">
+                                        <div class="featured-item-img">
+                                            <img src="https://images.unsplash.com/photo-1551029506-0807df4e2031?auto=format&fit=crop&w=400&q=80" alt="故事接龙">
+                                            <div class="featured-item-tag">5-8岁</div>
+                                        </div>
+                                        <div class="featured-item-info">
+                                            <div class="featured-item-name">故事接龙</div>
+                                            <div class="featured-item-author">20分钟</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
                 
-                <!-- 活动分类导航 -->
+                <!-- 活动分类导航，移除多余层级 -->
                 <div class="category-section">
                     <div class="filter-scroll">
                         <div class="filter-tab active">全部</div>
@@ -587,19 +1287,19 @@
                     <!-- 筛选选项 -->
                     <div class="filter-options">
                         <div class="filter-option">
-                            <span>全部年龄</span>
+                            <span>年龄</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="filter-option">
-                            <span>全部时长</span>
+                            <span>时长</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="filter-option">
-                            <span>全部场景</span>
+                            <span>场景</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="filter-option">
-                            <span>全部难度</span>
+                            <span>难度</span>
                             <i class="fas fa-chevron-down"></i>
                         </div>
                         <div class="filter-option active">
@@ -609,7 +1309,7 @@
                     </div>
                 </div>
                 
-                <!-- 活动列表 -->
+                <!-- 活动列表 - 两列网格布局 -->
                 <div class="activity-list">
                     <!-- 活动1 -->
                     <div class="activity-item">
@@ -622,15 +1322,9 @@
                             <div class="activity-tags">
                                 <div class="activity-tag">3-5岁</div>
                                 <div class="activity-tag">创意</div>
-                                <div class="activity-tag">手工合作</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">20分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="far fa-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -642,19 +1336,13 @@
                         </div>
                         <div class="activity-right">
                             <div class="activity-name">趣味恐龙化石挖掘</div>
-                            <div class="activity-desc">让孩子变身小考古学家，发掘神秘的恐龙化石，了解史前生物知识</div>
+                            <div class="activity-desc">让孩子变身小考古学家，发掘神秘的恐龙化石</div>
                             <div class="activity-tags">
                                 <div class="activity-tag">6-8岁</div>
                                 <div class="activity-tag">科学</div>
-                                <div class="activity-tag">STEAM</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">30分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -666,20 +1354,13 @@
                         </div>
                         <div class="activity-right">
                             <div class="activity-name">彩色气泡爆炸实验</div>
-                            <div class="activity-desc">使用简单材料制作七彩缤纷的泡泡，探索气体和液体的奇妙反应</div>
+                            <div class="activity-desc">使用简单材料制作七彩缤纷的泡泡</div>
                             <div class="activity-tags">
                                 <div class="activity-tag">3-5岁</div>
                                 <div class="activity-tag">科学</div>
-                                <div class="activity-tag">STEAM</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">15分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -691,20 +1372,13 @@
                         </div>
                         <div class="activity-right">
                             <div class="activity-name">雨天故事创作与绘本制作</div>
-                            <div class="activity-desc">在雨天创作属于自己的故事，发挥想象力制作精美的手工绘本</div>
+                            <div class="activity-desc">在雨天创作属于自己的故事，制作精美的手工绘本</div>
                             <div class="activity-tags">
                                 <div class="activity-tag">3-5岁</div>
                                 <div class="activity-tag">创意</div>
-                                <div class="activity-tag">故事创作</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">25分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star-half-alt"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -716,19 +1390,13 @@
                         </div>
                         <div class="activity-right">
                             <div class="activity-name">厨房小实验：彩虹杯</div>
-                            <div class="activity-desc">利用简单的厨房材料，制作出美丽的彩虹分层效果，学习液体密度知识</div>
+                            <div class="activity-desc">利用简单的厨房材料，制作出美丽的彩虹分层效果</div>
                             <div class="activity-tags">
                                 <div class="activity-tag">3-5岁</div>
                                 <div class="activity-tag">科学</div>
-                                <div class="activity-tag">亲子厨房</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">15分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -740,20 +1408,13 @@
                         </div>
                         <div class="activity-right">
                             <div class="activity-name">大自然寻宝记</div>
-                            <div class="activity-desc">探索户外世界，寻找大自然的宝藏，培养孩子的观察力和探索精神</div>
+                            <div class="activity-desc">探索户外世界，寻找大自然的宝藏，培养观察力</div>
                             <div class="activity-tags">
                                 <div class="activity-tag">3-5岁</div>
                                 <div class="activity-tag">户外</div>
-                                <div class="activity-tag">探索</div>
                             </div>
                             <div class="activity-meta">
                                 <div class="activity-time">30分钟</div>
-                                <div class="activity-rating">
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                    <i class="fas fa-star"></i>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -767,26 +1428,26 @@
             
             <!-- 底部导航 -->
             <div class="tabbar">
-                <div class="tab-item active">
+                <a href="#" class="tab-item active">
                     <i class="fas fa-compass tab-icon"></i>
                     <span>发现</span>
-                </div>
-                <div class="tab-item">
+                </a>
+                <a href="#" class="tab-item">
                     <i class="fas fa-layer-group tab-icon"></i>
                     <span>合集</span>
-                </div>
-                <div class="tab-item">
+                </a>
+                <a href="#" class="tab-item">
                     <i class="fas fa-calendar-check tab-icon"></i>
                     <span>打卡</span>
-                </div>
-                <div class="tab-item">
+                </a>
+                <a href="#" class="tab-item">
                     <i class="fas fa-users tab-icon"></i>
                     <span>社区</span>
-                </div>
-                <div class="tab-item">
+                </a>
+                <a href="#" class="tab-item">
                     <i class="fas fa-user tab-icon"></i>
                     <span>我的</span>
-                </div>
+                </a>
             </div>
         </div>
     </div>
