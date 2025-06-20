@@ -332,195 +332,197 @@
         
         .highlight-list {
             display: flex;
-            flex-wrap: wrap;
+            overflow-x: auto;
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
+            padding-bottom: 2px;
+            -webkit-overflow-scrolling: touch;
         }
         .highlight-card {
-            background: var(--mild-primary);
-            color: var(--primary-color);
+            background: linear-gradient(90deg, var(--primary-color) 60%, #fff 100%);
+            color: var(--white);
             border-radius: 10px;
-            padding: 10px 16px;
+            padding: 8px 16px;
             font-size: 13px;
             display: flex;
             align-items: center;
+            min-width: 120px;
             box-shadow: 0 2px 6px rgba(78,205,196,0.08);
+            font-weight: 500;
         }
         .highlight-card i {
             margin-right: 8px;
-            font-size: 15px;
+            font-size: 16px;
+        }
+        .stats-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .stats-tag {
+            background: var(--mild-primary);
+            color: var(--primary-color);
+            border-radius: 8px;
+            padding: 4px 10px;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+        }
+        .stats-tag i {
+            margin-right: 5px;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="page">
-            <!-- 头部图片区域 -->
-            <div class="collection-header">
-                <img src="https://images.unsplash.com/photo-1582779791160-5bd8fcc049db?ixlib=rb-1.2.1&auto=format&fit=crop&w=1000&q=80" class="collection-img" alt="下雨天宅家必玩10种游戏">
-                <div class="header-actions">
-                    <div class="back-btn">
-                        <i class="fas fa-arrow-left"></i>
+            <!-- 微信小程序风格导航栏 -->
+            <div class="wxapp-navbar">
+                <span class="navbar-back" onclick="window.history.back()">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="display:block">
+                        <path d="M15 19l-7-7 7-7" stroke="#07C160" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                <span class="navbar-title">合集详情</span>
+            </div>
+            <!-- 头部区域：大图+标题+标签 -->
+            <div class="collection-header" style="position: relative; height: 200px; overflow: hidden;">
+                <img src="../images/collection-default.jpg" class="collection-img" alt="下雨天宅家必玩10种游戏">
+                <div class="header-overlay" style="position: absolute; left: 0; right: 0; bottom: 0; top: 0; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0.05) 60%, transparent 100%); z-index: 1;"></div>
+                <div class="collection-info" style="position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; padding: 0 20px 18px 20px;">
+                    <h1 style="font-size: 26px; font-weight: 700; color: #fff; margin: 0 0 8px 0; text-shadow: 0 2px 8px rgba(0,0,0,0.18); font-family: 'PingFang SC', 'Microsoft YaHei', 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;">下雨天宅家必玩10种游戏</h1>
+                    <div class="collection-tags" style="display: flex; gap: 8px; flex-wrap: wrap;">
+                        <span class="tag" style="background: rgba(255,255,255,0.22); border-radius: 8px; padding: 2px 10px; font-size: 13px; color: #fff; display: flex; align-items: center;"><i class="fas fa-user-friends" style="margin-right:4px;"></i>3-8岁</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.22); border-radius: 8px; padding: 2px 10px; font-size: 13px; color: #fff; display: flex; align-items: center;"><i class="fas fa-clock" style="margin-right:4px;"></i>平均20分钟</span>
+                        <span class="tag" style="background: rgba(255,255,255,0.22); border-radius: 8px; padding: 2px 10px; font-size: 13px; color: #fff; display: flex; align-items: center;"><i class="fas fa-pen" style="margin-right:4px;"></i>动手类5个</span>
                     </div>
-                    <div class="header-actions-right">
-                        <div class="action-btn">
-                            <i class="far fa-heart"></i>
+                </div>
+            </div>
+            
+            <!-- 简介区（融合亮点） -->
+            <div class="collection-description" style="font-size: 14px; color: var(--text-secondary); line-height: 1.7; margin: 18px 0 10px 0; padding: 0 15px;">
+                本合集适合3-8岁亲子家庭，精选10个雨天宅家亲子活动，提升动手能力与亲子互动，让家庭时光更有趣。
+            </div>
+            
+            <!-- 活动列表标题和内容左侧加15px内边距 -->
+            <div class="section-title" style="padding-left:15px;">
+                <i class="fas fa-list" style="margin-right:8px;"></i>
+                <span>活动列表</span>
+            </div>
+            <div class="activity-list" style="padding:0 15px;">
+                <!-- 活动1 -->
+                <div class="activity-item">
+                    <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="创意彩虹纸飞机制作">
+                    <div class="activity-content">
+                        <div class="activity-title">创意彩虹纸飞机制作</div>
+                        <div class="activity-desc">
+                            通过折纸和绘画，制作色彩缤纷的纸飞机，培养孩子的动手能力和创造力。
                         </div>
-                        <div class="action-btn">
-                            <i class="fas fa-ellipsis-h"></i>
+                        <div class="activity-tags">
+                            <span class="activity-tag">3-5岁</span>
+                            <span class="activity-tag">创意</span>
+                            <span class="activity-tag">20分钟</span>
                         </div>
                     </div>
                 </div>
-                <div class="collection-info">
-                    <h1 class="collection-name">下雨天宅家必玩10种游戏</h1>
-                    <div class="collection-meta">
-                        <div class="collection-count">10个活动</div>
-                        <div class="collection-creator">
-                            <div class="creator-avatar">
-                                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="创意育儿社">
-                            </div>
-                            <div class="creator-name">创意育儿社</div>
+                
+                <!-- 活动2 -->
+                <div class="activity-item">
+                    <img src="https://images.unsplash.com/photo-1537455385523-85116bb4a9ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="室内寻宝游戏">
+                    <div class="activity-content">
+                        <div class="activity-title">室内寻宝游戏</div>
+                        <div class="activity-desc">
+                            在家中设置各种线索和谜题，引导孩子寻找隐藏的宝藏，锻炼观察力和解决问题的能力。
+                        </div>
+                        <div class="activity-tags">
+                            <span class="activity-tag">4-8岁</span>
+                            <span class="activity-tag">探索</span>
+                            <span class="activity-tag">30分钟</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动3 -->
+                <div class="activity-item">
+                    <img src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="厨房小实验">
+                    <div class="activity-content">
+                        <div class="activity-title">厨房小实验：彩虹杯</div>
+                        <div class="activity-desc">
+                            利用厨房中常见的材料，进行简单有趣的科学实验，探索色彩变化的奥秘。
+                        </div>
+                        <div class="activity-tags">
+                            <span class="activity-tag">5-8岁</span>
+                            <span class="activity-tag">科学</span>
+                            <span class="activity-tag">15分钟</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 活动4 -->
+                <div class="activity-item">
+                    <img src="https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="故事创作">
+                    <div class="activity-content">
+                        <div class="activity-title">雨天故事创作</div>
+                        <div class="activity-desc">
+                            以下雨天为主题，和孩子一起创作有趣的故事，通过绘画或口述方式表达出来。
+                        </div>
+                        <div class="activity-tags">
+                            <span class="activity-tag">全龄段</span>
+                            <span class="activity-tag">语言</span>
+                            <span class="activity-tag">25分钟</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 查看更多 -->
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="#" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
+                        查看全部10个活动 <i class="fas fa-angle-right"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- 相似合集 -->
+            <div class="section-title">
+                <i class="fas fa-magic"></i>
+                <span>猜你喜欢</span>
+            </div>
+            <div class="similar-collections">
+                <div class="similar-list">
+                    <div class="similar-item">
+                        <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="父子亲密度">
+                        <div class="similar-info">
+                            <div class="similar-name">父子亲密度提升6种游戏</div>
+                            <div class="similar-count">6个活动</div>
+                        </div>
+                    </div>
+                    <div class="similar-item">
+                        <img src="https://images.unsplash.com/photo-1533222481269-af9d3a19be15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="自律性">
+                        <div class="similar-info">
+                            <div class="similar-name">提升孩子自律性的5种游戏</div>
+                            <div class="similar-count">5个活动</div>
+                        </div>
+                    </div>
+                    <div class="similar-item">
+                        <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="户外探索">
+                        <div class="similar-info">
+                            <div class="similar-name">周末户外探索合集</div>
+                            <div class="similar-count">8个活动</div>
+                        </div>
+                    </div>
+                    <div class="similar-item">
+                        <img src="https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="家庭厨房">
+                        <div class="similar-info">
+                            <div class="similar-name">厨房小帮手成长计划</div>
+                            <div class="similar-count">7个活动</div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <!-- 合集内容区域 -->
-            <div class="collection-content">
-                <!-- 合集简介 -->
-                <div class="collection-description">
-                    雨天宅在家也不无聊！这个合集精选了10个适合雨天在家玩的亲子活动，既能锻炼孩子各方面能力，又能增进亲子关系。活动难度适中，材料简单易得，快来和孩子一起度过一个愉快的雨天吧！
-                </div>
-                
-                <!-- 合集亮点 -->
-                <div class="section-title">
-                    <i class="fas fa-lightbulb"></i>
-                    <span>合集亮点</span>
-                </div>
-                <div class="highlight-list">
-                    <div class="highlight-card"><i class="fas fa-users"></i> 适合3-8岁亲子家庭</div>
-                    <div class="highlight-card"><i class="fas fa-home"></i> 雨天宅家、周末亲子时光</div>
-                    <div class="highlight-card"><i class="fas fa-brain"></i> 提升动手能力、亲子互动</div>
-                </div>
-                
-                <!-- 活动列表 -->
-                <div class="section-title">
-                    <i class="fas fa-list"></i>
-                    <span>活动列表</span>
-                </div>
-                <div class="activity-list">
-                    <!-- 活动1 -->
-                    <div class="activity-item">
-                        <img src="https://images.unsplash.com/photo-1560963689-b5682b6440f8?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="创意彩虹纸飞机制作">
-                        <div class="activity-content">
-                            <div class="activity-title">创意彩虹纸飞机制作</div>
-                            <div class="activity-desc">
-                                通过折纸和绘画，制作色彩缤纷的纸飞机，培养孩子的动手能力和创造力。
-                            </div>
-                            <div class="activity-tags">
-                                <span class="activity-tag">3-5岁</span>
-                                <span class="activity-tag">创意</span>
-                                <span class="activity-tag">20分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 活动2 -->
-                    <div class="activity-item">
-                        <img src="https://images.unsplash.com/photo-1537455385523-85116bb4a9ea?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="室内寻宝游戏">
-                        <div class="activity-content">
-                            <div class="activity-title">室内寻宝游戏</div>
-                            <div class="activity-desc">
-                                在家中设置各种线索和谜题，引导孩子寻找隐藏的宝藏，锻炼观察力和解决问题的能力。
-                            </div>
-                            <div class="activity-tags">
-                                <span class="activity-tag">4-8岁</span>
-                                <span class="activity-tag">探索</span>
-                                <span class="activity-tag">30分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 活动3 -->
-                    <div class="activity-item">
-                        <img src="https://images.unsplash.com/photo-1515041219749-89347f83291a?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="厨房小实验">
-                        <div class="activity-content">
-                            <div class="activity-title">厨房小实验：彩虹杯</div>
-                            <div class="activity-desc">
-                                利用厨房中常见的材料，进行简单有趣的科学实验，探索色彩变化的奥秘。
-                            </div>
-                            <div class="activity-tags">
-                                <span class="activity-tag">5-8岁</span>
-                                <span class="activity-tag">科学</span>
-                                <span class="activity-tag">15分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 活动4 -->
-                    <div class="activity-item">
-                        <img src="https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="activity-img" alt="故事创作">
-                        <div class="activity-content">
-                            <div class="activity-title">雨天故事创作</div>
-                            <div class="activity-desc">
-                                以下雨天为主题，和孩子一起创作有趣的故事，通过绘画或口述方式表达出来。
-                            </div>
-                            <div class="activity-tags">
-                                <span class="activity-tag">全龄段</span>
-                                <span class="activity-tag">语言</span>
-                                <span class="activity-tag">25分钟</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- 查看更多 -->
-                    <div style="text-align: center; margin-top: 10px;">
-                        <a href="#" style="color: var(--primary-color); font-size: 14px; text-decoration: none;">
-                            查看全部10个活动 <i class="fas fa-angle-right"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <!-- 相似合集 -->
-                <div class="section-title">
-                    <i class="fas fa-magic"></i>
-                    <span>猜你喜欢</span>
-                </div>
-                <div class="similar-collections">
-                    <div class="similar-list">
-                        <div class="similar-item">
-                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="父子亲密度">
-                            <div class="similar-info">
-                                <div class="similar-name">父子亲密度提升6种游戏</div>
-                                <div class="similar-count">6个活动</div>
-                            </div>
-                        </div>
-                        <div class="similar-item">
-                            <img src="https://images.unsplash.com/photo-1533222481269-af9d3a19be15?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="自律性">
-                            <div class="similar-info">
-                                <div class="similar-name">提升孩子自律性的5种游戏</div>
-                                <div class="similar-count">5个活动</div>
-                            </div>
-                        </div>
-                        <div class="similar-item">
-                            <img src="https://images.unsplash.com/photo-1596464716127-f2a82984de30?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="户外探索">
-                            <div class="similar-info">
-                                <div class="similar-name">周末户外探索合集</div>
-                                <div class="similar-count">8个活动</div>
-                            </div>
-                        </div>
-                        <div class="similar-item">
-                            <img src="https://images.unsplash.com/photo-1588075592446-265fd1e6e76f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="similar-img" alt="家庭厨房">
-                            <div class="similar-info">
-                                <div class="similar-name">厨房小帮手成长计划</div>
-                                <div class="similar-count">7个活动</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- 底部按钮 -->
+            <!-- 底部按钮：同时保留收藏和分享 -->
             <div class="bottom-actions">
                 <button class="action-save">
                     <i class="far fa-bookmark"></i>
