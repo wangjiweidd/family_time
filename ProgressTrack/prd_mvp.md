@@ -153,3 +153,154 @@
 - 设计风格简洁明快，符合微信小程序视觉规范
 - 图标统一使用 Font Awesome 系列，确保一致性
 - 响应式设计，适应不同尺寸的手机屏幕 
+
+## 微信小程序云开发计划
+
+### 1. 项目初始化与配置
+
+#### 1.1 基础环境配置
+- 创建微信小程序项目，选择云开发模板
+- 配置云开发环境（开发环境、测试环境、生产环境）
+- 设置项目基础结构（目录规范、组件库、工具类）
+- 配置TypeScript支持，提高代码质量和可维护性
+
+#### 1.2 云开发资源规划
+- 云数据库集合设计
+- 云存储桶规划
+- 云函数架构设计
+- 权限与安全策略配置
+
+### 2. 数据库设计
+
+#### 2.1 核心数据集合
+| 集合名称 | 主要字段 | 用途说明 |
+|---------|--------|---------|
+| activities | id, title, description, steps, ageRange, duration, tags, coverImage, difficulty | 存储所有活动卡片信息 |
+| collections | id, title, description, type, coverImage, tags, activityIds, educationTheory | 存储系统预设合集 |
+| users | openid, nickName, avatarUrl, children[], preferences, favorites | 用户基本信息与偏好设置 |
+| records | id, userId, activityId, images, notes, completionTime, duration | 活动完成记录 |
+| children | id, userId, name, gender, birthday, avatar, interests | 孩子信息管理 |
+| favorites | userId, type(activity/collection), itemId, createTime | 用户收藏内容 |
+
+#### 2.2 索引设计
+- 为用户ID、活动ID、合集ID等高频查询字段创建索引
+- 为标签、年龄段等筛选条件创建复合索引
+
+### 3. 云函数开发计划
+
+#### 3.1 核心云函数
+| 云函数名称 | 功能说明 | 输入参数 | 输出 |
+|-----------|---------|---------|------|
+| getActivities | 获取活动列表，支持分页和筛选 | page, size, filters | {activities[], total} |
+| getCollections | 获取合集列表，支持分页和筛选 | page, size, filters | {collections[], total} |
+| getCollectionDetail | 获取合集详情及包含活动 | collectionId | {collection, activities[]} |
+| getActivityDetail | 获取活动详情 | activityId | activity |
+| saveRecord | 保存活动完成记录 | record | recordId |
+| uploadImages | 上传活动图片到云存储 | fileList | urls[] |
+| toggleFavorite | 添加/取消收藏 | type, itemId | {isFavorite} |
+| getUserProfile | 获取用户信息及统计数据 | - | {userInfo, stats} |
+| updateUserPreferences | 更新用户偏好设置 | preferences | success |
+| getRecommendations | 获取个性化推荐活动 | - | activities[] |
+
+#### 3.2 AI相关云函数
+| 云函数名称 | 功能说明 | 输入参数 | 输出 |
+|-----------|---------|---------|------|
+| generateActivity | 基于用户需求生成活动建议 | prompt, preferences | activity |
+| analyzeActivityImages | 分析活动图片，提取关键信息 | imageUrls | {tags, analysis} |
+
+### 4. 前端开发计划
+
+#### 4.1 页面开发清单
+| 页面路径 | 功能说明 | 优先级 | 依赖云函数 |
+|---------|---------|-------|----------|
+| pages/index/index | 首页，展示推荐合集和活动 | P0 | getCollections, getActivities |
+| pages/collections/list | 合集列表页 | P0 | getCollections |
+| pages/collections/detail | 合集详情页 | P0 | getCollectionDetail |
+| pages/activities/detail | 活动详情页 | P0 | getActivityDetail |
+| pages/activities/execute | 活动执行页 | P0 | - |
+| pages/activities/record | 活动记录页 | P1 | saveRecord, uploadImages |
+| pages/activities/share | 活动分享页 | P1 | - |
+| pages/profile/index | 个人中心页 | P0 | getUserProfile |
+| pages/profile/children | 孩子管理页 | P1 | - |
+| pages/profile/preferences | 偏好设置页 | P1 | updateUserPreferences |
+| pages/profile/records | 历史记录页 | P1 | - |
+| pages/profile/favorites | 我的收藏页 | P1 | - |
+
+#### 4.2 组件开发计划
+- 活动卡片组件（ActivityCard）
+- 合集卡片组件（CollectionCard）
+- 标签组件（TagGroup）
+- 图片上传组件（ImageUploader）
+- 活动步骤组件（StepGuide）
+- 计时器组件（Timer）
+- 筛选器组件（Filter）
+- 空状态组件（EmptyState）
+- 加载状态组件（Loading）
+
+### 5. 存储与缓存策略
+
+#### 5.1 云存储规划
+- 活动封面图：collections/covers/
+- 活动步骤图：activities/steps/
+- 用户上传图片：users/{openid}/records/
+- 头像与缩略图：thumbnails/
+
+#### 5.2 本地缓存策略
+- 缓存首页推荐数据，减少请求次数
+- 缓存用户基本信息和偏好设置
+- 缓存最近浏览的活动和合集
+- 缓存活动执行进度，支持断点继续
+
+### 6. 开发阶段规划
+
+#### 6.1 第一阶段（2周）：基础架构与核心功能
+- 项目初始化与云开发环境配置
+- 数据库集合创建与索引设置
+- 核心云函数开发（活动与合集相关）
+- 首页、合集列表页、活动详情页开发
+
+#### 6.2 第二阶段（2周）：用户系统与记录功能
+- 用户授权与信息管理
+- 活动执行与记录功能
+- 个人中心页面
+- 收藏与历史记录功能
+
+#### 6.3 第三阶段（1周）：AI功能与优化
+- AI活动推荐功能
+- 活动图片分析功能
+- 性能优化与体验提升
+- 错误处理与异常情况优化
+
+#### 6.4 第四阶段（1周）：测试与上线准备
+- 全面功能测试
+- 性能与兼容性测试
+- 内容审核与安全检查
+- 上线前准备与文档完善
+
+### 7. 技术栈选择
+
+#### 7.1 前端技术
+- 框架：原生微信小程序 + TypeScript
+- UI组件：自研组件 + WeUI
+- 状态管理：全局状态 + 页面状态分离
+- 样式：WXSS + Flex布局
+
+#### 7.2 后端技术
+- 云函数：Node.js + TypeScript
+- 数据库：云开发数据库
+- 存储：云开发存储
+- AI服务：微信云托管 + 第三方AI服务API
+
+### 8. 安全与性能考量
+
+#### 8.1 安全策略
+- 数据库访问权限严格控制
+- 敏感操作添加二次验证
+- 用户数据脱敏处理
+- 定期数据备份
+
+#### 8.2 性能优化
+- 图片懒加载与预加载策略
+- 分包加载减少首次启动时间
+- 合理使用缓存减少请求
+- 云函数超时与并发控制 
