@@ -50,188 +50,110 @@
             padding: 15px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             background-color: white;
             border-bottom: 1px solid var(--border-color);
-        }
-        
-        .header-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .header-actions {
-            display: flex;
-            align-items: center;
-        }
-        
-        .header-action {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-primary);
-            margin-left: 10px;
-        }
-        
-        .calendar-wrapper {
-            background-color: white;
-            padding: 12px 15px;
-            margin-bottom: var(--module-spacing);
-            border-radius: 0 0 var(--border-radius-lg) var(--border-radius-lg);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .month-nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        
-        .month-name {
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--text-primary);
-        }
-        
-        .month-arrows {
-            display: flex;
-            align-items: center;
-        }
-        
-        .month-arrow {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-secondary);
-            margin-left: 5px;
-        }
-        
-        .calendar-grid {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
-        }
-        
-        .calendar-weekday {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 24px;
-            font-size: 12px;
-            color: var(--text-tertiary);
-            font-weight: 500;
-        }
-        
-        .calendar-day {
-            aspect-ratio: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            font-size: 13px;
-            color: var(--text-primary);
             position: relative;
         }
         
-        .calendar-day.inactive {
-            color: var(--text-tertiary);
+        .header-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--text-primary);
         }
         
-        .calendar-day.today {
-            background-color: var(--mild-primary);
-            color: var(--primary-color);
-            font-weight: 500;
+        .calendar-wrapper {
+            display: none;
         }
         
-        .calendar-day.checked {
-            background-color: var(--primary-color);
-            color: white;
-            font-weight: 500;
+        .month-nav {
+            display: none;
         }
         
-        .calendar-day.checked:after {
-            content: '';
-            position: absolute;
-            bottom: 4px;
-            width: 3px;
-            height: 3px;
-            border-radius: 50%;
-            background-color: white;
+        .calendar-grid {
+            display: none;
+        }
+        
+        .calendar-weekday {
+            display: none;
+        }
+        
+        .calendar-day {
+            display: none;
         }
         
         .streak-stats {
-            display: flex;
-            justify-content: space-around;
-            padding: 12px 15px;
-            background-color: white;
-            margin-bottom: var(--module-spacing);
-            border-radius: var(--border-radius-lg);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: none;
         }
         
         .streak-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            display: none;
         }
         
         .streak-value {
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--primary-color);
-            margin-bottom: 3px;
+            display: none;
         }
         
         .streak-label {
-            font-size: 12px;
-            color: var(--text-tertiary);
+            display: none;
         }
         
         .daily-challenge {
             background-color: white;
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            margin: 0 15px var(--module-spacing);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin: 0 15px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-top: none;
+            position: relative;
+        }
+        
+        .daily-challenge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 0 0 3px 3px;
         }
         
         .challenge-header {
-            background: linear-gradient(135deg, var(--secondary-color), #FF5722);
-            padding: 12px 15px;
-            color: white;
+            background-color: rgba(78, 205, 196, 0.1);
+            padding: 15px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border-color);
         }
         
         .challenge-title {
-            font-size: 15px;
-            font-weight: 500;
+            font-size: 16px;
+            font-weight: 600;
             margin-bottom: 4px;
             display: flex;
             align-items: center;
+            color: var(--primary-color);
         }
         
         .challenge-title i {
-            margin-right: 6px;
+            margin-right: 8px;
         }
         
         .challenge-desc {
-            font-size: 12px;
-            opacity: 0.9;
+            font-size: 13px;
+            color: var(--text-secondary);
         }
         
         .challenge-content {
-            padding: 12px 15px;
+            padding: 15px;
         }
         
         .challenge-activity {
             display: flex;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
+            background-color: var(--gray-1);
+            padding: 10px;
+            border-radius: var(--border-radius-md);
         }
         
         .activity-img {
@@ -241,6 +163,7 @@
             object-fit: cover;
             margin-right: 12px;
             flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
         
         .activity-info {
@@ -248,38 +171,21 @@
         }
         
         .activity-name {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
         
         .activity-desc {
-            font-size: 12px;
+            font-size: 13px;
             color: var(--text-secondary);
-            margin-bottom: 6px;
+            margin-bottom: 8px;
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
-            line-height: 1.4;
-        }
-        
-        .activity-meta {
-            display: flex;
-            font-size: 11px;
-            color: var(--text-tertiary);
-        }
-        
-        .activity-meta-item {
-            display: flex;
-            align-items: center;
-            margin-right: 10px;
-        }
-        
-        .activity-meta-item i {
-            margin-right: 3px;
-            font-size: 11px;
+            line-height: 1.5;
         }
         
         .challenge-button {
@@ -287,34 +193,35 @@
             color: white;
             border: none;
             border-radius: var(--border-radius-md);
-            padding: 12px 0;
+            padding: 14px 0;
             font-size: 15px;
             font-weight: 500;
             width: 100%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 8px rgba(78, 205, 196, 0.3);
+            box-shadow: 0 3px 8px rgba(78, 205, 196, 0.25);
             transition: transform 0.2s, box-shadow 0.2s;
-            cursor: pointer;
         }
         
         .challenge-button:active {
             transform: scale(0.98);
-            box-shadow: 0 2px 4px rgba(78, 205, 196, 0.2);
+            box-shadow: 0 1px 3px rgba(78, 205, 196, 0.15);
         }
         
         .challenge-button i {
-            margin-right: 6px;
+            margin-right: 8px;
         }
         
         .section-title {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 600;
             color: var(--text-primary);
-            margin: 20px 15px 12px;
+            margin: 25px 15px 15px;
             display: flex;
             align-items: center;
+            padding-bottom: 8px;
+            border-bottom: none;
         }
         
         .section-title i {
@@ -330,133 +237,322 @@
             background-color: white;
             border-radius: var(--border-radius-lg);
             overflow: hidden;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 15px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .history-item:active {
+            transform: scale(0.99);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.04);
         }
         
         .history-header {
-            padding: 10px 15px;
+            padding: 14px 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--gray-2);
+            background-color: rgba(78, 205, 196, 0.05);
         }
         
         .history-date {
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 14px;
+            font-weight: 600;
             color: var(--text-primary);
             display: flex;
             align-items: center;
         }
         
         .history-date i {
-            margin-right: 6px;
+            margin-right: 8px;
             color: var(--primary-color);
         }
         
-        .history-actions {
+        .history-tag {
+            font-size: 12px;
+            color: white;
+            background-color: var(--primary-color);
+            padding: 3px 10px;
+            border-radius: 12px;
+            font-weight: 500;
             display: flex;
             align-items: center;
+        }
+        
+        .history-tag i {
+            margin-right: 4px;
+            font-size: 10px;
+        }
+        
+        .history-actions {
+            display: none;
         }
         
         .history-action {
-            font-size: 12px;
-            color: var(--text-tertiary);
-            margin-left: 10px;
-            display: flex;
-            align-items: center;
-        }
-        
-        .history-action i {
-            margin-right: 3px;
+            display: none;
         }
         
         .history-content {
-            padding: 12px 15px;
+            padding: 15px;
             display: flex;
+            flex-direction: column;
+        }
+        
+        .history-note {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin-bottom: 12px;
         }
         
         .history-images {
             display: flex;
             flex-wrap: wrap;
-            margin-top: 8px;
-            gap: 6px;
-        }
-        
-        .history-image {
-            width: calc(33.333% - 4px);
-            aspect-ratio: 1;
-            border-radius: var(--border-radius-sm);
-            object-fit: cover;
-        }
-        
-        .history-note {
-            font-size: 13px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            margin-top: 8px;
-        }
-        
-        .badges-section {
-            margin: 0 15px 30px;
-        }
-        
-        .badges-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
             gap: 10px;
         }
         
-        .badge-item {
+        .history-image {
+            width: calc(33.333% - 7px);
+            aspect-ratio: 1;
+            border-radius: var(--border-radius-md);
+            object-fit: cover;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        
+        .history-image:hover {
+            transform: scale(1.03);
+        }
+        
+        .history-footer {
+            display: flex;
+            justify-content: flex-end;
+            padding: 0 15px 15px;
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+        
+        .history-time {
+            display: flex;
+            align-items: center;
+        }
+        
+        .history-time i {
+            margin-right: 4px;
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+        
+        /* 整合的打卡日历与成就区域样式 */
+        .calendar-achievement {
+            background: transparent;
+            border-radius: var(--border-radius-lg);
+            padding: 0;
+            margin: 0 15px 15px;
+            color: var(--text-primary);
+            box-shadow: none;
+            overflow: hidden;
+        }
+        
+        .calendar-section {
+            background: white;
+            padding: 20px 15px;
+            color: var(--text-primary);
+            position: relative;
+            border-bottom: none;
+            border-radius: var(--border-radius-lg);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+        
+        .calendar-section::after {
+            display: none;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .month-name {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .month-arrows {
+            display: flex;
+            align-items: center;
+        }
+        
+        .month-arrow {
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            background-color: var(--gray-1);
+            border-radius: 50%;
+            margin-left: 6px;
+        }
+        
+        .month-arrow:active {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .week-row {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            margin-bottom: 20px;
+        }
+        
+        .week-day {
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-align: center;
+            font-weight: 500;
+        }
+        
+        .week-dots {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 20px 12px;
+            padding: 0;
+            row-gap: 25px;
+        }
+        
+        .day-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .day-number {
+            display: none;
+        }
+        
+        .day-number.current-month {
+            display: none;
+        }
+        
+        .day-number.today {
+            display: none;
+        }
+        
+        .day-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--gray-3);
+            margin: 0 auto;
+        }
+        
+        .day-dot.checked {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(78, 205, 196, 0.15);
+            width: 12px;
+            height: 12px;
+        }
+        
+        .day-dot.today {
+            background-color: var(--secondary-color);
+            box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2);
+            transform: scale(1.2);
+            animation: subtle-pulse 2s infinite;
+        }
+        
+        @keyframes subtle-pulse {
+            0% { box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2); }
+            50% { box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2), 0 0 10px rgba(255, 159, 28, 0.3); }
+            100% { box-shadow: 0 0 0 3px rgba(255, 159, 28, 0.2); }
+        }
+        
+        .day-dot.inactive {
+            opacity: 0.2;
+            width: 8px;
+            height: 8px;
+        }
+        
+        .stats-cards {
+            display: flex;
+            justify-content: space-between;
+            padding: 0;
+            gap: 12px;
+            background-color: transparent;
+            position: relative;
+            z-index: 2;
+            margin-top: 15px;
+        }
+        
+        .stats-card {
+            background: white;
+            border-radius: var(--border-radius-md);
+            padding: 15px;
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-        }
-        
-        .badge-icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 4px;
-            position: relative;
-        }
-        
-        .badge-icon img {
-            width: 100%;
-            height: 100%;
-        }
-        
-        .badge-name {
-            font-size: 11px;
-            color: var(--text-primary);
             text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: none;
         }
         
-        .badge-icon.locked:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .stats-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
         }
         
-        .badge-icon.locked:before {
-            content: '\f023';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            position: absolute;
+        .stats-card.primary {
+            background: linear-gradient(to bottom right, var(--primary-color), #3db8b0);
+            border: none;
+            box-shadow: 0 5px 15px rgba(78, 205, 196, 0.25);
+        }
+        
+        .stats-card.primary .stats-label {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .stats-card.primary .stats-value {
             color: white;
-            z-index: 1;
+        }
+        
+        .stats-card.primary .stats-unit {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .stats-label {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+        
+        .stats-value-container {
+            display: flex;
+            align-items: baseline;
+        }
+        
+        .stats-value {
+            font-size: 28px;
+            font-weight: 700;
+            line-height: 1;
+            color: var(--primary-color);
+        }
+        
+        .stats-unit {
+            font-size: 14px;
+            font-weight: 500;
+            margin-left: 2px;
+            color: var(--text-secondary);
+        }
+        
+        .calendar-weeks {
+            padding: 0 10px;
         }
     </style>
 </head>
@@ -466,96 +562,170 @@
             <!-- 头部 -->
             <div class="checkin-header">
                 <div class="header-title">打卡日历</div>
-                <div class="header-actions">
-                    <div class="header-action">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <div class="header-action">
-                        <i class="fas fa-ellipsis-h"></i>
-                    </div>
-                </div>
             </div>
             
-            <!-- 日历区域（高度优化） -->
-            <div class="calendar-wrapper">
-                <div class="month-nav">
-                    <div class="month-name">2023年6月</div>
-                    <div class="month-arrows">
-                        <div class="month-arrow">
-                            <i class="fas fa-chevron-left"></i>
+            <!-- 整合的打卡日历与成就区域 -->
+            <div class="calendar-achievement">
+                <div class="calendar-section">
+                    <div class="calendar-header">
+                        <div class="month-name">2023年6月19日</div>
+                        <div class="month-arrows">
+                            <div class="month-arrow">
+                                <i class="fas fa-chevron-left"></i>
+                            </div>
+                            <div class="month-arrow">
+                                <i class="fas fa-chevron-right"></i>
+                            </div>
                         </div>
-                        <div class="month-arrow">
-                            <i class="fas fa-chevron-right"></i>
+                    </div>
+                    
+                    <div class="calendar-weeks">
+                        <div class="week-row">
+                            <div class="week-day">日</div>
+                            <div class="week-day">一</div>
+                            <div class="week-day">二</div>
+                            <div class="week-day">三</div>
+                            <div class="week-day">四</div>
+                            <div class="week-day">五</div>
+                            <div class="week-day">六</div>
+                        </div>
+                        <div class="week-dots">
+                            <!-- 第一周 -->
+                            <div class="day-container">
+                                <div class="day-dot inactive"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot inactive"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot inactive"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot inactive"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            
+                            <!-- 第二周 -->
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            
+                            <!-- 第三周 -->
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            
+                            <!-- 第四周 -->
+                            <div class="day-container">
+                                <div class="day-dot checked"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot today"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            
+                            <!-- 第五周 -->
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot"></div>
+                            </div>
+                            <div class="day-container">
+                                <div class="day-dot inactive"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
-                <div class="calendar-grid">
-                    <!-- 星期标题 -->
-                    <div class="calendar-weekday">日</div>
-                    <div class="calendar-weekday">一</div>
-                    <div class="calendar-weekday">二</div>
-                    <div class="calendar-weekday">三</div>
-                    <div class="calendar-weekday">四</div>
-                    <div class="calendar-weekday">五</div>
-                    <div class="calendar-weekday">六</div>
+                <div class="stats-cards">
+                    <div class="stats-card primary">
+                        <div class="stats-label">连续打卡</div>
+                        <div class="stats-value-container">
+                            <div class="stats-value">9</div>
+                            <div class="stats-unit">天</div>
+                        </div>
+                    </div>
                     
-                    <!-- 日期 -->
-                    <div class="calendar-day inactive">28</div>
-                    <div class="calendar-day inactive">29</div>
-                    <div class="calendar-day inactive">30</div>
-                    <div class="calendar-day inactive">31</div>
-                    <div class="calendar-day">1</div>
-                    <div class="calendar-day">2</div>
-                    <div class="calendar-day">3</div>
+                    <div class="stats-card">
+                        <div class="stats-label">本月</div>
+                        <div class="stats-value">12</div>
+                    </div>
                     
-                    <div class="calendar-day">4</div>
-                    <div class="calendar-day">5</div>
-                    <div class="calendar-day">6</div>
-                    <div class="calendar-day">7</div>
-                    <div class="calendar-day">8</div>
-                    <div class="calendar-day checked">9</div>
-                    <div class="calendar-day checked">10</div>
-                    
-                    <div class="calendar-day checked">11</div>
-                    <div class="calendar-day">12</div>
-                    <div class="calendar-day checked">13</div>
-                    <div class="calendar-day checked">14</div>
-                    <div class="calendar-day checked">15</div>
-                    <div class="calendar-day checked">16</div>
-                    <div class="calendar-day checked">17</div>
-                    
-                    <div class="calendar-day checked">18</div>
-                    <div class="calendar-day today">19</div>
-                    <div class="calendar-day">20</div>
-                    <div class="calendar-day">21</div>
-                    <div class="calendar-day">22</div>
-                    <div class="calendar-day">23</div>
-                    <div class="calendar-day">24</div>
-                    
-                    <div class="calendar-day">25</div>
-                    <div class="calendar-day">26</div>
-                    <div class="calendar-day">27</div>
-                    <div class="calendar-day">28</div>
-                    <div class="calendar-day">29</div>
-                    <div class="calendar-day">30</div>
-                    <div class="calendar-day inactive">1</div>
-                </div>
-            </div>
-            
-            <!-- 连续打卡统计 -->
-            <div class="streak-stats">
-                <div class="streak-item">
-                    <div class="streak-value">9</div>
-                    <div class="streak-label">连续打卡</div>
-                </div>
-                <div class="streak-item">
-                    <div class="streak-value">12</div>
-                    <div class="streak-label">本月打卡</div>
-                </div>
-                <div class="streak-item">
-                    <div class="streak-value">28</div>
-                    <div class="streak-label">总打卡天数</div>
+                    <div class="stats-card">
+                        <div class="stats-label">总计</div>
+                        <div class="stats-value">28</div>
+                    </div>
                 </div>
             </div>
             
@@ -563,10 +733,10 @@
             <div class="daily-challenge">
                 <div class="challenge-header">
                     <div class="challenge-title">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-star"></i>
                         <span>今日挑战</span>
                     </div>
-                    <div class="challenge-desc">完成挑战，获得双倍成长点数！</div>
+                    <div class="challenge-desc">完成挑战，记录亲子美好时光！</div>
                 </div>
                 <div class="challenge-content">
                     <div class="challenge-activity">
@@ -576,25 +746,11 @@
                             <div class="activity-desc">
                                 通过趣味时间管理游戏，培养孩子的自律性和时间观念，让学习和玩耍都有规划。
                             </div>
-                            <div class="activity-meta">
-                                <div class="activity-meta-item">
-                                    <i class="fas fa-child"></i>
-                                    <span>5-8岁</span>
-                                </div>
-                                <div class="activity-meta-item">
-                                    <i class="far fa-clock"></i>
-                                    <span>15分钟</span>
-                                </div>
-                                <div class="activity-meta-item">
-                                    <i class="fas fa-star"></i>
-                                    <span>难度: 2/5</span>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     
                     <button class="challenge-button">
-                        <i class="fas fa-play"></i>
+                        <i class="fas fa-check-circle"></i>
                         <span>开始挑战</span>
                     </button>
                 </div>
@@ -614,28 +770,25 @@
                             <i class="far fa-calendar-check"></i>
                             <span>2023年6月18日</span>
                         </div>
-                        <div class="history-actions">
-                            <div class="history-action">
-                                <i class="far fa-heart"></i>
-                                <span>12</span>
-                            </div>
-                            <div class="history-action">
-                                <i class="far fa-comment"></i>
-                                <span>3</span>
-                            </div>
+                        <div class="history-tag">
+                            <i class="fas fa-paper-plane"></i>
+                            <span>创意彩虹纸飞机</span>
                         </div>
                     </div>
                     <div class="history-content">
-                        <div style="flex: 1;">
-                            <div class="activity-name">创意彩虹纸飞机制作</div>
-                            <div class="history-note">
-                                今天和小明一起做了创意彩虹纸飞机，他非常投入，坚持自己完成了全部步骤！最后的飞行测试中，他的飞机飞了超远，小家伙开心得不得了。
-                            </div>
-                            <div class="history-images">
-                                <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="准备材料">
-                                <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="对折">
-                                <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="完成">
-                            </div>
+                        <div class="history-note">
+                            今天和小明一起做了创意彩虹纸飞机，他非常投入，坚持自己完成了全部步骤！最后的飞行测试中，他的飞机飞了超远，小家伙开心得不得了。
+                        </div>
+                        <div class="history-images">
+                            <img src="https://images.unsplash.com/photo-1574359173731-5d197df08b42?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="准备材料">
+                            <img src="https://images.unsplash.com/photo-1589939705384-5185137a7f0f?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="对折">
+                            <img src="https://images.unsplash.com/photo-1545558014-8692077e9b5c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="完成">
+                        </div>
+                    </div>
+                    <div class="history-footer">
+                        <div class="history-time">
+                            <i class="far fa-clock"></i>
+                            <span>15:30 完成打卡</span>
                         </div>
                     </div>
                 </div>
@@ -647,87 +800,25 @@
                             <i class="far fa-calendar-check"></i>
                             <span>2023年6月17日</span>
                         </div>
-                        <div class="history-actions">
-                            <div class="history-action">
-                                <i class="far fa-heart"></i>
-                                <span>8</span>
-                            </div>
-                            <div class="history-action">
-                                <i class="far fa-comment"></i>
-                                <span>1</span>
-                            </div>
+                        <div class="history-tag">
+                            <i class="fas fa-bone"></i>
+                            <span>恐龙化石挖掘</span>
                         </div>
                     </div>
                     <div class="history-content">
-                        <div style="flex: 1;">
-                            <div class="activity-name">趣味恐龙化石挖掘</div>
-                            <div class="history-note">
-                                小明对恐龙知识非常感兴趣，在挖掘过程中展现出了极大的耐心和专注力。他能够准确识别出不同种类的恐龙，并主动提出了许多问题。
-                            </div>
-                            <div class="history-images">
-                                <img src="https://images.unsplash.com/photo-1549920867-1629df28cdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="恐龙化石">
-                                <img src="https://images.unsplash.com/photo-1564325724739-bae0bd08762c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="挖掘过程">
-                            </div>
+                        <div class="history-note">
+                            小明对恐龙知识非常感兴趣，在挖掘过程中展现出了极大的耐心和专注力。他能够准确识别出不同种类的恐龙，并主动提出了许多问题。
+                        </div>
+                        <div class="history-images">
+                            <img src="https://images.unsplash.com/photo-1549920867-1629df28cdf9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="恐龙化石">
+                            <img src="https://images.unsplash.com/photo-1564325724739-bae0bd08762c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" class="history-image" alt="挖掘过程">
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <!-- 徽章收集 -->
-            <div class="section-title">
-                <i class="fas fa-medal"></i>
-                <span>徽章收集</span>
-            </div>
-            
-            <div class="badges-section">
-                <div class="badges-grid">
-                    <div class="badge-item">
-                        <div class="badge-icon">
-                            <img src="https://img.icons8.com/color/96/000000/prize.png" alt="连续打卡7天">
+                    <div class="history-footer">
+                        <div class="history-time">
+                            <i class="far fa-clock"></i>
+                            <span>10:15 完成打卡</span>
                         </div>
-                        <div class="badge-name">连续7天</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon">
-                            <img src="https://img.icons8.com/color/96/000000/medal2.png" alt="连续打卡14天">
-                        </div>
-                        <div class="badge-name">连续14天</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon locked">
-                            <img src="https://img.icons8.com/color/96/000000/medal-first-place.png" alt="连续打卡30天">
-                        </div>
-                        <div class="badge-name">连续30天</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon">
-                            <img src="https://img.icons8.com/color/96/000000/paint-palette.png" alt="创意小能手">
-                        </div>
-                        <div class="badge-name">创意小能手</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon locked">
-                            <img src="https://img.icons8.com/color/96/000000/microscope.png" alt="科学探索家">
-                        </div>
-                        <div class="badge-name">科学探索家</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon locked">
-                            <img src="https://img.icons8.com/color/96/000000/reading.png" alt="阅读爱好者">
-                        </div>
-                        <div class="badge-name">阅读爱好者</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon locked">
-                            <img src="https://img.icons8.com/color/96/000000/property-time.png" alt="时间管理">
-                        </div>
-                        <div class="badge-name">时间管理</div>
-                    </div>
-                    <div class="badge-item">
-                        <div class="badge-icon locked">
-                            <img src="https://img.icons8.com/color/96/000000/basketball-player.png" alt="运动健将">
-                        </div>
-                        <div class="badge-name">运动健将</div>
                     </div>
                 </div>
             </div>
@@ -739,17 +830,9 @@
                 <i class="fas fa-compass tab-icon"></i>
                 <span>发现</span>
             </div>
-            <div class="tab-item">
-                <i class="fas fa-layer-group tab-icon"></i>
-                <span>合集</span>
-            </div>
             <div class="tab-item active">
                 <i class="fas fa-calendar-check tab-icon"></i>
                 <span>打卡</span>
-            </div>
-            <div class="tab-item">
-                <i class="fas fa-users tab-icon"></i>
-                <span>社区</span>
             </div>
             <div class="tab-item">
                 <i class="fas fa-user tab-icon"></i>
